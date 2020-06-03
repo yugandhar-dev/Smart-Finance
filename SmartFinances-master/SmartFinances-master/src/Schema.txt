@@ -1,0 +1,63 @@
+User:
+-------------------------------------
+userName(Email) - Unique, String, Required
+password - Trim, Required, Number
+accessLevel - Number
+
+
+New Transaction:
+-------------------------------------
+Amount
+
+
+
+
+Admin:
+-------------------------------------
+
+userName - Unique, String, Required
+password - Trim, Required, Number
+accessLevel - Number
+
+
+FundMangement => Create new fund
+---------------------------------------
+Fund ID - Unique, Trim, Required
+Fund Title - String, Trim, Required, Min Lenght: 2
+FUnd Type - String, Required
+Return of Investment - Number, Required, Non Negative
+Description - String, Word Limit 2000, Required, Trim
+
+
+
+FundMangement => Manage existing fund
+---------------------------------------
+Update fund Title - String, Trim
+Update Description - String, Trim, Limit: 2000
+Update ROI - Number, Non negative
+
+
+UserManagement => Create new user
+---------------------------------------
+Account Number - Number, Required, Trim
+Email - Unique, String, Required
+First name - String, Required
+Last name - String, Required
+Bank name - String, Trim
+Address - String, Trim
+TFN Number - Number, Required, Trim
+Phone Number - Number, Required, Trim
+Opening Balance - Number
+
+UserManagement => User Info
+---------------------------------------
+Account Number - Number, Required, Trim
+Email - Unique, String, Required
+First name - String, Required
+Last name - String, Required
+Bank name - String, Trim
+Address - String, Trim
+TFN Number - Number, Required, Trim
+Phone Number - Number, Required, Trim
+Balance - Number
+

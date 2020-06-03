@@ -1,0 +1,19 @@
+
+.content{
+    width: 400px;
+    position: absolute;
+    top:50px;
+    left: 30%;
+    margin-left: -200px;
+    z-index: 100;
+}
+.content p{
+    font-size: 19px;
+    color: #d0e5ff;
+    margin: 30px auto 0;
+    text-align: left;
+    position: relative;
+}
+.content h1{
+    color: #fff;
+}
