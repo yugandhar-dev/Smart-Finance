@@ -18,6 +18,8 @@ import { Jumbotron, Table } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Toast from "react-bootstrap";
+import './App.css'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -154,26 +156,48 @@ export default () => {
               <tr>
                 <td>
                   <div>
-                    <p>
-                      Account Number:{JSON.stringify(response.accountNumber)}
+                    <Typography variant="h6" fontweight = "bold">
+                    <p >
+                      
+                      <font color = "#b80000">
+                      Account Number:<font color = "#1273de">${JSON.stringify(response.accountNumber)}</font>
+                      </font>
+                      
                     </p>
-                    <p>Account Balance:{JSON.stringify(response.accBalance)}</p>
-
+                    </Typography>
+                    <Typography variant="h6" fontweight = "bold">
                     <p>
+                    <font color = "#b80000">
+                      Account Balance:<font color = "#1273de">${JSON.stringify(response.accBalance)}</font>
+                      </font>
+                      </p>
+                      </Typography>
+                      <Typography variant="h6" fontweight = "bold">
+                      <p>
+                    <font color = "#b80000">
+                      Total Investments:<font color = "#1273de">${JSON.stringify(response.totalfunds)}</font>
+                    </font>
+                    </p>
+                    </Typography>
+                    <p>
+                    <font color = "#f44336">
                       Low Risk Fund Investments:
-                      {JSON.stringify(response.lowRiskFund)}
+                      <font color = "#1273de">${JSON.stringify(response.lowRiskFund)}</font>
+                      </font>
                     </p>
                     <p>
+                    <font color = "#4caf50">
                       Medium Risk Fund Investments:
-                      {JSON.stringify(response.mediumRiskFund)}
+                      <font color = "#1273de">${JSON.stringify(response.mediumRiskFund)}</font>
+                      </font>
                     </p>
                     <p>
+                    <font color = "#ff9800">
                       High Risk Fund Investments:
-                      {JSON.stringify(response.highRiskFund)}
+                      <font color = "#1273de">${JSON.stringify(response.highRiskFund)}</font>
+                      </font>
                     </p>
-                    <p>
-                      Total Investments:{JSON.stringify(response.totalfunds)}
-                    </p>
+                    
                   </div>
                 </td>
                 <td>
