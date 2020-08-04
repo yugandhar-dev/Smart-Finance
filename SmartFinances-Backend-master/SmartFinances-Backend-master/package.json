@@ -27,5 +27,9 @@
     "nodemon": "^1.19.4",
     "npm": "^6.13.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1"
   }
 }
