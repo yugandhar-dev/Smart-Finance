@@ -51,21 +51,11 @@ const NewTransaction = () => {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   //const [afterAmount,setAfterAmount] = useState("")
-  const handleChangeAmount = (e) => {
-    setAmount(e.target.value);
-  };
-  const handleTranslate = (e) => {
-    e.preventDefault();
-    let value = Math.ceil(amount);
-    let remainder = Math.floor(value / 5);
-    let merchant = value % 5;
-    console.log(remainder, merchant);
-    if (merchant === 0) {
-      setRoundedAmount(Math.abs(amount - value).toFixed(2));
-    } else {
-      setRoundedAmount(Math.abs((remainder + 1) * 5 - amount).toFixed(2));
-    }
-  };
+  
+  const calculateRoundOff = (event) => {
+    setAmount(event.target.value);
+    setRoundedAmount(parseFloat((5 - parseFloat(event.target.value) % 5).toFixed(2)))
+  }
 
   const classes = useStyles();
 
@@ -137,7 +127,6 @@ const NewTransaction = () => {
                 autoComplete="Account Number"
                 autoFocus
                 value={account}
-                onChange={handleChangeAmount}
                 onChange={(e) => setAccount(e.target.value)}
               />
               <TextField
@@ -151,10 +140,8 @@ const NewTransaction = () => {
                 autoComplete="FundAmount"
                 autoFocus
                 value={amount}
-                onChange={handleChangeAmount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={calculateRoundOff}
               />
-              <button onClick={handleTranslate}>Round Off</button>
               <TextField
                 variant="outlined"
                 margin="normal"

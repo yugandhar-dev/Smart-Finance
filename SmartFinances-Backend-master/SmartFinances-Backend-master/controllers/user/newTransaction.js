@@ -2,87 +2,64 @@ const Transaction = require("../../models/newTransaction");
 const Abalance = require("../../models/balance");
 
 exports.AddTransaction = (req, res) => {
-  var accNumber = req.body.account;
-  //var accNumber = 123;
-  const transaction = new Transaction(req.body);
-  transaction.save((err, transaction) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Not able to save transaction",
-      });
-    }
-    res.json({ transaction });
-  });
-  Abalance.find({ accountNumber: accNumber }).exec((err, users) => {
-    // console.log(users);
-    if (err || users.length == 0) {
-      return res.status(400).json({
-        error: "Not able to update transaction",
-      });
-    }
-    console.log(users[0].accBalance);
-    var bal = users[0].accBalance;
-    var fundop = users[0].lowRiskFund;
-    var fundopt = users[0].mediumRiskFund;
-    var fundOpt = users[0].highRiskFund;
-    var totalfund = users[0].totalfunds;
-    console.log(users[0].accBalance);
-    // console.log(bal);
-    var ubalance =
-      parseInt(bal) -
-      parseInt(req.body.amount) -
-      parseInt(req.body.roundedAmount);
+	const accountNumber = req.body.account;
+	console.log(req.body);
+	//var accNumber = 123;
+	const transaction = new Transaction(req.body);
+	transaction.save((err, transaction) => {
+		if (err) {
+			return res.status(400).json({
+				error: "Not able to save transaction",
+			});
+		}
+		res.json({ transaction });
+	});
+	Abalance.find({ accountNumber }).exec((err, users) => {
+		// console.log(users);
+		if (err || users.length == 0) {
+			return res.status(400).json({
+				error: "Not able to update transaction",
+			});
+		}
+		var accountBalance =
+			parseFloat((parseFloat(users[0].accBalance) -
+			parseFloat(req.body.amount) -
+			parseFloat(req.body.roundedAmount)).toFixed(2));
 
-    // console.log(ubalance);
-    // console.log(fundop);
-    if (req.body.fund == "lowRiskFund") {
-      var fundoptionsnew = parseInt(fundop) + parseInt(req.body.roundedAmount);
-      var totalsavedfunds = totalfund + parseInt(req.body.roundedAmount);
-      // console.log(fundoptionsnew);
-      Abalance.updateOne(
-        { accountNumber: accNumber },
-        {
-          accBalance: ubalance,
-          lowRiskFund: fundoptionsnew,
-          // totalfunds: totalsavedfunds,
-        }
-      ).exec((err, balances) => {
-        console.log(balances);
-      });
-    } else if (req.body.fund == "mediumRiskFund") {
-      var fundoptionsnew = parseInt(fundopt) + parseInt(req.body.roundedAmount);
-      var totalsavedfunds = totalfund + parseInt(req.body.roundedAmount);
-      // console.log(fundoptionsnew);
-      Abalance.updateOne(
-        { accountNumber: accNumber },
-        {
-          accBalance: ubalance,
-          mediumRiskFund: fundoptionsnew,
-          totalfunds: totalsavedfunds,
-        }
-      ).exec((err, balances) => {
-        console.log(balances);
-      });
-    } else {
-      var fundoptionsnew = parseInt(fundOpt) + parseInt(req.body.roundedAmount);
-      var totalsavedfunds = totalfund + parseInt(req.body.roundedAmount);
-      console.log(fundoptionsnew);
-      Abalance.updateOne(
-        { accountNumber: accNumber },
-        {
-          accBalance: ubalance,
-          highRiskFund: fundoptionsnew,
-          totalfunds: totalsavedfunds,
-        }
-      ).exec((err, balances) => {
-        console.log(balances);
-      });
-    }
+		const fundType = req.body.fund;
+		const fundBalance =
+			parseFloat(users[0][req.body.fund]) + parseFloat(req.body.roundedAmount);
 
-    if (err || users == null) {
-      return res.status(400).json({
-        error: "Not able to update balance",
-      });
-    }
-  });
+		const totalFundsBalance = parseFloat((users[0].totalfunds + parseFloat(req.body.roundedAmount)).toFixed(2))
+		console.log(fundType, fundBalance, totalFundsBalance);
+		updateBalance(
+			accountNumber,
+			accountBalance,
+			{ [fundType]: fundBalance },
+			totalFundsBalance
+		);
+
+		if (err || users == null) {
+			return res.status(400).json({
+				error: "Not able to update balance",
+			});
+		}
+	});
 };
+
+const updateBalance = (
+	accountNumber,
+	accountBalance,
+	fundOption,
+	totalsavedfunds
+) =>
+	Abalance.updateOne(
+		{ accountNumber },
+		{
+			accBalance: accountBalance,
+			...fundOption,
+			totalfunds: totalsavedfunds,
+		}
+	).exec((err, balances) => {
+		console.log(balances);
+	});
