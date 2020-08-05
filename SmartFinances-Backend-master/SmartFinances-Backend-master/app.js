@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
@@ -20,6 +21,7 @@ const manageUser = require("./routes/admin/manageUser");
 const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
 
 const manageFund = require("./routes/admin/manageFund");
+const { authenticate } = require('./middlewares/authenticate');
 
 
 //DB Connections
@@ -50,6 +52,8 @@ mongoose
 app.use(bodyParser.json());
 app.use(cookieParser()); //used to put or delete some values into the cookies
 app.use(cors());
+
+app.use(authenticate);
 
 //Routes here
 app.use("/api", userAuthRoutes);
