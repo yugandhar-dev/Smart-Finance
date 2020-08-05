@@ -8,7 +8,18 @@ var Balance = new Schema(
             required : true,
             trim : true,  
         },
+        walletAccountNumber : {
+            type : Number,
+            required : true,
+            trim : true,  
+        },
         accBalance : {
+            type : Number,
+            required : true,
+            trim : true,
+            
+        },
+        walletAccBalance : {
             type : Number,
             required : true,
             trim : true,

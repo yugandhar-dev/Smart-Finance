@@ -18,7 +18,9 @@ exports.CreateUser = (req, res) => {
     //Updating balance collection after admin adds new user
     var nUser = {
       accountNumber: req.body.accountNumber,
+      walletAccountNumber: 1,
       accBalance: req.body.openingBalance,
+      walletAccBalance: 0,
       lowRiskFund: 0,
       mediumRiskFund: 0,
       highRiskFund: 0,
