@@ -2,6 +2,7 @@ const User = require("../../models/user");
 const { check, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
+const { JWT_SECRET } = process.env;
 
 exports.signup = (req, res) => {
   const errors = validationResult(req);
@@ -52,9 +53,14 @@ exports.signin = (req, res) => {
     }
 
     //Create token
-    const token = jwt.sign({ _id: user._id }, "smartfinances");
-    //Put token in cookie
-    res.cookie("token", user.email, { expire: new Date() + 9999 });
+    const expireDate = new Date(Date.now() + 15 * 60 * 1000);
+    const tokenContent = {
+      _id: user._id,
+      type: 'user',
+      iat: Date.now(),
+      exp: expireDate.getTime(),
+    };
+    const token = jwt.sign(tokenContent, JWT_SECRET);
 
     //send response to frontend
     const { _id, name, email, role } = user;
@@ -63,7 +69,6 @@ exports.signin = (req, res) => {
 };
 
 exports.signout = (req, res) => {
-  res.clearCookie("token");
   res.json({
     message: "User Signout",
   });
