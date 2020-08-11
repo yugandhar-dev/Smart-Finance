@@ -2,6 +2,7 @@ const Admin = require("../../models/admin");
 const { check, validationResult } = require("express-validator");
 var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
+const { JWT_SECRET } = process.env;
 
 exports.signup = (req, res) => {
   const errors = validationResult(req);
@@ -53,9 +54,14 @@ exports.signin = (req, res) => {
     }
 
     //Create token
-    const token = jwt.sign({ _id: admin._id }, "smartfinances");
-    //Put token in cookie
-    res.cookie("token", token, { expire: new Date() + 9999 });
+    const expireDate = new Date(Date.now() + 15 * 60 * 1000);
+    const tokenContent = {
+      _id: user._id,
+      type: 'admin',
+      iat: Date.now(),
+      exp: expireDate.getTime(),
+    };
+    const token = jwt.sign(tokenContent, JWT_SECRET);
 
     //send response to frontend
     const { _id, name, email, role } = admin;

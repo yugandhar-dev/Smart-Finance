@@ -53,7 +53,14 @@ exports.signin = (req, res) => {
     }
 
     //Create token
-    const token = jwt.sign({ _id: user._id }, JWT_SECRET);
+    const expireDate = new Date(Date.now() + 15 * 60 * 1000);
+    const tokenContent = {
+      _id: user._id,
+      type: 'user',
+      iat: Date.now(),
+      exp: expireDate.getTime(),
+    };
+    const token = jwt.sign(tokenContent, JWT_SECRET);
 
     //send response to frontend
     const { _id, name, email, role } = user;

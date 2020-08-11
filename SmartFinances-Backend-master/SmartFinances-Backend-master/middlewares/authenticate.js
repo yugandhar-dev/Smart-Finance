@@ -22,9 +22,14 @@ exports.authenticate = async(req, res, next) => {
   }
 
   try {
-    jwt.verify(authToken, JWT_SECRET);
+    const data = jwt.verify(authToken, JWT_SECRET);
+    req.user = data;
   } catch (err) {
     return res.status(401).json({ error: 'The given token is invalid' });
+  }
+
+  if (Date.now() > req.user.exp) {
+    return res.status(401).json({ error: 'The token has expired' });
   }
 
   return next();
