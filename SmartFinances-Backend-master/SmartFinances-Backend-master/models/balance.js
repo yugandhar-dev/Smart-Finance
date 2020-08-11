@@ -9,7 +9,7 @@ var Balance = new Schema(
             trim : true,  
         },
         walletAccountNumber : {
-            type : Number,
+            type : String,
             required : true,
             trim : true,  
         },
@@ -20,7 +20,7 @@ var Balance = new Schema(
             
         },
         walletAccBalance : {
-            type : String,
+            type : Number,
             required : true,
             trim : true,
             
