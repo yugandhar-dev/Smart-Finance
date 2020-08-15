@@ -24,8 +24,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test1": "react-scripts test",
+    "eject": "react-scripts eject",
+    "test": "jest",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,7 +47,9 @@
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
-    "husky": "^4.2.5"
+    "cypress": "^4.12.1",
+    "husky": "^4.2.5",
+    "jest": "^24.9.0"
   },
   "husky": {
     "hooks": {
