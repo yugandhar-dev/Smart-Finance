@@ -15,8 +15,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { adminSignin } from "../auth/index";
+import { signin } from "../auth/index";
 import "./Homepage.css";
+import { useAuth } from "../context/auth";
 
 //import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
@@ -71,6 +72,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setAuthToken } = useAuth();
 
   const classes = useStyles();
 
@@ -79,15 +81,16 @@ const AdminLogin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     //history.push("/signin/user");
-    adminSignin({ email, password })
+    signin({ email, password, role : 'admin' })
       .then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
+          setAuthToken(data.token)
           history.push("/admin/fundsDashboard");
         }
       })
-      .catch(console.log("Signin request error"));
+      .catch(ex => console.log(ex));
   };
 
   return (

@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +61,7 @@ function TabPanel(props) {
   );
 }
 
-export default () => {
+export default (props) => {
   const [status] = useState(null);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -70,11 +69,6 @@ export default () => {
     setValue(newValue);
   };
 
-  let history = useHistory();
-
-  const logout = () => {
-    history.push("/");
-  };
 
   return (
     <div>
@@ -95,7 +89,7 @@ export default () => {
               <Typography variant="h6" className={classes.title}>
                 Smart Finance
               </Typography>
-              <Button color="inherit" onClick={logout}>
+              <Button color="inherit" onClick={props.logout}>
                 Logout
               </Button>
             </Toolbar>

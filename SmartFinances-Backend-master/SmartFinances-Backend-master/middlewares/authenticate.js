@@ -3,7 +3,7 @@ const { JWT_SECRET } = process.env;
 
 exports.authenticate = async(req, res, next) => {
   // The path is an authentication one
-  if (req.path.startsWith('/api/signin/') || req.path.startsWith('/api/signup/')) {
+  if (req.path.startsWith('/api/signin') || req.path.startsWith('/api/signup')) {
     return next();
   }
 

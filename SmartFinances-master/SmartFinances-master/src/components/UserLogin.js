@@ -14,7 +14,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { userSignin } from "../auth/index";
+import { signin } from "../auth/index";
+import {useAuth } from '../context/auth'
 import "./Homepage.css";
 
 //import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserLogin = () => {
+  const { setAuthToken } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -77,15 +79,16 @@ const UserLogin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    userSignin({ email, password })
+    signin({ email, password, role : 'user' })
       .then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
+          setAuthToken(data.token)
           history.push("/user/dashboard");
         }
       })
-      .catch(console.log("Signin request error"));
+      .catch((ex) => console.log("Signin request error", ex));
   };
 
   return (
