@@ -84,8 +84,8 @@ export default () => {
                 <Grid
                   item
                   xs={false}
-                  sm={200}
-                  md={100}
+                  sm={12}
+                  md={12}
                   component={Paper}
                   elevation={10}
                   square

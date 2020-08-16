@@ -10,7 +10,7 @@ const {
 } = require("../../controllers/user/userAuth");
 
 router.post(
-  "/signup/user",
+  "/signup",
   //using express validator to validate in routes
   [
     check("name")
@@ -20,21 +20,23 @@ router.post(
     check("password")
       .isLength({ min: 3 })
       .withMessage("password should be atleast 3 charecters"),
+    check("role").isIn(['admin','user']).withMessage('Role should be either admin or user')
   ],
   signup
 );
 
 router.post(
-  "/signin/user",
+  "/signin",
   //using express validator to validate in routes
   [
     check("email").isEmail().withMessage("email is required"),
     check("password")
       .isLength({ min: 1 })
-      .withMessage("password sfield is required"),
+      .withMessage("password field is required"),
+    check("role").isIn(['admin','user']).withMessage('Role should be either admin or user')
   ],
   signin
 );
 
-router.get("/signout/user", signout);
+router.get("/signout", signout);
 module.exports = router;

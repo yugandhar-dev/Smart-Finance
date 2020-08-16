@@ -66,8 +66,8 @@ const UserManagement = () => {
             <Grid
               item
               xs={false}
-              sm={2000}
-              md={1000}
+              sm={12}
+              md={12}
               component={Paper}
               elevation={10}
               square

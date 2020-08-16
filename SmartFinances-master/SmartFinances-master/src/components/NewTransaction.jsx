@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewTransaction = () => {
+const NewTransaction = (props) => {
   //const [status, currentStatus] = useState(null);
   const [account, setAccount] = useState("");
   const [amount, setAmount] = useState("");
@@ -61,7 +61,6 @@ const NewTransaction = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    //history.push("/signin/user");
     newTransaction({
       account,
       amount,
@@ -75,12 +74,13 @@ const NewTransaction = () => {
         if (data.error) {
           setError(data.error);
         } else {
+          props.setReload(!props.reload)
           console.log("Transaction saved succesfully!");
           setSuccessMsg("Transaction saved successfully!");
           document.getElementById("forms").reset();
         }
       })
-      .catch(console.log("New transaction request error"));
+      .catch(ex => console.log(ex,"New transaction request error"));
   };
 
   const onReset = (event) => {
