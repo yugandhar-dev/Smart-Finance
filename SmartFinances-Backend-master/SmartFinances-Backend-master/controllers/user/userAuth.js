@@ -1,76 +1,86 @@
-const { User, securePassword } = require("../../models/user");
-const { check, validationResult } = require("express-validator");
-var jwt = require("jsonwebtoken");
-var expressJwt = require("express-jwt");
+const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+const { User, securePassword } = require('../../models/user');
+
 const { JWT_SECRET } = process.env;
 
-exports.signup = (req, res) => {
-	const errors = validationResult(req);
+exports.signup = async (req, res) => {
+  const errors = validationResult(req);
 
-	if (!errors.isEmpty())
-		return res.status(422).json({
-			error: errors.array()[0].msg,
-		});
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      error: errors.array()[0].msg,
+    });
+  }
 
-	//Saving user to DB
-	const user = new User({
-		email: req.body.email,
-		password: securePassword(req.body.password, req.body.name),
-		name: req.body.name,
-		role: req.body.role,
-	});
+  // Saving user to DB
+  const user = new User({
+    email: req.body.email,
+    password: securePassword(req.body.password),
+    name: req.body.name,
+    role: req.body.role,
+  });
 
-	user.save((err, user) => {
-		if (err)
-			return res.status(400).json({
-				error: "NOT able to save user in DB",
-			});
+  try {
+    await user.save();
+  } catch (err) {
+    return res.status(400).json({
+      error: err.errmsg,
+    });
+  }
 
-		res.json({
-			name: user.name,
-			email: user.email,
-			id: user._id,
-		});
-	});
+  return res.status(200).json({
+    name: user.name,
+    email: user.email,
+    id: user._id,
+  });
 };
 
-exports.signin = (req, res) => {
-	const errors = validationResult(req);
-	const { email, password, role } = req.body;
+exports.signin = async (req, res) => {
+  const errors = validationResult(req);
+  const { email, password, role } = req.body;
 
-	if (!errors.isEmpty())
-		return res.status(422).json({
-			error: errors.array()[0].msg,
-		});
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      error: errors.array()[0].msg,
+    });
+  }
 
-	User.findOne({ email, role }, (err, user) => {
-		if (err || !user)
-			return res.status(400).json({
-				error: "User email does not exist",
-			});
+  const user = await User.findOne({ email, role }).exec();
+  if (!user) {
+    return res.status(400).json({
+      error: 'User email does not exist',
+    });
+  }
 
-		if (!user.authenticate(password))
-			return res.status(401).json({
-				error: " Email & password do not match",
-			});
+  if (!password || !user.authenticate(password)) {
+    return res.status(401).json({
+      error: ' Email & password do not match',
+    });
+  }
 
-		//Create token
-		const expireDate = new Date(Date.now() + 15 * 60 * 1000);
-		const tokenContent = {
-			_id: user._id,
-			type: user.role,
-			iat: Date.now(),
-			exp: expireDate.getTime(),
-		};
-		const token = jwt.sign(tokenContent, JWT_SECRET);
+  // Create token
+  const expireDate = new Date(Date.now() + 15 * 60 * 1000);
+  const tokenContent = {
+    _id: user._id,
+    type: user.role,
+    iat: Date.now(),
+    exp: expireDate.getTime(),
+  };
+  const token = jwt.sign(tokenContent, JWT_SECRET);
 
-		//send response to frontend
-		const { _id, name, email, role } = user;
-		return res.json({ token, user: { _id, name, email, role } });
-	});
+  // send response to frontend
+  return res.json({
+    token,
+    user: {
+      email,
+      role,
+      _id: user._id,
+      name: user.name,
+    },
+  });
 };
 
-exports.signout = (req, res) =>
-	res.json({
-		message: "User Signout",
-	});
+exports.signout = (req, res) => res.json({
+  message: 'User Signout',
+});
