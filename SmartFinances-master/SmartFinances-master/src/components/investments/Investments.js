@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { Wallet } from "@styled-icons/entypo/Wallet";
+import { Calculator } from "@styled-icons/boxicons-solid/Calculator";
+import { Funds } from "@styled-icons/remix-fill/Funds";
+import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
+import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
+import { Plus } from "@styled-icons/evaicons-solid/Plus";
+import { Minus } from "@styled-icons/boxicons-regular/Minus";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -17,7 +24,7 @@ const CategoriesDiv = styled.div`
   width: 80%;
   text-align: start;
   margin: auto;
-  font-size: 1.5rem;
+  font-size: 1rem;
   border-radius: 1rem;
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(233, 227, 227, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -49,12 +56,6 @@ const dropDown = (
 function Investments() {
   const [open, setOpen] = useState(false);
 
-  const plusStyle = {
-    fontSize: "1rem",
-    float: "right",
-    paddingTop: "0.5rem",
-  };
-
   const toggle = () => {
     setOpen(!open);
   };
@@ -62,28 +63,28 @@ function Investments() {
   return (
     <MainDiv>
       <CategoriesDiv onClick={open && toggle}>
-        <i className="fas fa-wallet"></i> Add Funds to Wallet
+        <Wallet size="35" /> Add Funds to Wallet
       </CategoriesDiv>
       <CategoriesDiv
         onClick={toggle}
         style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
       >
-        <i class="fas fa-coins"></i> Invest
+        <Funds size="35" /> Invest
         {open ? (
-          <i className="fas fa-minus" style={plusStyle}></i>
+          <Minus size="35" style={{ float: "right" }} />
         ) : (
-          <i className="fas fa-plus" style={plusStyle}></i>
+          <Plus size="35" style={{ float: "right" }} />
         )}
       </CategoriesDiv>
       {open && dropDown}
       <CategoriesDiv onClick={open && toggle}>
-        <i class="fas fa-hand-holding-usd"></i> Sell Investments
+        <HandHoldingUsd size="35" /> Sell Investments
       </CategoriesDiv>
       <CategoriesDiv onClick={open && toggle}>
-        <i class="fas fa-download"></i> Withdraw Investments
+        <MoneyCheckAlt size="35" /> Withdraw Money
       </CategoriesDiv>
       <CategoriesDiv onClick={open && toggle}>
-        <i class="fas fa-calculator"></i> Investment Calculator
+        <Calculator size="35" /> Investment Calculator
       </CategoriesDiv>
     </MainDiv>
   );
