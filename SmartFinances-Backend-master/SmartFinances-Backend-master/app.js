@@ -14,6 +14,7 @@ const adminCreateFund = require("./routes/admin/createFund");
 const adminCreateUser = require("./routes/admin/createNewUser");
 const fundOptions = require("./routes/user/userFundOptions");
 const userBalance = require("./routes/user/balance");
+const walletFunds = require("./routes/user/addFundsToWallet");
 const manageUser = require("./routes/admin/manageUser");
 const userPayToMerchant = require("./routes/user/payToMerchant");
 
@@ -65,6 +66,7 @@ app.use("/api", userBalance);
 app.use("/api", userPayToMerchant);
 app.use("/openapi", thirdpartyapi);
 
+app.use("/api", walletFunds);
 app.use("/api", manageFund);
 
 //Port
