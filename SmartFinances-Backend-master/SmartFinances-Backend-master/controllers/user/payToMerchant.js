@@ -1,83 +1,103 @@
 const userBalance = require("../../models/balance");
 
-exports.UserPayToMerchant = (req, res) => {
-  var sourceAccountNumber = req.body.sAccountNumber;
-  var destinationAccountNumber = req.body.dAccountNumber;
-  var amount = req.body.amount;
-
-  userBalance
-    .findOne({ accountNumber: sourceAccountNumber })
-    .exec((err, sourceUser) => {
-      if (err || sourceUser.length == 0) {
-        return res.status(400).json({
-          error: "Not able find User  "
-        });
-      }
-
-      var sourceWalletAccountBalance = sourceUser.walletAccountBalance;
-
-      if (amount > sourceWalletAccountBalance) {
-        return res.status(400).json({
-          error: "Entered amount is more than the current wallet balance.  "
-        });
-      } else {
-        var sourceUpdatedBalance = sourceWalletAccountBalance - amount;
-
-        updateSourceWalletBalance(sourceAccountNumber, sourceUpdatedBalance);
-        userBalance
-          .findOne({ accountNumber: destinationAccountNumber })
-          .exec((err, destinationUser) => {
-            if (err) {
-              return res.status(400).json({
-                error: "Unable to find the Destination user information "
-              });
-            } else {
-              var destinationWalletBalance =
-                destinationUser.walletAccountBalance;
-              var destinationUpdatedBalance = destinationWalletBalance + amount;
-              updateDestinationWalletBalance(
-                destinationAccountNumber,
-                destinationUpdatedBalance
-              );
-            }
-          });
-      }
-    });
-
-  const updateSourceWalletBalance = (
-    sourceAccountNumber,
-    sourceUpdatedBalance
-  ) =>
-    userBalance
+//Updates Source Wallet Balance
+const updateSourceWalletBalance = async (
+  res,
+  sourceAccountNumber,
+  sourceUpdatedBalance
+) => {
+  try {
+    let sourceBalance = await userBalance
       .updateOne(
         { accountNumber: sourceAccountNumber },
         { walletAccountBalance: sourceUpdatedBalance }
       )
-      .exec((err, balance) => {
-        if (err) {
-          return res.status(400).json({
-            error: "Unable to update Source Wallet Balance "
-          });
-        }
-        res.status(200).json({
-          Success: "Updated source user wallet Balance"
-        });
-      });
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
+};
 
-  const updateDestinationWalletBalance = (
-    destinationAccountNumber,
-    destinationUpdatedBalance
-  ) =>
-    userBalance
+//Updates Destination Wallet Balance
+const updateDestinationWalletBalance = async (
+  res,
+  destinationAccountNumber,
+  destinationUpdatedBalance
+) => {
+  try {
+    let destinationBalance = await userBalance
       .updateOne(
         { accountNumber: destinationAccountNumber },
         { walletAccountBalance: destinationUpdatedBalance }
       )
-      .exec((err, balance) => {
-        if (err) {
-          return res.status(400).json({
-            error: "Unable to update destination Wallet Balance "
-          });
-        }
-      });
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
+};
+
+exports.UserPayToMerchant = async (req, res) => {
+  const sourceAccountNumber = req.body.sourceAccountNumber;
+  const destinationAccountNumber = req.body.destinationAccountNumber;
+  const amount = req.body.amount;
+  let sourceUser;
+  try {
+    sourceUser = await userBalance
+      .findOne({ accountNumber: sourceAccountNumber })
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
+
+  if (!sourceUser) {
+    return res.status(400).json({
+      error: "Not able find Source User information  "
+    });
+  }
+
+  var sourceWalletAccountBalance = sourceUser.walletAccountBalance;
+
+  if (amount > sourceWalletAccountBalance) {
+    return res.status(400).json({
+      error: "Entered amount is more than the current wallet balance.  "
+    });
+  }
+  var sourceUpdatedBalance = sourceWalletAccountBalance - amount;
+
+  updateSourceWalletBalance(res, sourceAccountNumber, sourceUpdatedBalance);
+  let destinationUser;
+  try {
+    destinationUser = await userBalance
+      .findOne({ accountNumber: destinationAccountNumber })
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
+
+  if (!destinationUser) {
+    return res.status(400).json({
+      error: "Not able  to find the Destination user information "
+    });
+  }
+
+  var destinationWalletBalance = destinationUser.walletAccountBalance;
+  var destinationUpdatedBalance = destinationWalletBalance + amount;
+
+  updateDestinationWalletBalance(
+    res,
+    destinationAccountNumber,
+    destinationUpdatedBalance
+  );
+
+  res.status(200).json({
+    Success: "Wallet Balances are updated"
+  });
 };

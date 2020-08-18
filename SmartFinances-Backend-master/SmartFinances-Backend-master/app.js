@@ -16,6 +16,7 @@ const fundOptions = require("./routes/user/userFundOptions");
 const userBalance = require("./routes/user/balance");
 const manageUser = require("./routes/admin/manageUser");
 const userPayToMerchant = require("./routes/user/payToMerchant");
+
 const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
 
 const manageFund = require("./routes/admin/manageFund");
@@ -50,7 +51,7 @@ app.use(bodyParser.json());
 app.use(cookieParser()); //used to put or delete some values into the cookies
 app.use(cors());
 
-//app.use(authenticate);
+app.use(authenticate);
 
 //Routes here
 app.use("/api", userAuthRoutes);
@@ -60,6 +61,7 @@ app.use("/api", adminCreateFund);
 app.use("/api", adminCreateUser);
 app.use("/api", fundOptions);
 app.use("/api", userBalance);
+
 app.use("/api", userPayToMerchant);
 app.use("/openapi", thirdpartyapi);
 
