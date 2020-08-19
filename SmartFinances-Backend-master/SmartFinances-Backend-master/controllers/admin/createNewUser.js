@@ -1,6 +1,6 @@
 const NewUser = require("../../models/createNewUser");
 const userBalance = require("../../models/balance");
-const user = require("../../models/user");
+const userdetails = require("../../models/user");
 
 exports.CreateUser = (req, res) => {
   const newUser = new NewUser(req.body);
@@ -8,7 +8,7 @@ exports.CreateUser = (req, res) => {
   newUser.save((err, newUser) => {
     if (err) {
       res.status(400).json({
-        error: "Not able to Create User",
+        error: "Not able to Create User"
       });
       return;
     }
@@ -16,7 +16,7 @@ exports.CreateUser = (req, res) => {
     userBalance.find((err, docs) => {
       if (err) {
         res.status(400).json({
-          error: "Not able to find user information",
+          error: "Not able to find user information"
         });
       } else {
         var prefix = "SFW";
@@ -34,7 +34,7 @@ exports.CreateUser = (req, res) => {
         lowRiskFund: 0,
         mediumRiskFund: 0,
         highRiskFund: 0,
-        totalfunds: 0,
+        totalfunds: 0
       };
 
       const newBalance = new userBalance(updateUser);
@@ -42,27 +42,27 @@ exports.CreateUser = (req, res) => {
       newBalance.save((err, newBalance) => {
         if (err) {
           res.status(400).json({
-            error: "not able to update user information",
+            error: "not able to update user information"
           });
           return;
         }
       });
-    });
 
-    //Updating user table with user credentials
-    var userInfo = {
-      name: req.body.firstName,
-      email: req.body.emailId,
-    };
+      //Updating user table with user credentials
+      var userInfo = {
+        name: req.body.firstName,
+        email: req.body.emailId
+      };
 
-    const createUser = new user(userInfo);
-    createUser.save((err, createUser) => {
-      if (err) {
-        res.status(400).json({
-          error: "not able to update user information",
-        });
-        return;
-      }
+      const createUser = new userdetails.User(userInfo);
+      createUser.save((err, createuser) => {
+        if (err) {
+          res.status(400).json({
+            error: "not able to update user information"
+          });
+          return;
+        }
+      });
     });
 
     res.json({ newUser });

@@ -1,11 +1,10 @@
-require('dotenv').config();
+require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
 
 //import routes here
 const userAuthRoutes = require("./routes/user/userAuth");
@@ -16,12 +15,12 @@ const adminCreateUser = require("./routes/admin/createNewUser");
 const fundOptions = require("./routes/user/userFundOptions");
 const userBalance = require("./routes/user/balance");
 const manageUser = require("./routes/admin/manageUser");
+const userPayToMerchant = require("./routes/user/payToMerchant");
 
 const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
 
 const manageFund = require("./routes/admin/manageFund");
-const { authenticate } = require('./middlewares/authenticate');
-
+const { authenticate } = require("./middlewares/authenticate");
 
 //DB Connections
 //This is local DB connection
@@ -36,12 +35,12 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
+    useCreateIndex: true
   })
   .then(() => {
     console.log("DB CONNECTED");
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
 
     console.log("DB CONNECTION ERROR");
@@ -63,17 +62,13 @@ app.use("/api", adminCreateUser);
 app.use("/api", fundOptions);
 app.use("/api", userBalance);
 
-app.use("/openapi",thirdpartyapi);
-
-
-
+app.use("/api", userPayToMerchant);
+app.use("/openapi", thirdpartyapi);
 
 app.use("/api", manageFund);
 
-
 //Port
 const port = process.env.PORT || 8000;
-
 
 //Starting Server
 app.listen(port, () => {
