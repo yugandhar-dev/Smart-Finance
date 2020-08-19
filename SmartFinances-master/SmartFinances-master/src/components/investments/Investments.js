@@ -7,6 +7,7 @@ import { HandHoldingUsd } from '@styled-icons/fa-solid/HandHoldingUsd';
 import { MoneyCheckAlt } from '@styled-icons/fa-solid/MoneyCheckAlt';
 import { Plus } from '@styled-icons/evaicons-solid/Plus';
 import { Minus } from '@styled-icons/boxicons-regular/Minus';
+import Addfunds from './Addfunds';
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -140,11 +141,12 @@ function Investments() {
         </CategoriesDiv>
       </MainDiv>
       <ChildDiv>
-        {/* {display === 'add' && <Add />}
-        {display === 'lowrisk' && <LowRisk />}
-        {display === 'etf' && <Etfs />}
-        {display === 'schemes' && <Schemes />}
-        {display === 'sell' && <SellFunds />} */}
+        { display === 'add' && <Addfunds />}
+        {/* // {display === 'lowrisk' && <LowRisk />}
+        // {display === 'etf' && <Etfs />}
+        // {display === 'schemes' && <Schemes />}
+        // {display === 'sell' && <SellFunds />} */ }
+      
         {/* {display === 'withdraw' && <Withdraw />} */}
         {/* {display === 'calculator' && <Calculator />} */}
       </ChildDiv>
