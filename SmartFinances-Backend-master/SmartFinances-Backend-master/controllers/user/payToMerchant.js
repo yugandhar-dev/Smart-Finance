@@ -1,45 +1,5 @@
 const userBalance = require("../../models/balance");
 
-//Updates Source Wallet Balance
-const updateSourceWalletBalance = async (
-  res,
-  sourceAccountNumber,
-  sourceUpdatedBalance
-) => {
-  try {
-    let sourceBalance = await userBalance
-      .updateOne(
-        { accountNumber: sourceAccountNumber },
-        { walletAccountBalance: sourceUpdatedBalance }
-      )
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
-};
-
-//Updates Destination Wallet Balance
-const updateDestinationWalletBalance = async (
-  res,
-  destinationAccountNumber,
-  destinationUpdatedBalance
-) => {
-  try {
-    let destinationBalance = await userBalance
-      .updateOne(
-        { accountNumber: destinationAccountNumber },
-        { walletAccountBalance: destinationUpdatedBalance }
-      )
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
-};
-
 exports.UserPayToMerchant = async (req, res) => {
   const sourceAccountNumber = req.body.sourceAccountNumber;
   const destinationAccountNumber = req.body.destinationAccountNumber;
@@ -70,8 +30,21 @@ exports.UserPayToMerchant = async (req, res) => {
   }
   var sourceUpdatedBalance = sourceWalletAccountBalance - amount;
 
-  updateSourceWalletBalance(res, sourceAccountNumber, sourceUpdatedBalance);
+  try {
+    await userBalance
+      .updateOne(
+        { accountNumber: sourceAccountNumber },
+        { walletAccountBalance: sourceUpdatedBalance }
+      )
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
+
   let destinationUser;
+
   try {
     destinationUser = await userBalance
       .findOne({ accountNumber: destinationAccountNumber })
@@ -91,11 +64,18 @@ exports.UserPayToMerchant = async (req, res) => {
   var destinationWalletBalance = destinationUser.walletAccountBalance;
   var destinationUpdatedBalance = destinationWalletBalance + amount;
 
-  updateDestinationWalletBalance(
-    res,
-    destinationAccountNumber,
-    destinationUpdatedBalance
-  );
+  try {
+    await userBalance
+      .updateOne(
+        { accountNumber: destinationAccountNumber },
+        { walletAccountBalance: destinationUpdatedBalance }
+      )
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: err
+    });
+  }
 
   res.status(200).json({
     Success: "Wallet Balances are updated"
