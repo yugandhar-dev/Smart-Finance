@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import { Wallet } from "@styled-icons/entypo/Wallet";
-import { Calculator } from "@styled-icons/boxicons-solid/Calculator";
-import { Funds } from "@styled-icons/remix-fill/Funds";
-import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
-import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
-import { Plus } from "@styled-icons/evaicons-solid/Plus";
-import { Minus } from "@styled-icons/boxicons-regular/Minus";
+import React, { useState, Fragment } from 'react';
+import styled, { css } from 'styled-components';
+import { Wallet } from '@styled-icons/entypo/Wallet';
+import { Calculator } from '@styled-icons/boxicons-solid/Calculator';
+import { Funds } from '@styled-icons/remix-fill/Funds';
+import { HandHoldingUsd } from '@styled-icons/fa-solid/HandHoldingUsd';
+import { MoneyCheckAlt } from '@styled-icons/fa-solid/MoneyCheckAlt';
+import { Plus } from '@styled-icons/evaicons-solid/Plus';
+import { Minus } from '@styled-icons/boxicons-regular/Minus';
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -16,6 +16,10 @@ const MainDiv = styled.div`
   position: absolute;
   left: 0;
   bottom: 0;
+`;
+
+const ChildDiv = styled.div`
+  margin-left: 30%;
 `;
 
 const CategoriesDiv = styled.div`
@@ -45,48 +49,106 @@ const CategoriesDiv = styled.div`
     `}
 `;
 
-const dropDown = (
-  <div>
-    <CategoriesDiv subCategory>Low Risk</CategoriesDiv>
-    <CategoriesDiv subCategory>Exchange Traded Funds</CategoriesDiv>
-    <CategoriesDiv subCategory>Savings Schemes</CategoriesDiv>
-  </div>
-);
-
 function Investments() {
   const [open, setOpen] = useState(false);
+  const [display, setDisplay] = useState('');
 
-  const toggle = () => {
-    setOpen(!open);
+  const getForm = e => {
+    setDisplay(e.target.getAttribute('name'));
+    if (open) setOpen(!open);
   };
 
-  return (
-    <MainDiv>
-      <CategoriesDiv onClick={open && toggle}>
-        <Wallet size="35" /> Add Funds to Wallet
+  const changeStyle = {
+    backgroundColor: 'white',
+    color: '#07236a',
+  };
+
+  const dropDown = (
+    <div>
+      <CategoriesDiv
+        subCategory
+        name='lowrisk'
+        onClick={() => setDisplay('lowrisk')}
+        style={display === 'lowrisk' ? changeStyle : {}}
+      >
+        Low Risk
       </CategoriesDiv>
       <CategoriesDiv
-        onClick={toggle}
-        style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
+        subCategory
+        name='etfs'
+        onClick={() => setDisplay('etfs')}
+        style={display === 'etfs' ? changeStyle : {}}
       >
-        <Funds size="35" /> Invest
-        {open ? (
-          <Minus size="35" style={{ float: "right" }} />
-        ) : (
-          <Plus size="35" style={{ float: "right" }} />
-        )}
+        Exchange Traded Funds
       </CategoriesDiv>
-      {open && dropDown}
-      <CategoriesDiv onClick={open && toggle}>
-        <HandHoldingUsd size="35" /> Sell Investments
+      <CategoriesDiv
+        subCategory
+        name='schemes'
+        onClick={() => setDisplay('schemes')}
+        style={display === 'schemes' ? changeStyle : {}}
+      >
+        Savings Schemes
       </CategoriesDiv>
-      <CategoriesDiv onClick={open && toggle}>
-        <MoneyCheckAlt size="35" /> Withdraw Money
-      </CategoriesDiv>
-      <CategoriesDiv onClick={open && toggle}>
-        <Calculator size="35" /> Investment Calculator
-      </CategoriesDiv>
-    </MainDiv>
+    </div>
+  );
+
+  return (
+    <Fragment>
+      <MainDiv>
+        <CategoriesDiv
+          name='add'
+          onClick={e => getForm(e)}
+          style={display === 'add' ? changeStyle : {}}
+        >
+          <Wallet size='35' /> Add Funds to Wallet
+        </CategoriesDiv>
+        <CategoriesDiv
+          onClick={e => {
+            setOpen(!open);
+            getForm(e);
+          }}
+          style={open ? { backgroundColor: '#8598c9', color: '#07236a' } : {}}
+        >
+          <Funds size='35' /> Invest
+          {open ? (
+            <Minus size='35' style={{ float: 'right' }} />
+          ) : (
+            <Plus size='35' style={{ float: 'right' }} />
+          )}
+        </CategoriesDiv>
+        {open && dropDown}
+        <CategoriesDiv
+          name='sell'
+          onClick={e => getForm(e)}
+          style={display === 'sell' ? changeStyle : {}}
+        >
+          <HandHoldingUsd size='35' /> Sell Investments
+        </CategoriesDiv>
+        <CategoriesDiv
+          name='withdraw'
+          onClick={e => getForm(e)}
+          style={display === 'withdraw' ? changeStyle : {}}
+        >
+          <MoneyCheckAlt size='35' /> Withdraw Money
+        </CategoriesDiv>
+        <CategoriesDiv
+          name='calculator'
+          onClick={e => getForm(e)}
+          style={display === 'calculator' ? changeStyle : {}}
+        >
+          <Calculator size='35' /> Investment Calculator
+        </CategoriesDiv>
+      </MainDiv>
+      <ChildDiv>
+        {/* {display === 'add' && <Add />}
+        {display === 'lowrisk' && <LowRisk />}
+        {display === 'etf' && <Etfs />}
+        {display === 'schemes' && <Schemes />}
+        {display === 'sell' && <SellFunds />} */}
+        {/* {display === 'withdraw' && <Withdraw />} */}
+        {/* {display === 'calculator' && <Calculator />} */}
+      </ChildDiv>
+    </Fragment>
   );
 }
 
