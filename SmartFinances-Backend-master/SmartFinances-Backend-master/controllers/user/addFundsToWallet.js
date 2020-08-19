@@ -1,14 +1,12 @@
 const usersWalletBalance = require("../../models/balance");
-
 exports.addWalletFunds = (req, res) => {
-  const userWalletBalance = new usersWalletBalance(req.body);
-  const walletAmount = req.body.walletFund;
+  const walletAmount = parseInt(req.body.walletFund);
   const accountNumber = req.body.accountNumber;
 
   usersWalletBalance
     .findOne({ accountNumber: accountNumber })
     .exec((err, user) => {
-      if (err || user.length == 0) {
+      if (err || !user) {
         return res.status(400).json({
           error: "Not able to find User"
         });
@@ -18,26 +16,10 @@ exports.addWalletFunds = (req, res) => {
         });
       } else {
         var accountBalance = user.accountBalance;
-        var updateAccountBalance = accountBalance - walletAmount;
-        var walletUpdate = user.walletAccountBalance + walletAmount;
-        updatewalletbalance(accountNumber, walletUpdate, updateAccountBalance);
+        user.accountBalance = accountBalance - walletAmount;
+        user.walletAccountBalance = user.walletAccountBalance+walletAmount;
+        user.save();
+        res.json(user);
       }
-    });
-
-  function updatewalletbalance(
-    accountNumber,
-    walletUpdate,
-    updateAccountBalance
-  ) {
-    usersWalletBalance
-      .updateOne(
-        { accountNumber: accountNumber },
-        {
-          accountBalance: updateAccountBalance,
-          walletAccountBalance: walletUpdate
-        }
-      )
-      .exec((err, balances) => {});
-    res.json(usersWalletBalance);
-  }
-};
+    })
+    };
