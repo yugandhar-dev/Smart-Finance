@@ -20,7 +20,6 @@ exports.addWalletFunds = (req, res) => {
         var accountBalance = user.accountBalance;
         var updateAccountBalance = accountBalance - walletAmount;
         var walletUpdate = user.walletAccountBalance + walletAmount;
-
         updatewalletbalance(accountNumber, walletUpdate, updateAccountBalance);
       }
     });
