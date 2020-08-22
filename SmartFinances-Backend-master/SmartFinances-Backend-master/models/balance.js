@@ -5,39 +5,39 @@ var Balance = new Schema({
   accountNumber: {
     type: Number,
     required: true,
-    trim: true,
+    trim: true
   },
   walletAccountNumber: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   accountBalance: {
     type: Number,
     required: true,
-    trim: true,
+    trim: true
   },
   walletAccountBalance: {
     type: Number,
     required: true,
-    trim: true,
+    trim: true
   },
   lowRiskFund: {
     type: Number,
-    trim: true,
+    trim: true
   },
   mediumRiskFund: {
     type: Number,
-    trim: true,
+    trim: true
   },
   highRiskFund: {
     type: Number,
-    trim: true,
+    trim: true
   },
   totalfunds: {
     type: Number,
-    trim: true,
-  },
+    trim: true
+  }
 });
 
 module.exports = mongoose.model("Balance", Balance);
