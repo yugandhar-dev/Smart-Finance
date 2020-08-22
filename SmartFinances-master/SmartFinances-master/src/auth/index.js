@@ -1,6 +1,6 @@
 import { API } from "../backend";
 
-export const signin = (user) => {
+export const signin = user => {
 	return fetch(`${API}signin`, {
 		method: "POST",
 		headers: {
@@ -26,9 +26,8 @@ export const authenticate = (data, next) => {
 	}
 };
 
-export const newTransaction = data => {
-	//
-	return fetch(`${API}user/newTransaction`, {
+export const payToMerchant = data => {
+	return fetch(`${API}user/payToMerchant`, {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
@@ -143,7 +142,7 @@ export const getHighRisk = data => {
 };
 
 //User dashboard
-export const getDashboard = data => {
+export const getUserDetails = async data => {
 	return fetch(`${API}user/dashboard`, {
 		method: "GET",
 		headers: {

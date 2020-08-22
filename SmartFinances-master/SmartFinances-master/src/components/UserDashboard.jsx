@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import NewTransaction from "./NewTransaction";
 import FundOptions from "./FundOptions";
 import Investments from "./investments/Investments";
 import AppBar from "@material-ui/core/AppBar";
@@ -12,12 +11,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { getDashboard } from "../auth/index";
+import { getUserDetails } from "../auth/index";
 import { Doughnut } from "react-chartjs-2";
 import { Table } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import "./App.css";
+import PayMerchant from './payToMerchant/payToMerchant'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,7 @@ export default (props) => {
   };
 
   useEffect(() => {
-    getDashboard()
+    getUserDetails()
       .then((data) => {
         if (data.error) {
           setError(data.error);
@@ -98,7 +98,7 @@ export default (props) => {
             centered
           >
             <Tab label="Portfolio" />
-            <Tab label="New Transaction" />
+            <Tab label="Pay Merchant" />
             <Tab label="Fund Options" />
             <Tab label="Investments" />
           </Tabs>
@@ -121,7 +121,7 @@ export default (props) => {
                           <font color="#b80000">
                             Account Number:
                             <font color="#1273de">
-                              ${JSON.stringify(response.accountNumber)}
+                              {JSON.stringify(response.accountNumber)}
                             </font>
                           </font>
                         </p>
@@ -131,7 +131,7 @@ export default (props) => {
                           <font color="#b80000">
                             Account Balance:
                             <font color="#1273de">
-                              ${JSON.stringify(response.accBalance)}
+                              ${JSON.stringify(response.accountBalance)}
                             </font>
                           </font>
                         </p>
@@ -215,8 +215,8 @@ export default (props) => {
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <NewTransaction reload={reload} setReload={setReload} />
-          {/* {newTransaction} */}
+          <PayMerchant reload={reload} setReload={setReload} />
+          {/* {payMerchant} */}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <FundOptions />

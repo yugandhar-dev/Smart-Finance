@@ -1,83 +1,98 @@
 const userBalance = require("../../models/balance");
 
 exports.UserPayToMerchant = async (req, res) => {
-  const sourceAccountNumber = req.body.sourceAccountNumber;
-  const destinationAccountNumber = req.body.destinationAccountNumber;
-  const amount = req.body.amount;
-  let sourceUser;
-  try {
-    sourceUser = await userBalance
-      .findOne({ accountNumber: sourceAccountNumber })
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
+	const sourceAccountNumber = req.body.sourceAccountNumber;
+	const destinationAccountNumber = req.body.destinationAccountNumber;
+	const amount = parseFloat(req.body.amount);
+	const roundOffAmount = parseFloat(req.body.roundOffAmount);
+	let sourceUser;
+	let destinationUser;
 
-  if (!sourceUser) {
-    return res.status(400).json({
-      error: "Not able find Source User information  "
-    });
-  }
+	// validations
+	try {
+		sourceUser = await userBalance
+			.findOne({ accountNumber: sourceAccountNumber })
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: err,
+		});
+	}
 
-  var sourceWalletAccountBalance = sourceUser.walletAccountBalance;
+	if (!sourceUser) {
+		return res.status(400).json({
+			error: "Error fetching user details",
+		});
+	}
 
-  if (amount > sourceWalletAccountBalance) {
-    return res.status(400).json({
-      error: "Entered amount is more than the current wallet balance.  "
-    });
-  }
-  var sourceUpdatedBalance = sourceWalletAccountBalance - amount;
+	if (amount + roundOffAmount > sourceUser.accountBalance) {
+		return res.status(400).json({
+			error: "Insufficient funds in your account",
+		});
+	}
 
-  try {
-    await userBalance
-      .updateOne(
-        { accountNumber: sourceAccountNumber },
-        { walletAccountBalance: sourceUpdatedBalance }
-      )
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
+	try {
+		destinationUser = await userBalance
+			.findOne({ accountNumber: destinationAccountNumber })
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: "Error fetching merchant details",
+		});
+	}
 
-  let destinationUser;
+	if (!destinationUser) {
+		return res.status(400).json({
+			error: "No merchant exists with this account number",
+		});
+	}
 
-  try {
-    destinationUser = await userBalance
-      .findOne({ accountNumber: destinationAccountNumber })
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
+	//deduct spent(sale+roundoff) amount from source user bank balance
+	//add round off amount to source user wallet balance
+	try {
+		await userBalance
+			.updateOne(
+				{ accountNumber: sourceAccountNumber },
+				{
+					accountBalance: parseFloat(
+						parseFloat(
+							sourceUser.accountBalance - amount - roundOffAmount
+						).toFixed(2)
+					),
+					walletAccountBalance: parseFloat(
+						parseFloat(
+							sourceUser.walletAccountBalance + roundOffAmount
+						).toFixed(2)
+					),
+				}
+			)
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: "Error updating balances",
+		});
+	}
 
-  if (!destinationUser) {
-    return res.status(400).json({
-      error: "Not able  to find the Destination user information "
-    });
-  }
+	//add sale amount to destination user bank account
+	try {
+		await userBalance
+			.updateOne(
+				{ accountNumber: destinationAccountNumber },
+				{
+					accountBalance: parseFloat(
+						parseFloat(destinationUser.accountBalance + amount).toFixed(2)
+					),
+				}
+			)
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: "Payment error",
+		});
+	}
 
-  var destinationWalletBalance = destinationUser.walletAccountBalance;
-  var destinationUpdatedBalance = destinationWalletBalance + amount;
-
-  try {
-    await userBalance
-      .updateOne(
-        { accountNumber: destinationAccountNumber },
-        { walletAccountBalance: destinationUpdatedBalance }
-      )
-      .exec();
-  } catch (err) {
-    return res.status(400).json({
-      error: err
-    });
-  }
-
-  res.status(200).json({
-    Success: "Wallet Balances are updated"
-  });
+	// success reponse
+	res.status(200).json({
+		Success: "Wallet Balances are updated",
+	});
 };

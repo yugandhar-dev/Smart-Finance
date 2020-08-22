@@ -4,7 +4,7 @@ import App from "./components/App";
 import UserLogin from "./components/UserLogin";
 import AdminLogin from "./components/AdminLogin";
 import UserDashboard from "./components/UserDashboard";
-import NewTransaction from "./components/NewTransaction";
+import PayMerchant from './components/payToMerchant/payToMerchant'
 import AdminDashboard from "./components/AdminDashboard";
 import NewUser from "./components/NewUserCreation";
 import UserDetails from "./components/UserDetails";
@@ -28,7 +28,7 @@ const Routes = () => {
         <Route path="/user" exact component={UserLogin} />
         <Route path="/admin" exact component={AdminLogin} />
         <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
-        <PrivateRoute path="/user/newTransaction" exact component={NewTransaction} />
+        <PrivateRoute path = '/user/payToMerchant' exact component={PayMerchant} />
         <PrivateRoute path="/admin/fundsDashboard" exact component={AdminDashboard} />
         <PrivateRoute path="/admin/newUser" exact component={NewUser} />
         <PrivateRoute path="/admin/userDetails" exact component={UserDetails} />
