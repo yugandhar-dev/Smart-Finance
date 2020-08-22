@@ -2,9 +2,10 @@ const usersWalletBalance = require("../../models/balance");
 exports.InvestmentWithdraw = (req, res) => {
   const walletAmount = parseInt(req.body.walletFund);
   const userAccountNumber = req.body.accountNumber;
+  const userWalletAccountNumber = req.body.walletAccountNumber;
 
   usersWalletBalance
-    .findOne({ accountNumber: userAccountNumber })
+    .findOne({ accountNumber: userAccountNumber, walletAccountNumber: userWalletAccountNumber })
     .exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
