@@ -73,7 +73,22 @@ export const getUser = data => {
 		})
 		.catch(err => console.log(err));
 };
-
+// withdraw Amount
+export const InvestmentWithdraw = data => {
+	return fetch(`${API}user/investmentwithdraw`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
+};
 // Admin Fund Management
 export const getFund = data => {
 	return fetch(`${API}admin/manageFund`, {
