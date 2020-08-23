@@ -17,9 +17,9 @@ const userBalance = require("./routes/user/balance");
 const walletFunds = require("./routes/user/addFundsToWallet");
 const manageUser = require("./routes/admin/manageUser");
 const userPayToMerchant = require("./routes/user/payToMerchant");
-
+const investmentWithdraw = require("./routes/user/investmentWithdraw");
 const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
-
+const investmentCreation = require("./routes/user/investment");
 const manageFund = require("./routes/admin/manageFund");
 const { authenticate } = require("./middlewares/authenticate");
 
@@ -62,9 +62,13 @@ app.use("/api", adminCreateFund);
 app.use("/api", adminCreateUser);
 app.use("/api", fundOptions);
 app.use("/api", userBalance);
+app.use("/api", investmentCreation);
 
 app.use("/api", userPayToMerchant);
+app.use("/api", investmentWithdraw);
 app.use("/openapi", thirdpartyapi);
+
+investmentWithdraw;
 
 app.use("/api", walletFunds);
 app.use("/api", manageFund);
