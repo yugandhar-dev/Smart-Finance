@@ -19,8 +19,7 @@ exports.InvestmentSell = async (req, res) => {
     return res.status(400).json({
       error: 'Not able to find the user Information',
     });
-  }
-  if (req.body.numberOfUnits > user.numberOfUnits) {
+  } else if (userDetails.numberOfUnits > user.numberOfUnits) {
     return res.status(400).json({
       error: 'Number of units entered is greater than available units',
     });
