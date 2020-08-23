@@ -17,12 +17,9 @@ const userBalance = require("./routes/user/balance");
 const walletFunds = require("./routes/user/addFundsToWallet");
 const manageUser = require("./routes/admin/manageUser");
 const userPayToMerchant = require("./routes/user/payToMerchant");
-<<<<<<< HEAD
 const investmentWithdraw = require("./routes/user/investmentWithdraw");
-=======
 const investmentSell = require("./routes/user/investmentSell");
-
->>>>>>> d339d07... feat: user investments sell
+const getInvestments = require("./routes/user/getInvestments");
 const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
 const manageFund = require("./routes/admin/manageFund");
 const { authenticate } = require("./middlewares/authenticate");
@@ -67,7 +64,7 @@ app.use("/api", adminCreateUser);
 app.use("/api", fundOptions);
 app.use("/api", userBalance);
 app.use("/api", investmentSell);
-
+app.use("/api",getInvestments);
 app.use("/api", userPayToMerchant);
 app.use("/api", investmentWithdraw);
 app.use("/openapi", thirdpartyapi);

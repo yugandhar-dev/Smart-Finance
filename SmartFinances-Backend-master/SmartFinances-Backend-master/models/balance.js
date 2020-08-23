@@ -26,11 +26,11 @@ var Balance = new Schema({
     type: Number,
     trim: true
   },
-  mediumRiskFund: {
+  exchangeTradedFund: {
     type: Number,
     trim: true
   },
-  highRiskFund: {
+  savingScheme: {
     type: Number,
     trim: true
   },
