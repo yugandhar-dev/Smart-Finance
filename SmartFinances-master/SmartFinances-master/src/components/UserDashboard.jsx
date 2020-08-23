@@ -17,7 +17,8 @@ import { Table } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import "./App.css";
-import PayMerchant from './payToMerchant/payToMerchant'
+import PayMerchant from "./payToMerchant/payToMerchant";
+import WalletDetails from "./WalletDetails";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  walletdiv: {
+    width: "50px",
   },
 }));
 
@@ -209,12 +213,16 @@ export default (props) => {
                       />
                     </div>
                   </td>
+                  <div className={classes.walletdiv}>
+                    <WalletDetails />
+                  </div>
                 </tr>
               </tbody>
             </Table>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
+          <WalletDetails />
           <PayMerchant reload={reload} setReload={setReload} />
           {/* {payMerchant} */}
         </TabPanel>
@@ -222,6 +230,7 @@ export default (props) => {
           <FundOptions />
         </TabPanel>
         <TabPanel value={value} index={3}>
+          <WalletDetails />
           <Investments />
         </TabPanel>
       </div>

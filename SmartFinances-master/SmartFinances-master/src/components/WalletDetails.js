@@ -1,0 +1,47 @@
+import React, { useState } from "react";
+import { getUserDetails } from "../auth/index";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  wallet: {
+    position: "absolute",
+    right: "25px",
+  },
+}));
+
+const WalletDetails = () => {
+  const [walletAccountNumber, setwalletAccountNumber] = useState("");
+  const [walletAccountBalance, setwalletAccountBalance] = useState("");
+  var [message, setMessage] = useState("");
+
+  const classes = useStyles();
+
+  try {
+    getUserDetails().then((data) => {
+      setwalletAccountNumber(data[0].walletAccountNumber);
+      setwalletAccountBalance(data[0].walletAccountBalance);
+    });
+  } catch (error) {
+    setMessage(error);
+  }
+
+  return (
+    <div className={classes.wallet}>
+      <p>
+        <font color="#b80000">
+          Wallet Account Number:
+          <font color="#1273de">{walletAccountNumber}</font>{" "}
+          {/*removed stringify because wallet account number shows value in quotations*/}
+        </font>
+      </p>
+      <p>
+        <font color="#b80000">
+          Wallet Account Balance:
+          <font color="#1273de">{JSON.stringify(walletAccountBalance)}</font>
+        </font>
+      </p>
+    </div>
+  );
+};
+
+export default WalletDetails;
