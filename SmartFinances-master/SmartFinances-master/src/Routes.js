@@ -32,6 +32,7 @@ const Routes = () => {
         <PrivateRoute path="/admin/fundsDashboard" exact component={AdminDashboard} />
         <PrivateRoute path="/admin/newUser" exact component={NewUser} />
         <PrivateRoute path="/admin/userDetails" exact component={UserDetails} />
+        
         {/* <Route path="/signin/user" exact component={UserLogin} />
         <Route path="/signin/admin" exact component={AdminLogin} /> */}
       </Switch>

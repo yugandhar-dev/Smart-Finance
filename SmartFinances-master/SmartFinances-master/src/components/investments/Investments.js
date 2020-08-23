@@ -8,6 +8,7 @@ import { MoneyCheckAlt } from '@styled-icons/fa-solid/MoneyCheckAlt';
 import { Plus } from '@styled-icons/evaicons-solid/Plus';
 import { Minus } from '@styled-icons/boxicons-regular/Minus';
 import Addfunds from './Addfunds';
+import Withdraw from './Withdraw'
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -147,7 +148,7 @@ function Investments() {
         // {display === 'schemes' && <Schemes />}
         // {display === 'sell' && <SellFunds />} */ }
       
-        {/* {display === 'withdraw' && <Withdraw />} */}
+        {display === 'withdraw' && <Withdraw />}
         {/* {display === 'calculator' && <Calculator />} */}
       </ChildDiv>
     </Fragment>
