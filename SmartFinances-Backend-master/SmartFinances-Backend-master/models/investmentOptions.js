@@ -13,8 +13,8 @@ var InvestmentOptionDetails = new Schema({
     trim: true
   },
   pricePerUnit: {
-    type: Number
-    //required: true
+    type: Number,
+    required: true
   },
   percentageOfReturns: {
     type: Number

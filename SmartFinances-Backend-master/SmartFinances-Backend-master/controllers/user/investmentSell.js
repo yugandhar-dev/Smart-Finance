@@ -2,11 +2,14 @@ const usersWalletBalance = require('../../models/balance');
 const userInvestments = require('../../models/userInvestments');
 const investmentOptions = require('../../models/investmentOptions');
 exports.InvestmentSell = async (req, res) => {
+  let investmentDetails;
+  let user;
   let calculateAmount;
   let amountInvested;
   let updatedNumberOfUnits;
-  // Query for retrieving user information from all tables according to the request
-  const query = {
+  
+  //Query for retrieving user information from all tables according to the request
+  var query = {
     walletAccountNumber: req.body.walletAccountNumber,
     investmentType: req.body.investmentType,
     companyName: req.body.companyName,
@@ -19,7 +22,7 @@ exports.InvestmentSell = async (req, res) => {
     return res.status(400).json({
       error: 'Not able to find the user Information',
     });
-  } else if (userDetails.numberOfUnits > user.numberOfUnits) {
+  } else if (req.body.numberOfUnits > user.numberOfUnits) {
     return res.status(400).json({
       error: 'Number of units entered is greater than available units',
     });
