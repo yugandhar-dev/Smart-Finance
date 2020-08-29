@@ -9,13 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Addfunds from './Addfunds';
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
-
   paper: {
     margin: theme.spacing(8, 8),
     display: "flex",
@@ -40,21 +37,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }));
-
-
-
-
-
-
 function Lowrisk() {
-
   const [status, currentStatus] = useState(null);
- 
-
-
-
-  
-  const classes = useStyles();
+   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
@@ -79,18 +64,15 @@ function Lowrisk() {
               elevation={10}
               square
             >
-
-              <div className={classes.paper}>
+               <div className={classes.paper}>
                 <Typography component="h1" variant="h5">
                   Low Risk
-            </Typography>
+                </Typography>
 
             <p>An Investment where there is perceived to be just a slight chance of loosing some or all of the your money.An Investment where there is perceived to be just a slight chance of loosing some or all of the your money.An Investment where there is perceived to be just a slight chance of loosing some or all of the your money.An Investment where there is perceived to be just a slight chance of loosing some or all of the your money.An Investment where there is perceived to be just a slight chance of loosing some or all of the your money</p>
 
                 <form className={classes.form} id="forms">
                  
-                  
-                   
                       <Button
                         onClick={() => currentStatus("otp")}
                         type="submit"
@@ -99,25 +81,14 @@ function Lowrisk() {
                         color="primary"
                         className={classes.submit}
                       >
-
                         Invest
-              </Button>
-                    
-                  
-
-                </form>
+                      </Button>
+                    </form>
               </div>
             </Grid>
           </Grid>
-
         )}
-
-
-     
-    </div>
-
-  );
-}
-
-
+      </div>
+    );
+   }
 export default Lowrisk;

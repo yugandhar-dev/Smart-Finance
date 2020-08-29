@@ -9,6 +9,7 @@ import { Plus } from '@styled-icons/evaicons-solid/Plus';
 import { Minus } from '@styled-icons/boxicons-regular/Minus';
 import Addfunds from './Addfunds';
 import Lowrisk from './Lowrisk';
+import Withdraw from './Withdraw';
 const MainDiv = styled.div`
   background-color: #3f51b5;
   min-height: 70vh;
@@ -147,7 +148,7 @@ function Investments() {
         // {display === 'schemes' && <Schemes />}
         // {display === 'sell' && <SellFunds />} */ } 
       
-        {/* {display === 'withdraw' && <Withdraw />} */}
+        { display === 'Withdraw' && <Withdraw />}
         {/* {display === 'calculator' && <Calculator />} */}
       </ChildDiv>
     </Fragment>
