@@ -7,6 +7,7 @@ exports.GetInvestments = (req, res) => {
         error: "No Investments Found",
       });
     }
+
     res.json(investments);
   });
 };
