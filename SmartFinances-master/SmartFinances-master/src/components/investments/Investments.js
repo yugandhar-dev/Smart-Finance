@@ -148,7 +148,7 @@ function Investments() {
         // {display === 'schemes' && <Schemes />}
         // {display === 'sell' && <SellFunds />} */ } 
       
-        { display === 'Withdraw' && <Withdraw />}
+        { display === 'withdraw' && <Withdraw />}
         {/* {display === 'calculator' && <Calculator />} */}
       </ChildDiv>
     </Fragment>
