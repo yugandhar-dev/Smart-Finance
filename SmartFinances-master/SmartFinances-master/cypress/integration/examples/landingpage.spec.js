@@ -3,18 +3,18 @@ describe('Landing page test flow', () => {
     cy.visit('http://localhost:3000/')    
   })
 
-  it("should Check whether the Sign In title is there or not", () => {
+  it("should check whether the sign in title is there or not", () => {
     cy.get(".makeStyles-paper-3").contains("Sign in").should("be.visible");
   });
 
-  it("should Check whether the title is correct or not", () => {
+  it("should check whether the title is correct or not", () => {
     cy.get(".content")
       .children("h1")
       .invoke("text")
       .should("equal", "Smart Finance");
   });
 
-  it("Should Check whether the description is correct or not", () => {
+  it("should check whether the description is correct or not", () => {
     cy.get(".content")
       .children("p")
       .invoke("text")
@@ -24,12 +24,12 @@ describe('Landing page test flow', () => {
       );
     })
 
-    it('Should Check whether it Contains User bitton and whether we can navigate to User login page or not', () => {
+    it('should check whether it contains user button and whether we can navigate to user login page or not', () => {
       cy.contains('User').click()
       cy.url().should('equal', 'http://localhost:3000/user')    
     })
 
-    it('Should Check whether it Contains Admin bitton and whether we can navigate to Admin login page or not', () => {
+    it('should check whether it contains admin button and whether we can navigate to admin login page or not', () => {
       cy.visit('http://localhost:3000/')
       cy.contains('Admin').click()
       cy.url().should('equal', 'http://localhost:3000/admin')
