@@ -1,19 +1,22 @@
-const usersWalletBalance = require("../../models/balance");
+const usersWalletBalance = require('../../models/balance');
 exports.InvestmentWithdraw = (req, res) => {
-  const walletAmount = parseInt(req.body.walletFund);
+  const walletAmount = parseFloat(req.body.walletFund);
   const userAccountNumber = req.body.accountNumber;
   const userWalletAccountNumber = req.body.walletAccountNumber;
 
   usersWalletBalance
-    .findOne({ accountNumber: userAccountNumber, walletAccountNumber: userWalletAccountNumber })
+    .findOne({
+      accountNumber: userAccountNumber,
+      walletAccountNumber: userWalletAccountNumber,
+    })
     .exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          error: "Not able to find User"
+          error: 'Not able to find User',
         });
       } else if (walletAmount > user.walletAccountBalance) {
         return res.status(400).json({
-          error: "Entered Amount is greater than Available wallat Balance"
+          error: 'Entered Amount is greater than Available wallat Balance',
         });
       } else {
         user.accountBalance = user.accountBalance + walletAmount;
