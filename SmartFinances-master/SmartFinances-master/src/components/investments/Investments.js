@@ -51,7 +51,7 @@ const CategoriesDiv = styled.div`
     `}
 `;
 
-function Investments() {
+function Investments(props) {
   const [open, setOpen] = useState(false);
   const [display, setDisplay] = useState('');
 
@@ -148,7 +148,7 @@ function Investments() {
         // {display === 'schemes' && <Schemes />}
         // {display === 'sell' && <SellFunds />} */ } 
       
-        { display === 'withdraw' && <Withdraw />}
+        { display === 'withdraw' && <Withdraw reload={props.reload} setReload = {props.setReload} />}
         {/* {display === 'calculator' && <Calculator />} */}
       </ChildDiv>
     </Fragment>

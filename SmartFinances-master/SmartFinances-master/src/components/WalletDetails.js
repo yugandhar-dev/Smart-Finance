@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserDetails } from "../auth/index";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -9,39 +9,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WalletDetails = () => {
+const WalletDetails = (props) => {
   const [walletAccountNumber, setwalletAccountNumber] = useState("");
   const [walletAccountBalance, setwalletAccountBalance] = useState("");
   var [message, setMessage] = useState("");
 
   const classes = useStyles();
 
-  try {
-    getUserDetails().then((data) => {
-      setwalletAccountNumber(data[0].walletAccountNumber);
-      setwalletAccountBalance(data[0].walletAccountBalance);
-    });
-  } catch (error) {
-    setMessage(error);
-  }
+  useEffect(() => {
+		getUserDetails()
+			.then(data => {
+				setwalletAccountNumber(data[0].walletAccountNumber);
+				setwalletAccountBalance(data[0].walletAccountBalance);
+			})
+			.catch(error => {
+				setMessage(error);
+			});
+	}, [props.reload]);
 
-  return (
-    <div className={classes.wallet}>
-      <p>
-        <font color="#b80000">
-          Wallet Account Number:
-          <font color="#1273de">{walletAccountNumber}</font>{" "}
-          {/*removed stringify because wallet account number shows value in quotations*/}
-        </font>
-      </p>
-      <p>
-        <font color="#b80000">
-          Wallet Account Balance:
-          <font color="#1273de">{JSON.stringify(walletAccountBalance)}</font>
-        </font>
-      </p>
-    </div>
-  );
+	return (
+		<div className={classes.wallet}>
+			<p>
+				<font color="#b80000">
+					Wallet Account Number:
+					<font color="#1273de">{walletAccountNumber}</font>{" "}
+					{/*removed stringify because wallet account number shows value in quotations*/}
+				</font>
+			</p>
+			<p>
+				<font color="#b80000">
+					Wallet Account Balance:
+					<font color="#1273de">{JSON.stringify(message == "" ? walletAccountBalance: message)}</font>
+				</font>
+			</p>
+		</div>
+	);
 };
 
 export default WalletDetails;
