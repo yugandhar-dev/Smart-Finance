@@ -19,6 +19,7 @@ import Paper from "@material-ui/core/Paper";
 import "./App.css";
 import PayMerchant from "./payToMerchant/payToMerchant";
 import WalletDetails from "./WalletDetails";
+import {WalletContext} from '../context/wallet'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +59,7 @@ export default (props) => {
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
   const [reload, setReload] = useState(true);
+  const [walletReload, setWalletReload] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -78,6 +80,8 @@ export default (props) => {
   return (
     <div>
       <div>
+        
+    <WalletContext.Provider value={{ walletReload, setWalletReload }}>
         <AppBar position="static">
           <Toolbar>
             <IconButton
@@ -182,8 +186,8 @@ export default (props) => {
                         data={{
                           labels: [
                             "Low Risk Investments",
-                            "Medium Risk Investments",
-                            "High RIsk Investments",
+                            "Exchange Traded Funds",
+                            "Savings Schemes",
                           ],
                           datasets: [
                             {
@@ -214,7 +218,7 @@ export default (props) => {
                     </div>
                   </td>
                   <div className={classes.walletdiv}>
-                    <WalletDetails />
+                    <WalletDetails reload={walletReload} />
                   </div>
                 </tr>
               </tbody>
@@ -222,7 +226,7 @@ export default (props) => {
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <WalletDetails />
+          <WalletDetails reload={walletReload}/>
           <PayMerchant reload={reload} setReload={setReload} />
           {/* {payMerchant} */}
         </TabPanel>
@@ -230,9 +234,10 @@ export default (props) => {
           <FundOptions />
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <WalletDetails />
-          <Investments />
+          <WalletDetails reload={walletReload}/>
+          <Investments reload={reload} setReload={setReload} />
         </TabPanel>
+        </WalletContext.Provider>
       </div>
     </div>
   );

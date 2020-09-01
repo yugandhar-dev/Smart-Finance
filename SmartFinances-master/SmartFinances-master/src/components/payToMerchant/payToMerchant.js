@@ -5,14 +5,17 @@ import { getUserDetails, payToMerchant } from "../../auth/index";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { List } from "@material-ui/core";
+import { useWallet } from "../../context/wallet";
 
-export default () => {
+export default (props) => {
 	const [amount, setAmount] = useState("");
 	const [payeename, setPayeename] = useState("");
 	const [payeeaccount, setPayeeaccount] = useState("");
 	const [roundOffAmount, setRoundOffAmount] = useState("");
 	const [message, setMessage] = useState("");
 	const [otp, setOTP] = useState("");
+    const {walletReload, setWalletReload} = useWallet();
+
 	let response = "";
 
 	const getAmount = value => {
@@ -42,6 +45,8 @@ export default () => {
 				response = await payToMerchant(data);
 				if (response.Success) setMessage(response.Success);
 				if (response.error) setMessage(response.error);
+				setWalletReload(!walletReload)
+				props.setReload(!props.reload)
 			} catch (ex) {
 				setMessage(`Something wrong, ${ex}`);
 			}

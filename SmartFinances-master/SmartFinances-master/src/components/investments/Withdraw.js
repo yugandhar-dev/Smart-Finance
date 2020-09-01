@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import { InvestmentWithdraw, getUserDetails } from "../../auth/index";
+import { useWallet } from "../../context/wallet";
 
 
 const Content = styled.div`
@@ -39,10 +40,11 @@ const Button = styled.button`
 }
 `;
 
-export default () => {
+export default (props) => {
   const [error, setError] = useState("");
   const [response, setResponse] = useState("");
   const [walletAmount, setWalletAmount] = useState('');
+  const {walletReload, setWalletReload} = useWallet();
 
   useEffect(() => {
     getUserDetails()
@@ -64,6 +66,8 @@ export default () => {
       walletFund: walletAmount,
     };
     setResponse(await InvestmentWithdraw(data));
+    setWalletReload(!walletReload)
+    props.setReload(!props.reload)
     console.log(response, "string")
   };
 
