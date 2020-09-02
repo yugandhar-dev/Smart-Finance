@@ -5,7 +5,8 @@ describe("Tab Navigation in User Login", () => {
     cy.get("#password").type("1234");
     cy.get(".MuiButton-label").click();
   });
-  it("Contains Tabs in Ivestments Tab", () => {
+  
+  it("should contain tabs in investments tab", () => {
     cy.contains("Investments").should("be.visible");
     cy.contains("Investments").click();
     cy.contains("Add Funds to Wallet").should("be.visible");
