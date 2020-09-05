@@ -10,6 +10,7 @@ import { Minus } from '@styled-icons/boxicons-regular/Minus';
 import Addfunds from './Addfunds';
 import Lowrisk from './Lowrisk';
 import Withdraw from './Withdraw';
+import Sell from './sell/sell'
 const MainDiv = styled.div`
   background-color: #3f51b5;
   min-height: 70vh;
@@ -145,8 +146,8 @@ function Investments(props) {
         { display === 'add' && <Addfunds />}
         {display === 'lowrisk' && <Lowrisk />}
         {/* // {display === 'etf' && <Etfs />}
-        // {display === 'schemes' && <Schemes />}
-        // {display === 'sell' && <SellFunds />} */ } 
+        // {display === 'schemes' && <Schemes />} */ }
+        {display === 'sell' && <Sell  reload={props.reload} setReload = {props.setReload} />} 
       
         { display === 'withdraw' && <Withdraw reload={props.reload} setReload = {props.setReload} />}
         {/* {display === 'calculator' && <Calculator />} */}

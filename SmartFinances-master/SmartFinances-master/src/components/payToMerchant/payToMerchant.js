@@ -33,7 +33,7 @@ export default (props) => {
 
 	const payAmount = async () => {
 		setMessage();
-		if (otp == 220292) {
+		if (otp === 220292) {
 			try {
 				const userDetails = await getUserDetails();
 				const data = {
@@ -62,7 +62,7 @@ export default (props) => {
 
 	return (
 		<Grid container justify="center">
-			<List maxWidth="sm">
+			<List maxwidth="sm">
 				<ListItem style={{ display: "flex", justifyContent: "center" }}>
 					<Typography component="h1" variant="h5">
 						ENTER DETAILS
@@ -118,7 +118,7 @@ export default (props) => {
 				<ListItem>
 					<Grid container justify="space-evenly">
 						<Grid item>
-							<Button variant="contained" color="primary" onClick>
+							<Button variant="contained" color="primary">
 								Generate OTP
 							</Button>
 						</Grid>
