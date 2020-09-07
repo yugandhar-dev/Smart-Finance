@@ -27,6 +27,7 @@ const getInvestments = require("./routes/user/getInvestments");
 const investmentSell = require("./routes/user/investmentSell");
 const userPhoneNumber = require("./routes/admin/manageUser");
 const changeProfileSettings = require("./routes/user/changeProfileSettings");
+const getTransactions = require("./routes/user/transactionHistory");
 
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
