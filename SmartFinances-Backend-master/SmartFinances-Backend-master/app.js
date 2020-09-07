@@ -47,6 +47,7 @@ app.use("/api", fundOptions);
 app.use("/api", userBalance);
 app.use("/api", userPayToMerchant);
 app.use("/api", investmentWithdraw);
+app.use("/api", getTransactions);
 app.use("/openapi", thirdpartyapi);
 app.use("/api", walletFunds);
 app.use("/api", manageFund);
