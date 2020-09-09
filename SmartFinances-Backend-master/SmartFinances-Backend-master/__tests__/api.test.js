@@ -30,4 +30,25 @@ describe("checks user details", () => {
     });
     done();
   });
+
+  it("checks get user details API", async (done) => {
+    const getUserDetails = await request(app)
+      .get("/api/user/dashboard")
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+    expect(getUserDetails.status).toBe(200);
+    expect(getUserDetails.body[0]).toMatchObject({
+      _id: expect.any(String),
+      walletAccountNumber: expect.any(String),
+      accountNumber: expect.any(Number),
+      accountBalance: expect.any(Number),
+      walletAccountBalance: expect.any(Number),
+      exchangeTradedFund: expect.any(Number),
+      savingScheme: expect.any(Number),
+      totalfunds: expect.any(Number),
+    });
+    done();
+    userDetails = getUserDetails.body[0];
+  });
 });
