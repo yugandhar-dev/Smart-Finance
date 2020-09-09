@@ -6,8 +6,7 @@ const userCredentials = {
   password: "1234",
   role: "user",
 };
-
-var token, signinResponse;
+var token, signinResponse, userDetails;
 
 describe("checks user details", () => {
   beforeEach(async () => {
@@ -50,5 +49,22 @@ describe("checks user details", () => {
     });
     done();
     userDetails = getUserDetails.body[0];
+  });
+
+  it("checks investment withdraw API", async (done) => {
+    const investmnentWithdraw = await request(app)
+      .post("/api/user/investmentwithdraw")
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        accountNumber: userDetails.accountNumber,
+        walletAccountNumber: userDetails.walletAccountNumber,
+        walletFund: "1",
+      });
+    
+    expect(investmnentWithdraw.status).toBe(200);
+    expect(investmnentWithdraw.res.statusMessage).toBe("OK");
+    done();
   });
 });
