@@ -157,7 +157,7 @@ export const getHighRisk = data => {
 };
 
 //User dashboard
-export const getUserDetails = async data => {
+export const getUserDetails = data => {
 	return fetch(`${API}user/dashboard`, {
 		method: "GET",
 		headers: {
@@ -166,6 +166,55 @@ export const getUserDetails = async data => {
 			Authorization: `Bearer ${localStorage.getItem("token")}`,
 		},
 		//body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
+};
+
+export const getInvestmentDetails = data => {
+	return fetch(`${API}/user/getinvestments`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
+};
+
+export const sellInvestments = data => {
+	return fetch(`${API}/user/investmentsell`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+
+		body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
+};
+
+export const getInvestmentOptions = data => {
+	return fetch(`${API}/user/investmentOptions`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		body: JSON.stringify(data),
 	})
 		.then(response => {
 			return response.json();

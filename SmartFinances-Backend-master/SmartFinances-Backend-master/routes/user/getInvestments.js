@@ -1,9 +1,11 @@
 var express = require("express");
 var router = express.Router();
 
-const { GetInvestments } = require("../../controllers/user/getInvestments");
-router.get("/user/getinvestments", GetInvestments);
+const {
+	GetInvestments,
+	GetInvestmentOptions,
+} = require("../../controllers/user/getInvestments");
+router.post("/user/getinvestments", GetInvestments);
+router.post("/user/investmentOptions", GetInvestmentOptions);
 
 module.exports = router;
-
-

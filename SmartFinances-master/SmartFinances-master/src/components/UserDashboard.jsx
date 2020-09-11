@@ -19,226 +19,223 @@ import Paper from "@material-ui/core/Paper";
 import "./App.css";
 import PayMerchant from "./payToMerchant/payToMerchant";
 import WalletDetails from "./WalletDetails";
-import {WalletContext} from '../context/wallet'
+import { WalletContext } from "../context/wallet";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  walletdiv: {
-    width: "50px",
-  },
+const useStyles = makeStyles(theme => ({
+	root: {
+		flexGrow: 1,
+	},
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
+	title: {
+		flexGrow: 1,
+	},
+	walletdiv: {
+		width: "50px",
+	},
 }));
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props;
 
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
+	return (
+		<Typography
+			component='div'
+			role='tabpanel'
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && <Box p={3}>{children}</Box>}
+		</Typography>
+	);
 }
 
-export default (props) => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [error, setError] = useState("");
-  const [response, setResponse] = useState("");
-  const [reload, setReload] = useState(true);
-  const [walletReload, setWalletReload] = useState(true);
+export default props => {
+	const classes = useStyles();
+	const [value, setValue] = React.useState(0);
+	const [error, setError] = useState("");
+	const [response, setResponse] = useState("");
+	const [reload, setReload] = useState(true);
+	const [walletReload, setWalletReload] = useState(true);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 
-  useEffect(() => {
-    getUserDetails()
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          setResponse(data[0]);
-        }
-      })
-      .catch((ex) => console.log("Fund Details Retrieval error", ex));
-  }, [reload]);
+	useEffect(() => {
+		getUserDetails()
+			.then(data => {
+				if (data.error) {
+					setError(data.error);
+				} else {
+					setResponse(data[0]);
+				}
+			})
+			.catch(ex => console.log("Fund Details Retrieval error", ex));
+	}, [reload]);
 
-  return (
-    <div>
-      <div>
-        
-    <WalletContext.Provider value={{ walletReload, setWalletReload }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Smart Finance
-            </Typography>
-            <Button color="inherit" onClick={props.logout}>
-              Logout
-            </Button>
-          </Toolbar>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-            centered
-          >
-            <Tab label="Portfolio" />
-            <Tab label="Pay Merchant" />
-            <Tab label="Fund Options" />
-            <Tab label="Investments" />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-            component={Paper}
-          >
-            <Table>
-              <tbody>
-                <tr>
-                  <td>
-                    <div>
-                      <Typography variant="h6" fontWeight="bold">
-                        <p>
-                          <font color="#b80000">
-                            Account Number:
-                            <font color="#1273de">
-                              {JSON.stringify(response.accountNumber)}
-                            </font>
-                          </font>
-                        </p>
-                      </Typography>
-                      <Typography variant="h6" fontWeight="bold">
-                        <p>
-                          <font color="#b80000">
-                            Account Balance:
-                            <font color="#1273de">
-                              ${JSON.stringify(response.accountBalance)}
-                            </font>
-                          </font>
-                        </p>
-                      </Typography>
-                      <Typography variant="h6" fontWeight="bold">
-                        <p>
-                          <font color="#b80000">
-                            Total Investments:
-                            <font color="#1273de">
-                              ${JSON.stringify(response.totalfunds)}
-                            </font>
-                          </font>
-                        </p>
-                      </Typography>
-                      <p>
-                        <font color="#f44336">
-                          Low Risk Fund Investments:
-                          <font color="#1273de">
-                            ${JSON.stringify(response.lowRiskFund)}
-                          </font>
-                        </font>
-                      </p>
-                      <p>
-                        <font color="#4caf50">
-                          Medium Risk Fund Investments:
-                          <font color="#1273de">
-                            ${JSON.stringify(response.mediumRiskFund)}
-                          </font>
-                        </font>
-                      </p>
-                      <p>
-                        <font color="#ff9800">
-                          High Risk Fund Investments:
-                          <font color="#1273de">
-                            ${JSON.stringify(response.highRiskFund)}
-                          </font>
-                        </font>
-                      </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <Doughnut
-                        data={{
-                          labels: [
-                            "Low Risk Investments",
-                            "Exchange Traded Funds",
-                            "Savings Schemes",
-                          ],
-                          datasets: [
-                            {
-                              data: [
-                                response.lowRiskFund,
-                                response.mediumRiskFund,
-                                response.highRiskFund,
-                              ],
-                              backgroundColor: [
-                                "#F7464A",
-                                "#46BFBD",
-                                "#FDB45C",
-                                // "#949FB1",
-                                // "#4D5360",
-                              ],
-                              hoverBackgroundColor: [
-                                "#FF5A5E",
-                                "#5AD3D1",
-                                "#FFC870",
-                                // "#A8B3C5",
-                                // "#616774",
-                              ],
-                            },
-                          ],
-                        }}
-                        options={{ responsive: true }}
-                      />
-                    </div>
-                  </td>
-                  <div className={classes.walletdiv}>
-                    <WalletDetails reload={walletReload} />
-                  </div>
-                </tr>
-              </tbody>
-            </Table>
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <WalletDetails reload={walletReload}/>
-          <PayMerchant reload={reload} setReload={setReload} />
-          {/* {payMerchant} */}
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <FundOptions />
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          <WalletDetails reload={walletReload}/>
-          <Investments reload={reload} setReload={setReload} />
-        </TabPanel>
-        </WalletContext.Provider>
-      </div>
-    </div>
-  );
+	return (
+		<div>
+			<div>
+				<WalletContext.Provider value={{ walletReload, setWalletReload }}>
+					<AppBar position='static'>
+						<Toolbar>
+							<IconButton
+								edge='start'
+								className={classes.menuButton}
+								color='inherit'
+								aria-label='menu'
+							>
+								<MenuIcon />
+							</IconButton>
+							<Typography variant='h6' className={classes.title}>
+								Smart Finance
+							</Typography>
+							<Button color='inherit' onClick={props.logout}>
+								Logout
+							</Button>
+						</Toolbar>
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							aria-label='simple tabs example'
+							centered
+						>
+							<Tab label='Portfolio' />
+							<Tab label='Pay Merchant' />
+							<Tab label='Fund Options' />
+							<Tab label='Investments' />
+						</Tabs>
+					</AppBar>
+					<TabPanel value={value} index={0}>
+						<Grid
+							container
+							direction='column'
+							justify='center'
+							alignItems='stretch'
+							component={Paper}
+						>
+							<Table>
+								<tbody>
+									<tr>
+										<td>
+											<Typography variant='h6' fontWeight='bold'>
+												<p>
+													<font color='#b80000'>
+														Account Number:
+														<font color='#1273de'>
+															{JSON.stringify(response.accountNumber)}
+														</font>
+													</font>
+												</p>
+											</Typography>
+											<Typography variant='h6' fontWeight='bold'>
+												<p>
+													<font color='#b80000'>
+														Account Balance:
+														<font color='#1273de'>
+															${JSON.stringify(response.accountBalance)}
+														</font>
+													</font>
+												</p>
+											</Typography>
+											<Typography variant='h6' fontWeight='bold'>
+												<p>
+													<font color='#b80000'>
+														Total Investments:
+														<font color='#1273de'>
+															${(parseFloat(response.lowRiskFund + response.exchangeTradedFund + response.savingScheme).toFixed(2))}
+														</font>
+													</font>
+												</p>
+											</Typography>
+											<p>
+												<font color='#f44336'>
+													Low Risk Fund Investments:
+													<font color='#1273de'>
+														${JSON.stringify(response.lowRiskFund)}
+													</font>
+												</font>
+											</p>
+											<p>
+												<font color='#4caf50'>
+													Exchange Traded Funds:
+													<font color='#1273de'>
+														${JSON.stringify(response.exchangeTradedFund)}
+													</font>
+												</font>
+											</p>
+											<p>
+												<font color='#ff9800'>
+													Savings Schemes:
+													<font color='#1273de'>
+														${JSON.stringify(response.savingScheme)}
+													</font>
+												</font>
+											</p>
+										</td>
+										<td>
+											<div>
+												<Doughnut
+													data={{
+														labels: [
+															"Low Risk Investments",
+															"Exchange Traded Funds",
+															"Savings Schemes",
+														],
+														datasets: [
+															{
+																data: [
+																	response.lowRiskFund,
+																	response.exchangeTradedFund,
+																	response.savingScheme,
+																],
+																backgroundColor: [
+																	"#F7464A",
+																	"#46BFBD",
+																	"#FDB45C",
+																	// "#949FB1",
+																	// "#4D5360",
+																],
+																hoverBackgroundColor: [
+																	"#FF5A5E",
+																	"#5AD3D1",
+																	"#FFC870",
+																	// "#A8B3C5",
+																	// "#616774",
+																],
+															},
+														],
+													}}
+													options={{ responsive: true }}
+												/>
+											</div>
+										</td>
+										<div className={classes.walletdiv}>
+											<WalletDetails reload={walletReload} />
+										</div>
+									</tr>
+								</tbody>
+							</Table>
+						</Grid>
+					</TabPanel>
+					<TabPanel value={value} index={1}>
+						<WalletDetails reload={walletReload} />
+						<PayMerchant reload={reload} setReload={setReload} />
+						{/* {payMerchant} */}
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+						<FundOptions />
+					</TabPanel>
+					<TabPanel value={value} index={3}>
+						<WalletDetails reload={walletReload} />
+						<Investments reload={reload} setReload={setReload} />
+					</TabPanel>
+				</WalletContext.Provider>
+			</div>
+		</div>
+	);
 };
