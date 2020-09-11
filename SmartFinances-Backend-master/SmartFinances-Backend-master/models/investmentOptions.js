@@ -1,28 +1,37 @@
-const mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var InvestmentOptionDetails = new Schema({
+const { Schema } = mongoose;
+
+const InvestmentOptionDetails = new Schema({
   companyName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+  },
+  companyStockSymbol: {
+    type: String,
+    required: false,
+    set: (k) => k.toUpperCase(),
   },
   investmentType: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   pricePerUnit: {
     type: Number,
-    required: true
+    required: true,
   },
   percentageOfReturns: {
-    type: Number
-   
-  }
+    type: Number,
+    // required: true
+  },
+  lastUpdate: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model(
-  "InvestmentOptionDetails",
-  InvestmentOptionDetails
+  'InvestmentOptionDetails',
+  InvestmentOptionDetails,
 );
