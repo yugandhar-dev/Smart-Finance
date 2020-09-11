@@ -65,15 +65,9 @@ app.use("/api", changeProfileSettings);
 app.use("/api", userInvestments);
 app.use("/api", getTransactions);
 app.use("/api", uploadreceipt);
-<<<<<<< HEAD
 app.use("/api", changePassword);
 app.use("/api", modifyUser);
 app.use("/api", modifyFund);
-=======
-
-updatePricesForAllOptions();
-
->>>>>>> feat(update option prices): update option prices
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
