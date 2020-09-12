@@ -9,10 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import OTP from "./OTP";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    height: "100vh",
+    maxHeight: "100vh",
+    marginTop: "5%",
   },
 
   paper: {
@@ -40,139 +40,123 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
-
 function Addfunds() {
-
   const [status, currentStatus] = useState(null);
   const [from, onChangeFrom] = useState("");
   const [to, onChangeTo] = useState("");
   const [amount, onChangeAmount] = useState("");
 
-  const onReset = (event) => {
+  const onReset = event => {
     event.preventDefault();
 
     document.getElementById("forms").reset();
   };
 
-  
   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
-        <div>{status === "otp" ?<OTP from={from} to={to} amount={amount}/>  :""}</div>
+        <div>
+          {status === "otp" ? <OTP from={from} to={to} amount={amount} /> : ""}
+        </div>
       ) : (
-
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          component="main"
+          className={classes.root}
+        >
+          <CssBaseline />
           <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-            component="main"
-            className={classes.root}
+            item
+            xs={false}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={10}
+            square
           >
-            <CssBaseline />
-            <Grid
-              item
-              xs={false}
-              sm={8}
-              md={5}
-              component={Paper}
-              elevation={10}
-              square
-            >
+            <div className={classes.paper}>
+              <Typography component="h1" variant="h5">
+                ENTER DETAILS
+              </Typography>
 
-              <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                  ENTER DETAILS
-            </Typography>
-
-                <form className={classes.form} id="forms">
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="From"
-                    label="From"
-                    name="From"
-                    value={from}
-                    autoComplete="From"
-                    autoFocus
-                    onChange={(e) => onChangeFrom(e.target.value)}
-
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="To"
-                    label="To"
-                    name="To"
-                    value={to}
-                    autoComplete="To"
-                    autoFocus
-                    onChange={(e) => onChangeTo(e.target.value)}
-
-
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="Amount"
-                    label="Amount"
-                    name="Amount"
-                    type="number"
-                    value={amount}
-                    autoComplete="Amount"
-                    autoFocus
-                    onChange={(e) => onChangeAmount(e.target.value)}
-                  />
-                  {from !== "" && to !== "" && amount !== "" ?
-                    <React.Fragment>
-                      <Button
-                        onClick={() => currentStatus("otp")}
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                      >
-
-                        Confirm and Send Otp
-              </Button>
-                    </React.Fragment>
-                    : ""}
-                  <Button
-                    onClick={onReset}
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Reset
-              </Button>
-
-                </form>
-              </div>
-            </Grid>
+              <form className={classes.form} id="forms">
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="From"
+                  label="From"
+                  name="From"
+                  value={from}
+                  autoComplete="From"
+                  autoFocus
+                  onChange={e => onChangeFrom(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="To"
+                  label="To"
+                  name="To"
+                  value={to}
+                  autoComplete="To"
+                  autoFocus
+                  onChange={e => onChangeTo(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="Amount"
+                  label="Amount"
+                  name="Amount"
+                  type="number"
+                  value={amount}
+                  autoComplete="Amount"
+                  autoFocus
+                  onChange={e => onChangeAmount(e.target.value)}
+                />
+                {from !== "" && to !== "" && amount !== "" ? (
+                  <React.Fragment>
+                    <Button
+                      onClick={() => currentStatus("otp")}
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                    >
+                      Confirm and Send Otp
+                    </Button>
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
+                <Button
+                  onClick={onReset}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Reset
+                </Button>
+              </form>
+            </div>
           </Grid>
-
-        )}
-
-
-     
+        </Grid>
+      )}
     </div>
-
   );
 }
-
 
 export default Addfunds;
