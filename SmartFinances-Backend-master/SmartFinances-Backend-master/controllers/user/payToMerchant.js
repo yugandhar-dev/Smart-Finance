@@ -1,4 +1,5 @@
 const userBalance = require("../../models/balance");
+const newTransaction = require("../../models/newTransaction");
 
 exports.UserPayToMerchant = async (req, res) => {
 	const sourceAccountNumber = req.body.sourceAccountNumber;
@@ -90,6 +91,31 @@ exports.UserPayToMerchant = async (req, res) => {
 			error: "Payment error",
 		});
 	}
+
+	//Creating JSON to save transaction
+    const transaction = {
+        walletAccountNumber: sourceAccountNumber,
+        category: req.body.category,
+        subcategory: "PayToMerchant",
+        amount: amount,
+        roundedAmount: roundOffAmount,
+        date: req.body.date,
+        description: req.body.description
+
+    }
+
+    
+
+    const saveTransaction = new newTransaction(transaction);
+    
+        try{
+		//Save transaction to new Transactions collection
+            await saveTransaction.save();
+        }catch(error){
+            return res.status(400).json({
+                error: "Unable to save transaction"
+            });
+        }
 
 	// success reponse
 	res.status(200).json({

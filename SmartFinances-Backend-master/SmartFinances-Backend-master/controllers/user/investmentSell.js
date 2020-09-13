@@ -1,11 +1,13 @@
 const usersWalletBalance = require("../../models/balance");
 const userInvestments = require("../../models/userInvestments");
 const investmentOptions = require("../../models/investmentOptions");
+const transaction = require("../../models/newTransaction");
 
 exports.InvestmentSell = async (req, res) => {
 	let calculateAmount;
 	let amountInvested;
 	let updatedNumberOfUnits;
+	const now = new Date();
 
 	// Query for retrieving user information from all tables according to the request
 	const query = {
@@ -120,6 +122,41 @@ exports.InvestmentSell = async (req, res) => {
 			error: err,
 		});
 	}
+
+	//Creating JSON to save wallet transaction
+	const walletTransaction = {
+		walletAccountNumber: req.body.walletAccountNumber,
+		category: "wallet",
+		subcategory: "investmentToWallet",
+		amount: calculateAmount,
+		date: now,
+	
+	  }
+	  
+	  //Creating JSON to save investment transaction
+	  const investmentTransaction = {
+		walletAccountNumber: req.body.walletAccountNumber,
+		category: req.body.category,
+		subcategory: "investmentToWallet",
+		amount: calculateAmount,
+		date: now,
+	
+	  }
+	
+	  
+	  const saveTransaction = new transaction(walletTransaction);
+	  const saveInvestmentTransaction = new transaction(investmentTransaction);
+		try{
+		//Saving wallet transaction to new transactions collection 
+		  await saveTransaction.save();
+		//Saving investment transaction to new transactions collection
+		  await saveInvestmentTransaction.save();
+		}catch(error){
+		  return res.status(400).json({
+			error: "Unable to save transaction"
+		  });
+		}
+
 	return res.status(200).json({
 		Success: "Sold successfully and your balances are updated",
 	});
