@@ -15,8 +15,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { signin } from "../auth/index";
-import {useAuth } from '../context/auth'
+import { useAuth } from "../context/auth";
 import "./Homepage.css";
+import { submitPhone, verifyOtp } from "../auth/smsAuth";
+import { getUserPhoneNumber } from "../auth/index";
 
 //import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
@@ -33,7 +35,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     height: "100vh",
   },
@@ -59,11 +61,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "90%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  otpBtn: {
+    margin: theme.spacing(2, 2, 2),
+    padding: "2%",
+  },
+  phone: {
+    width: "75%",
+    marginRight: "20px",
   },
 }));
 
@@ -72,23 +82,48 @@ const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
 
   const classes = useStyles();
   let history = useHistory();
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-
-    signin({ email, password, role : 'user' })
-      .then((data) => {
+  const onSubmit = () => {
+    signin({ email, password, role: "user" })
+      .then(data => {
         if (data.error) {
           setError(data.error);
         } else {
-          setAuthToken(data.token)
+          setAuthToken(data.token);
           history.push("/user/dashboard");
         }
       })
-      .catch((ex) => console.log("Signin request error", ex));
+      .catch(ex => console.log("Signin request error", ex));
+  };
+
+  const sendOtp = async () => {
+    if (phone.charAt(0) !== "+" || parseInt(phone.substring(1)) === NaN) {
+      setError("Enter valid Phone number with '+' Country-code");
+      return;
+    }
+    const number = await getUserPhoneNumber(email);
+    if (parseInt(phone.substring(1)) !== number.phoneNumber) {
+      setError("Phone number is incorrect. Please try again");
+      return;
+    }
+    const res = submitPhone(phone);
+    if (res === false) {
+      setError("SMS cannot be sent. Please check your phone number");
+      return;
+    }
+  };
+
+  const submitOtp = async () => {
+    if (phone.length === 0) return;
+    const res = await verifyOtp(otp);
+    console.log(res);
+    if (res) onSubmit();
+    else setError("OTP is incorrect. Please try again");
   };
 
   return (
@@ -120,7 +155,7 @@ const UserLogin = () => {
             <Typography component="h1" variant="h5">
               User Sign In
             </Typography>
-            <p>{error}</p>
+            <p style={{ color: "red" }}>{error}</p>
             <form className={classes.form} noValidate>
               <TextField
                 variant="outlined"
@@ -132,7 +167,10 @@ const UserLogin = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => {
+                  setError("");
+                  setEmail(e.target.value);
+                }}
               />
               <TextField
                 variant="outlined"
@@ -144,17 +182,67 @@ const UserLogin = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => {
+                  setError("");
+                  setPassword(e.target.value);
+                }}
               />
+
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                name="phone"
+                value={phone}
+                onChange={e => {
+                  setError("");
+                  setPhone(e.target.value);
+                }}
+                label="Phone Number"
+                id="phone"
+                className={classes.phone}
+                autoComplete="off"
+              />
+              <Button
+                onClick={sendOtp}
+                variant="contained"
+                color="primary"
+                className={classes.otpBtn}
+              >
+                Send OTP
+              </Button>
+              <Typography variant="body1">
+                *If phone number matches with your account, you will receive One
+                Time Password
+              </Typography>
+              <div id="recaptcha-container"></div>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="otp"
+                value={otp}
+                onChange={e => {
+                  setError("");
+                  setOtp(e.target.value);
+                }}
+                label="Enter OTP"
+                id="otp"
+                autoComplete="off"
+              />
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
 
               <Button
-                onClick={onSubmit}
-                type="submit"
+                onClick={submitOtp}
                 fullWidth
+                disabled={
+                  parseInt(otp) === NaN || parseInt(otp).toString().length !== 6
+                }
                 variant="contained"
                 color="primary"
                 className={classes.submit}

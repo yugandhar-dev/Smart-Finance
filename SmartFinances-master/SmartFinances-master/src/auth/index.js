@@ -236,3 +236,18 @@ export const getAllInvestmentOptions = () => {
     })
     .catch(err => console.log(err));
 };
+
+export const getUserPhoneNumber = email => {
+  return fetch(`${API}/admin/getPhoneNumber`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
