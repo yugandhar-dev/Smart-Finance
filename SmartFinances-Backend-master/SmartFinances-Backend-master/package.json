@@ -18,6 +18,7 @@
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
     "express-jwt": "^5.3.1",
     "express-validator": "^6.2.0",
     "formidable": "^1.2.1",
@@ -28,6 +29,7 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4",
     "npm": "^6.14.7",
+    "tesseract.js": "^2.1.1",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
