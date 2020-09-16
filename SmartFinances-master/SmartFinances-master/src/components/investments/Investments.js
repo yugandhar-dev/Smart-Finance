@@ -1,24 +1,26 @@
-import React, { useState, Fragment } from 'react';
-import styled, { css } from 'styled-components';
-import { Wallet } from '@styled-icons/entypo/Wallet';
-import { Calculator } from '@styled-icons/boxicons-solid/Calculator';
-import { Funds } from '@styled-icons/remix-fill/Funds';
-import { HandHoldingUsd } from '@styled-icons/fa-solid/HandHoldingUsd';
-import { MoneyCheckAlt } from '@styled-icons/fa-solid/MoneyCheckAlt';
-import { Plus } from '@styled-icons/evaicons-solid/Plus';
-import { Minus } from '@styled-icons/boxicons-regular/Minus';
-import Addfunds from './Addfunds';
-import Lowrisk from './Lowrisk';
-import Withdraw from './Withdraw';
-import Sell from './sell/sell'
+import React, { useState, Fragment } from "react";
+import styled, { css } from "styled-components";
+import { Wallet } from "@styled-icons/entypo/Wallet";
+import { Calculator } from "@styled-icons/boxicons-solid/Calculator";
+import { Funds } from "@styled-icons/remix-fill/Funds";
+import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
+import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
+import { Plus } from "@styled-icons/evaicons-solid/Plus";
+import { Minus } from "@styled-icons/boxicons-regular/Minus";
+import Addfunds from "./Addfunds";
+import Lowrisk from "./Lowrisk";
+import Withdraw from "./Withdraw";
+import Sell from "./sell/sell";
+import InvestmentCalculator from "./Calculator/Calculator";
+
 const MainDiv = styled.div`
   background-color: #3f51b5;
-  min-height: 70vh;
+  height: 100vh;
   width: 25%;
-  padding-top: 20vh;
+  padding-top: 40vh;
   position: absolute;
   left: 0;
-  bottom: 0;
+  top: 0;
 `;
 
 const ChildDiv = styled.div`
@@ -54,41 +56,41 @@ const CategoriesDiv = styled.div`
 
 function Investments(props) {
   const [open, setOpen] = useState(false);
-  const [display, setDisplay] = useState('');
+  const [display, setDisplay] = useState("");
 
   const getForm = e => {
-    setDisplay(e.target.getAttribute('name'));
+    setDisplay(e.target.getAttribute("name"));
     if (open) setOpen(!open);
   };
 
   const changeStyle = {
-    backgroundColor: 'white',
-    color: '#07236a',
+    backgroundColor: "white",
+    color: "#07236a",
   };
 
   const dropDown = (
     <div>
       <CategoriesDiv
         subCategory
-        name='lowrisk'
-        onClick={() => setDisplay('lowrisk')}
-        style={display === 'lowrisk' ? changeStyle : {}}
+        name="lowrisk"
+        onClick={() => setDisplay("lowrisk")}
+        style={display === "lowrisk" ? changeStyle : {}}
       >
         Low Risk
       </CategoriesDiv>
       <CategoriesDiv
         subCategory
-        name='etfs'
-        onClick={() => setDisplay('etfs')}
-        style={display === 'etfs' ? changeStyle : {}}
+        name="etfs"
+        onClick={() => setDisplay("etfs")}
+        style={display === "etfs" ? changeStyle : {}}
       >
         Exchange Traded Funds
       </CategoriesDiv>
       <CategoriesDiv
         subCategory
-        name='schemes'
-        onClick={() => setDisplay('schemes')}
-        style={display === 'schemes' ? changeStyle : {}}
+        name="schemes"
+        onClick={() => setDisplay("schemes")}
+        style={display === "schemes" ? changeStyle : {}}
       >
         Savings Schemes
       </CategoriesDiv>
@@ -97,60 +99,63 @@ function Investments(props) {
 
   return (
     <Fragment>
-      <MainDiv>
+      <MainDiv style={{ position: "fixed" }}>
         <CategoriesDiv
-          name='add'
+          name="add"
           onClick={e => getForm(e)}
-          style={display === 'add' ? changeStyle : {}}
+          style={display === "add" ? changeStyle : {}}
         >
-          <Wallet size='35' /> Add Funds to Wallet
+          <Wallet size="35" /> Add Funds to Wallet
         </CategoriesDiv>
         <CategoriesDiv
           onClick={e => {
             setOpen(!open);
             getForm(e);
           }}
-          style={open ? { backgroundColor: '#8598c9', color: '#07236a' } : {}}
+          style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
         >
-          <Funds size='35' /> Invest
+          <Funds size="35" /> Invest
           {open ? (
-            <Minus size='35' style={{ float: 'right' }} />
+            <Minus size="35" style={{ float: "right" }} />
           ) : (
-            <Plus size='35' style={{ float: 'right' }} />
+            <Plus size="35" style={{ float: "right" }} />
           )}
         </CategoriesDiv>
         {open && dropDown}
         <CategoriesDiv
-          name='sell'
+          name="sell"
           onClick={e => getForm(e)}
-          style={display === 'sell' ? changeStyle : {}}
+          style={display === "sell" ? changeStyle : {}}
         >
-          <HandHoldingUsd size='35' /> Sell Investments
+          <HandHoldingUsd size="35" /> Sell Investments
         </CategoriesDiv>
         <CategoriesDiv
-          name='withdraw'
+          name="withdraw"
           onClick={e => getForm(e)}
-          style={display === 'withdraw' ? changeStyle : {}}
+          style={display === "withdraw" ? changeStyle : {}}
         >
-          <MoneyCheckAlt size='35' /> Withdraw Money
+          <MoneyCheckAlt size="35" /> Withdraw Money
         </CategoriesDiv>
         <CategoriesDiv
-          name='calculator'
+          name="calculator"
           onClick={e => getForm(e)}
-          style={display === 'calculator' ? changeStyle : {}}
+          style={display === "calculator" ? changeStyle : {}}
         >
-          <Calculator size='35' /> Investment Calculator
+          <Calculator size="35" /> Investment Calculator
         </CategoriesDiv>
       </MainDiv>
       <ChildDiv>
-        { display === 'add' && <Addfunds />}
-        {display === 'lowrisk' && <Lowrisk />}
+        {display === "add" && <Addfunds />}
+        {display === "lowrisk" && <Lowrisk />}
         {/* // {display === 'etf' && <Etfs />}
-        // {display === 'schemes' && <Schemes />} */ }
-        {display === 'sell' && <Sell  reload={props.reload} setReload = {props.setReload} />} 
-      
-        { display === 'withdraw' && <Withdraw reload={props.reload} setReload = {props.setReload} />}
-        {/* {display === 'calculator' && <Calculator />} */}
+        // {display === 'schemes' && <Schemes />} */}
+        {display === "sell" && (
+          <Sell reload={props.reload} setReload={props.setReload} />
+        )}
+        {display === "withdraw" && (
+          <Withdraw reload={props.reload} setReload={props.setReload} />
+        )}
+        {display === "calculator" && <InvestmentCalculator />}
       </ChildDiv>
     </Fragment>
   );
