@@ -4,7 +4,6 @@ exports.ChangeProfileSettings = async(req, res) => {
     const useraccountNumber = req.body.useraccountNumber;
     const userfirstName = req.body.userfirstName;
     const userlastName = req.body.userlastName;
-    const userbankName = req.body.userbankName;
     const useraddress = req.body.useraddress;
     const userphoneNumber = req.body.userphoneNumber;
 
@@ -32,7 +31,6 @@ exports.ChangeProfileSettings = async(req, res) => {
                     emailId: userProfile.emailId,
                     firstName: userfirstName,
                     lastName: userlastName,
-                    bankName: userbankName,
                     address: useraddress,
                     tfnNumber: userProfile.tfnNumber,
                     phoneNumber: userphoneNumber,
