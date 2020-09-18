@@ -1,11 +1,16 @@
 const Profile = require("../../models/createNewUser");
 
 exports.ChangeProfileSettings = async(req, res) => {
-    const useraccountNumber = req.body.useraccountNumber;
-    const userfirstName = req.body.userfirstName;
-    const userlastName = req.body.userlastName;
-    const useraddress = req.body.useraddress;
-    const userphoneNumber = req.body.userphoneNumber;
+     const useraccountNumber = req.body.useraccountNumber;
+    // const userfirstName = req.body.userfirstName;
+    // const userlastName = req.body.userlastName;
+    // const useraddress = req.body.useraddress;
+    // const userphoneNumber = req.body.userphoneNumber;
+
+    let firstname;
+    let lastname;
+    let address;
+    let phonenumber;
 
     try {
 		userProfile = await Profile
@@ -16,12 +21,42 @@ exports.ChangeProfileSettings = async(req, res) => {
 			error: err,
 		});
     }
-    
+
     if (!userProfile) {
-		return res.status(400).json({
-			error: "Error fetching user details",
-		});
-    }
+      return res.status(400).json({
+        error: "Error fetching user details",
+      });
+      }
+    
+   if(req.body.userfirstName == null){
+    firstname=userProfile.firstName;
+
+   }else {
+    firstname=req.body.userfirstName;
+   }
+
+   if(req.body.userlastName == null){
+    lastname=userProfile.lastName;
+
+   }else {
+    lastname=req.body.userlastName;
+   }
+
+
+   if(req.body.useraddress == null){
+    address=userProfile.address;
+
+   }else {
+    address=req.body.useraddress;
+   }
+
+
+   if(req.body.userphoneNumber == null){
+    phonenumber=userProfile.phoneNumber;
+
+   }else {
+    phonenumber=req.body.userphoneNumber;
+   }
     
     try {
 		await Profile
@@ -29,11 +64,11 @@ exports.ChangeProfileSettings = async(req, res) => {
                 { accountNumber: useraccountNumber },
                 {
                     emailId: userProfile.emailId,
-                    firstName: userfirstName,
-                    lastName: userlastName,
-                    address: useraddress,
+                    firstName: firstname,
+                    lastName: lastname,
+                    address: address,
                     tfnNumber: userProfile.tfnNumber,
-                    phoneNumber: userphoneNumber,
+                    phoneNumber: phonenumber,
                     openingBalance: userProfile.openingBalance,
                 }
 			)

@@ -27,6 +27,7 @@ const getInvestments = require("./routes/user/getInvestments");
 const investmentSell = require("./routes/user/investmentSell");
 const userPhoneNumber = require("./routes/admin/manageUser");
 const changeProfileSettings = require("./routes/user/changeProfileSettings")
+
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
 
@@ -54,6 +55,7 @@ app.use("/api", investmentSell);
 app.use("/api", getInvestments);
 app.use("/api", userPhoneNumber);
 app.use("/api", changeProfileSettings);
+
 // Server Startup
 (async () => {
 	// We must not catch errors on db connection
