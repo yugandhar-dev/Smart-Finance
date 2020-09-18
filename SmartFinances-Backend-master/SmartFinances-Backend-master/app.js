@@ -41,8 +41,9 @@ app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
 app.use(authenticate);
 
-
 // Routes here
+
+
 app.use("/api", userAuthRoutes);
 app.use("/api", newTransaction);
 app.use("/api", userDashboard);
@@ -64,9 +65,6 @@ app.use("/api", userInvestments);
 app.use("/api", getTransactions);
 app.use("/api", uploadreceipt);
 app.use("/api", changePassword);
-
-
-
 
 // Server Startup
 (async () => {
