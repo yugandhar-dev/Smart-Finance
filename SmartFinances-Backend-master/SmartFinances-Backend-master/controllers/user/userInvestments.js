@@ -9,6 +9,35 @@ exports.InvestmentFunds = async (req, res) => {
   let investmentDetails;
   let userBalances;
   let calculateAmount;
+<<<<<<< HEAD
+=======
+  
+
+  if (investment.investmentType=="lowRiskFund" || investment.investmentType=="exchangeTradedFund" || investment.investmentType=="savingScheme"){
+
+    
+
+  try {
+    investmentDetails = await investmentOptions
+      .findOne({
+        companyName: investment.companyName,
+        investmentType: investment.investmentType
+      })
+      .exec();
+  } catch (err) {
+    return res.status(400).json({
+      error: "Error fetching user details"
+    });
+  }
+
+  if (!investmentDetails) {
+    return res.status(400).json({
+      error: "No Investment options found with the provided company name and investment type"
+    });
+  }
+    calculateAmount = parseFloat(investmentDetails.pricePerUnit).toFixed(2)*parseInt(investment.numberOfUnits);
+  
+>>>>>>> 8c0b353... fix: modified and fixed code according to comments
 
   if (
     investment.investmentType == "lowRiskFund" ||
@@ -28,6 +57,7 @@ exports.InvestmentFunds = async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     if (!investmentDetails) {
       return res.status(400).json({
         error:
@@ -135,4 +165,57 @@ exports.InvestmentFunds = async (req, res) => {
       error: "Unable to save transaction",
     });
   }
+=======
+  if (!userBalances) {
+    return res.status(400).json({
+      error: "Error fetching user Balances"
+    });
+  }else if(userBalances.walletAccountBalance < calculateAmount){
+    return res.status(400).json({
+      error: "Balance is less than the Investment Amount"
+    });
+  }
+  userBalances.walletAccountBalance = userBalances.walletAccountBalance - calculateAmount;
+  userBalances[investment.investmentType] = userBalances[investment.investmentType] + calculateAmount;
+  userBalances.totalfunds = userBalances.totalfunds + calculateAmount;
+  try{
+    await userBalances.save();
+
+  }catch(err){
+    return res.status(400).json({
+      error: err
+    });
+  }
+  const saveInvestment = {
+    accountNumber: investment.accountNumber,
+    walletAccountNumber: investment.walletAccountNumber,
+    investmentType: investment.investmentType,
+    companyName: investment.companyName,
+    numberOfUnits: investment.numberOfUnits,
+    amountInvested: calculateAmount,
+    pricePerUnit: investmentDetails.pricePerUnit,
+    createdDate: now
+  };
+  const saveUserInvestment = new userInvestments(saveInvestment);
+    try{
+      await saveUserInvestment.save();
+    }catch(err){
+      return res.status(400).json({
+        error: err
+      });
+    }
+    
+    res.status(200).json({
+      Success: "Amount Invested and updated Balances"
+    });
+}
+else{
+  return res.status(400).json({
+            
+    error: "Given Investment Type is not in the list"
+  });
+}
+>>>>>>> 8c0b353... fix: modified and fixed code according to comments
 };
+
+  
