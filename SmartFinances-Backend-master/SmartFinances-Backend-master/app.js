@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 53f3e11... fix: rebasing to clear conflicts
 require('dotenv').config();
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
