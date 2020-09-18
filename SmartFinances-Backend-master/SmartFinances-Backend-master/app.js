@@ -41,6 +41,7 @@ app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
 app.use(authenticate);
 
+
 // Routes here
 
 
