@@ -1,7 +1,9 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const fileUpload = require("express-fileupload");
-const express = require("express");
+
+require('dotenv').config();
+const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+const express = require('express');
+
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -38,6 +40,7 @@ app.use(bodyParser.json());
 app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
 app.use(authenticate);
+
 
 // Routes here
 app.use("/api", userAuthRoutes);
