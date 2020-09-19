@@ -5,9 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Lowriskinvest from "./Lowriskinvest";
-
-import LowRiskInvestment from "./lowRiskInvestment";
+import Lowtrend from "./Lowtrend";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,22 +37,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Lowrisk = props => {
+const Lowrisk = () => {
   const [status, currentStatus] = useState(null);
   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
-        <div>
-          {status === "otp" ? (
-            <LowRiskInvestment
-              reload={props.reload}
-              setReload={props.setReload}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+        <div>{status === "invest" ? <Lowtrend /> : ""}</div>
       ) : (
         <Grid
           container
@@ -79,17 +68,7 @@ const Lowrisk = props => {
                 Low Risk
               </Typography>
 
-              <p>
-                An Investment where there is perceived to be just a slight
-                chance of loosing some or all of the your money.An Investment
-                where there is perceived to be just a slight chance of loosing
-                some or all of the your money.An Investment where there is
-                perceived to be just a slight chance of loosing some or all of
-                the your money.An Investment where there is perceived to be just
-                a slight chance of loosing some or all of the your money.An
-                Investment where there is perceived to be just a slight chance
-                of loosing some or all of the your money
-              </p>
+             
 
               <form className={classes.form} id="forms">
                 <Button
@@ -100,7 +79,7 @@ const Lowrisk = props => {
                   color="primary"
                   className={classes.submit}
                 >
-                  Invest
+                  Low risk Trend Analysis
                 </Button>
               </form>
             </div>
