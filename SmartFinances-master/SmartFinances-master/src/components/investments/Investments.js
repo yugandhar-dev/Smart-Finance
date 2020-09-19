@@ -14,6 +14,7 @@ import Sell from "./sell/sell";
 import InvestmentCalculator from "./Calculator/Calculator";
 import LowRiskInvestment from './lowRiskInvestment';
 import ETF from './ETFs/ETF';
+import SavingScheme from './SavingSchemes/savingScheme';
 const MainDiv = styled.div`
   background-color: #3f51b5;
   height: 100vh;
@@ -153,8 +154,7 @@ function Investments(props) {
           <Lowrisk reload={props.reload} setReload={props.setReload} />
         )}
         {display === 'etfs' && <ETF />}
-        {/* // {display === 'etf' && <Etfs />}
-        // {display === 'schemes' && <Schemes />} */}
+        {display === 'schemes' && <SavingScheme />}
         {display === "sell" && (
           <Sell reload={props.reload} setReload={props.setReload} />
         )}
