@@ -34,7 +34,7 @@
     "tesseract.js": "^2.1.1",
     "uuid": "^3.3.3"
   },
-  "jest":{
+  "jest": {
     "testEnvironment": "node"
   },
   "devDependencies": {

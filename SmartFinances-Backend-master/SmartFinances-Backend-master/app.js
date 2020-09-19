@@ -3,11 +3,15 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const express = require("express");
 
+ 
+
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const tesseract = require("./lib/tesseract");
+
+ 
 
 // import routes here
 const userAuthRoutes = require("./routes/user/userAuth");
@@ -32,11 +36,15 @@ const getTransactions = require("./routes/user/transactionHistory");
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
 
+ 
+
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
 app.use(authenticate);
+
+ 
 
 // Routes here
 app.use("/api", userAuthRoutes);
@@ -48,7 +56,6 @@ app.use("/api", fundOptions);
 app.use("/api", userBalance);
 app.use("/api", userPayToMerchant);
 app.use("/api", investmentWithdraw);
-app.use("/api", getTransactions);
 app.use("/openapi", thirdpartyapi);
 app.use("/api", walletFunds);
 app.use("/api", manageFund);
@@ -56,6 +63,7 @@ app.use("/api", receiptValue);
 app.use("/api", investmentSell);
 app.use("/api", getInvestments);
 app.use("/api", userPhoneNumber);
+<<<<<<< HEAD
 app.use("/api", changeProfileSettings);
 
 // Server Startup
@@ -68,6 +76,23 @@ app.use("/api", changeProfileSettings);
   });
 
   await tesseract.initWorker();
+=======
+app.use("/api", getTransactions);
+// Server Startup
+(async () => {
+    // We must not catch errors on db connection
+    await mongoose.connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    });
+
+ 
+
+    await tesseract.initWorker();
+>>>>>>> 7c7be50... fix: modified and resolved code issues according to comments
 })();
+
+ 
 
 module.exports = app;
