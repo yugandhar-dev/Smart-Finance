@@ -17,7 +17,6 @@ const getOptionPrice = async (symbol) => {
     },
   });
 
-<<<<<<< HEAD
   let delta = 1; // Default to previous day
   if (moment().isoWeekday() === 7) { // Sunday
     delta = 2;
@@ -28,11 +27,6 @@ const getOptionPrice = async (symbol) => {
   const lastValidDate = moment().subtract(delta, 'days').format('YYYY-MM-DD');
 
   return req.data['Time Series (Daily)'][lastValidDate]['4. close'];
-=======
-  const yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
-
-  return req.data['Time Series (Daily)'][yesterday]['4. close'];
->>>>>>> feat(update option prices): update option prices
 };
 
 const updateOption = async (option) => {
@@ -46,7 +40,6 @@ const updateOption = async (option) => {
     return;
   }
 
-<<<<<<< HEAD
   try {
     option.pricePerUnit = await getOptionPrice(option.companyStockSymbol);
     option.lastUpdate = today;
@@ -54,11 +47,6 @@ const updateOption = async (option) => {
   } catch (err) {
     // If there was an error while updating, there is no need to store anything
   }
-=======
-  option.pricePerUnit = await getOptionPrice(option.companyStockSymbol).catch(() => 0);
-  option.lastUpdate = today;
-  await option.save();
->>>>>>> feat(update option prices): update option prices
 };
 
 const updatePricesForAllOptions = async () => {
