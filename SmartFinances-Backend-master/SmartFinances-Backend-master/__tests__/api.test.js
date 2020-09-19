@@ -430,4 +430,14 @@ describe('checks user details', () => {
     expect(getPhoneNumber.res.statusMessage).toBe('OK');
     done();
   });
+  it("checks pay to merchant API", async (done) => {
+    const PaytoMerchant = await request(app)
+      .post("/api/user/payToMerchant")
+      .set({
+        Authorization: `Bearer ${token}`,
+      }).send({sourceAccountNumber : 123, destinationAccountNumber : 223, amount : 8, roundOffAmount : 2})
+    expect(PaytoMerchant.status).toBe(200);
+    expect(PaytoMerchant.res.statusMessage).toBe("OK");
+    done();
+  });
 });
