@@ -20,7 +20,7 @@ import PayMerchant from "./payToMerchant/payToMerchant";
 import WalletDetails from "./WalletDetails";
 import { WalletContext } from "../context/wallet";
 import UploadReceipt from "./uploadReceipt/uploadReceipt";
-
+import Settings from "./Settings/settings";
 import History from "./Transactions/history";
 
 const useStyles = makeStyles(theme => ({
@@ -245,9 +245,10 @@ export default props => {
 						<WalletDetails reload={walletReload} />
 						<Investments reload={reload} setReload={setReload} />
 					</TabPanel>
-
-
-
+					<TabPanel value={value} index={4}>
+						<WalletDetails reload={walletReload} />
+						<Settings reload={reload} setReload={setReload} />
+					</TabPanel>
 					<TabPanel value={value} index={5}>
 						<History reload={reload} setReload={setReload} />
 					</TabPanel>
