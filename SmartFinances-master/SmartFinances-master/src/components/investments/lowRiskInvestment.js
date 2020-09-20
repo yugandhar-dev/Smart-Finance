@@ -114,8 +114,18 @@ export default props => {
 					<a>Amount:</a>
 					<TextField value={amount} />
 				</ListItem>
-				<button onClick={buyFunds}>Invest</button>
-				<button>Reset</button>
+				<Grid container justify='space-evenly'>
+						<Grid item>
+							<Button variant='contained' color='primary' >
+								Reset
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button variant='contained' color='primary'>
+								Sell
+							</Button>
+						</Grid>
+					</Grid>
 				<div>{message}</div>
 			</List>
 		</Grid>
