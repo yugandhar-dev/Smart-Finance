@@ -3,9 +3,14 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { ListItem, TextField } from "@material-ui/core";
 import { getReceiptValue } from "../../auth/index";
+import { useWallet } from "../../context/wallet";
 
-export default () => {
+export default props => {
 	const [message, setMessage] = useState();
+	const [amount, setAmount] = useState();
+	const [roundOffAmount, setRoundOffAmount] = useState("");
+	const { walletReload, setWalletReload } = useWallet();
+
 	const uploadImage = async event => {
 		setMessage(`Loading...`);
 		const files = event.target.files;
@@ -14,12 +19,26 @@ export default () => {
 		const receiptValue = await getReceiptValue(formData).catch(ex =>
 			setMessage(ex),
 		);
-		if (receiptValue.success)
+		if (receiptValue.success) {
+			setWalletReload(!walletReload);
+			props.setReload(!props.reload);
+			setAmount(receiptValue.value);
+			setRoundOffAmount(
+				parseFloat(parseFloat(5 - (receiptValue.value % 5)).toFixed(2)),
+			);
 			setMessage(
 				`Receipt Upload successful. Your amount is ${receiptValue.value}`,
 			);
-		else setMessage("Receipt upload unsuccessful. Please try again.");
+		} else setMessage("Receipt upload unsuccessful. Please try again.");
 	};
+
+	const resetValues = () => {
+		setAmount("");
+		setRoundOffAmount("");
+		setMessage("");
+	};
+
+	const addtoHistory = () => {};
 
 	return (
 		<div>
@@ -35,6 +54,46 @@ export default () => {
 								onChange={uploadImage}
 							/>
 						</Button>
+					</ListItem>
+					<ListItem>
+						Receipt Amount:
+						<TextField
+							size='small'
+							variant='outlined'
+							value={amount}
+							disabled
+						/>
+					</ListItem>
+					<ListItem>
+						Roundoff Amount:
+						<TextField
+							size='small'
+							variant='outlined'
+							value={roundOffAmount}
+							onChange={event => setRoundOffAmount(event.target.value)}
+						/>
+					</ListItem>
+					<ListItem>
+						<Grid container justify='space-evenly'>
+							<Grid item>
+								<Button
+									variant='contained'
+									color='primary'
+									onClick={resetValues}
+								>
+									clear
+								</Button>
+							</Grid>
+							<Grid item>
+								<Button
+									variant='contained'
+									color='primary'
+									onClick={addtoHistory}
+								>
+									Confirm
+								</Button>
+							</Grid>
+						</Grid>
 					</ListItem>
 					<ListItem>{message}</ListItem>
 				</Grid>
