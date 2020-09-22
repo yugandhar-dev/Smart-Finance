@@ -15,7 +15,6 @@ const newTransaction = require("./routes/user/newTransaction");
 const userDashboard = require("./routes/user/userDashboard");
 const adminCreateFund = require("./routes/admin/createFund");
 const adminCreateUser = require("./routes/admin/createNewUser");
-const fundOptions = require("./routes/user/userFundOptions");
 const userBalance = require("./routes/user/balance");
 const walletFunds = require("./routes/user/addFundsToWallet");
 const userPayToMerchant = require("./routes/user/payToMerchant");
@@ -27,6 +26,7 @@ const getInvestments = require("./routes/user/getInvestments");
 const investmentSell = require("./routes/user/investmentSell");
 const userPhoneNumber = require("./routes/admin/manageUser");
 const changeProfileSettings = require("./routes/user/changeProfileSettings");
+const getTransactions = require("./routes/user/transactionHistory");
 
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
@@ -43,7 +43,6 @@ app.use("/api", newTransaction);
 app.use("/api", userDashboard);
 app.use("/api", adminCreateFund);
 app.use("/api", adminCreateUser);
-app.use("/api", fundOptions);
 app.use("/api", userBalance);
 app.use("/api", userPayToMerchant);
 app.use("/api", investmentWithdraw);
@@ -58,14 +57,14 @@ app.use("/api", changeProfileSettings);
 
 // Server Startup
 (async () => {
-  // We must not catch errors on db connection
-  await mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  });
+	// We must not catch errors on db connection
+	await mongoose.connect(process.env.MONGODB_URL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+	});
 
-  await tesseract.initWorker();
+	await tesseract.initWorker();
 })();
 
 module.exports = app;

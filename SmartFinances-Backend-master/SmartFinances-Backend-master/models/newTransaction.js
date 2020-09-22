@@ -2,10 +2,21 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var NewTransaction = new Schema({
-  account: {
-    type: Number,
+  walletAccountNumber: {
+    type: String,
     required: true,
     trim: true,
+  },
+  category:{
+    type: String,
+    required: true,
+    trim: true,
+
+  },
+  subcategory:{
+    type: String,
+    trim: true,
+
   },
   amount: {
     type: Number,
@@ -14,29 +25,24 @@ var NewTransaction = new Schema({
   },
   roundedAmount: {
     type: Number,
-    required: true,
+    //required: true,
   },
   date: {
     type: String,
     required: true,
     trim: true,
   },
-  transactionType: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   description: {
     type: String,
-    required: true,
+    //required: true,
     trim: true,
     maxlength: 200,
   },
-  fund: {
-    type: String,
-    required: true,
-    trim: true,
-  },
+  // fund: {
+  //   type: String,
+  //   required: true,
+  //   trim: true,
+  // },
 });
 
 module.exports = mongoose.model("NewTransaction", NewTransaction);

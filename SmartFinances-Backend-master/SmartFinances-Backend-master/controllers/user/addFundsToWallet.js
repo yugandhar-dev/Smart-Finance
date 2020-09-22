@@ -1,25 +1,66 @@
 const usersWalletBalance = require("../../models/balance");
-exports.addWalletFunds = (req, res) => {
-  const walletAmount = parseInt(req.body.walletFund);
-  const accountNumber = req.body.accountNumber;
+const newTransaction = require("../../models/newTransaction");
 
-  usersWalletBalance
-    .findOne({ accountNumber: accountNumber })
-    .exec((err, user) => {
-      if (err || !user) {
-        return res.status(400).json({
-          error: "Not able to find User"
-        });
-      } else if (walletAmount > user.accountBalance) {
-        return res.status(400).json({
-          error: "Entered Amount is greater than Account Balance"
-        });
-      } else {
-        var accountBalance = user.accountBalance;
-        user.accountBalance = accountBalance - walletAmount;
-        user.walletAccountBalance = user.walletAccountBalance+walletAmount;
-        user.save();
-        res.json(user);
-      }
-    })
-    };
+exports.addWalletFunds = async (req, res) => {
+	const walletAmount = parseInt(req.body.walletFund);
+	const now = new Date();
+	let user;
+	try {
+		user = await usersWalletBalance
+			.findOne({ walletAccountNumber: req.body.walletAccountNumber })
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: err,
+		});
+	}
+	if (!user) {
+		return res.status(400).json({
+			error: "Not able to find User",
+		});
+	} else if (walletAmount > user.accountBalance) {
+		return res.status(400).json({
+			error: "Entered Amount is greater than Account Balance",
+		});
+	} else {
+		var accountBalance = user.accountBalance;
+		user.accountBalance = accountBalance - walletAmount;
+		user.walletAccountBalance = user.walletAccountBalance + walletAmount;
+		await user.save();
+	}
+
+	//Save transaction to new Transactions collection with category and subcategory
+	const walletTransaction = {
+		walletAccountNumber: req.body.walletAccountNumber,
+		category: req.body.category,
+		subcategory: "AccountToWallet",
+		amount: walletAmount,
+		date: now,
+	};
+
+	const accountTransaction = {
+		walletAccountNumber: req.body.walletAccountNumber,
+		category: "account",
+		subcategory: "AccountToWallet",
+		amount: walletAmount,
+		date: now,
+	};
+
+	const saveTransaction = new newTransaction(walletTransaction);
+	const saveAccountTransaction = new newTransaction(accountTransaction);
+	try {
+		//save transaction with category of wallet
+		await saveTransaction.save();
+
+		//save transaction with category of account
+		await saveAccountTransaction.save();
+	} catch (error) {
+		return res.status(400).json({
+			error: "Unable to save transaction",
+		});
+	}
+
+	return res.status(200).json({
+		Success: "Funds added successfully to wallet and Balances are updated",
+	});
+};

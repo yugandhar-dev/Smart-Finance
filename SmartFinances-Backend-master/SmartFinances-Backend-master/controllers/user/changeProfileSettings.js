@@ -2,10 +2,6 @@ const Profile = require("../../models/createNewUser");
 
 exports.ChangeProfileSettings = async(req, res) => {
      const useraccountNumber = req.body.useraccountNumber;
-    // const userfirstName = req.body.userfirstName;
-    // const userlastName = req.body.userlastName;
-    // const useraddress = req.body.useraddress;
-    // const userphoneNumber = req.body.userphoneNumber;
 
     let firstname;
     let lastname;
