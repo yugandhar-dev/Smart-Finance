@@ -352,3 +352,21 @@ export const getTransactionHistory = data => {
 		})
 		.catch(err => console.log(err));
 };
+
+
+export const receiptTransaction = data => {
+  console.log(data, "line 358")
+  return fetch(`${API}/user/uploadreceipt`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};

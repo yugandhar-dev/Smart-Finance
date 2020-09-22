@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { ListItem, TextField } from "@material-ui/core";
-import { getReceiptValue } from "../../auth/index";
+import {
+	getUserDetails,
+	getReceiptValue,
+	receiptTransaction,
+} from "../../auth/index";
 import { useWallet } from "../../context/wallet";
 
 export default props => {
@@ -10,6 +14,8 @@ export default props => {
 	const [amount, setAmount] = useState();
 	const [roundOffAmount, setRoundOffAmount] = useState("");
 	const { walletReload, setWalletReload } = useWallet();
+	const subcategory = "Upload receipt";
+	let response = "";
 
 	const uploadImage = async event => {
 		setMessage(`Loading...`);
@@ -38,7 +44,24 @@ export default props => {
 		setMessage("");
 	};
 
-	const addtoHistory = () => {};
+	const addtoHistory = async () => {
+		try {
+			const userDetails = await getUserDetails();
+			const data = {
+				sourceAccountNumber: userDetails[0].accountNumber,
+				amount,
+				roundOffAmount,
+				subcategory,
+			};
+			response = await receiptTransaction(data);
+			if (response.Success) setMessage(response.Success);
+			if (response.error) setMessage(response.error);
+			setWalletReload(!walletReload);
+			props.setReload(!props.reload);
+		} catch (ex) {
+			setMessage(`Something wrong, ${ex}`);
+		}
+	};
 
 	return (
 		<div>

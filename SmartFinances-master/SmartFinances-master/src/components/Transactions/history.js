@@ -54,8 +54,8 @@ export default () => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map(row => (
-					<TableRow>
+					{rows.map((row, index) => (
+					<TableRow key={index}>
 						<TableCell align='center'>{row['date'] ? row['date'].split('GMT')[0].trim(): ''}</TableCell>
 						<TableCell align='center'>{row['amount'] ? row['amount']: 0}</TableCell>
 						<TableCell align='center'>{row['roundedAmount'] ? row['roundedAmount']: 0}</TableCell>
