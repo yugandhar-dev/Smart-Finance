@@ -15,10 +15,11 @@ import InvestmentCalculator from "./Calculator/Calculator";
 import LowRiskInvestment from './lowRiskInvestment';
 import ETF from './ETFs/ETF';
 import SavingScheme from './SavingSchemes/savingScheme';
+
 const MainDiv = styled.div`
   background-color: #3f51b5;
   height: 100vh;
-  width: 25%;
+  width: 20%;
   padding-top: 40vh;
   position: absolute;
   left: 0;
