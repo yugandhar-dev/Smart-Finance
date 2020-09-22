@@ -30,30 +30,30 @@ exports.addWalletFunds = async (req, res) => {
 	}
 
 	//Save transaction to new Transactions collection with category and subcategory
-	const walletTransaction = {
+	const transaction = {
 		walletAccountNumber: req.body.walletAccountNumber,
-		category: req.body.category,
-		subcategory: "AccountToWallet",
+		category: "Savings",
+		subcategory: "Funds added to wallet",
 		amount: walletAmount,
 		date: now,
 	};
 
-	const accountTransaction = {
-		walletAccountNumber: req.body.walletAccountNumber,
-		category: "account",
-		subcategory: "AccountToWallet",
-		amount: walletAmount,
-		date: now,
-	};
+	// const accountTransaction = {
+	// 	walletAccountNumber: req.body.walletAccountNumber,
+	// 	category: "account",
+	// 	subcategory: "AccountToWallet",
+	// 	amount: walletAmount,
+	// 	date: now,
+	// };
 
-	const saveTransaction = new newTransaction(walletTransaction);
-	const saveAccountTransaction = new newTransaction(accountTransaction);
+	// const saveTransaction = new newTransaction(walletTransaction);
+	const history = new newTransaction(transaction);
 	try {
 		//save transaction with category of wallet
-		await saveTransaction.save();
+		await history.save();
 
 		//save transaction with category of account
-		await saveAccountTransaction.save();
+		// await saveAccountTransaction.save();
 	} catch (error) {
 		return res.status(400).json({
 			error: "Unable to save transaction",

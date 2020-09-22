@@ -19,63 +19,65 @@ import "./App.css";
 import PayMerchant from "./payToMerchant/payToMerchant";
 import WalletDetails from "./WalletDetails";
 import { WalletContext } from "../context/wallet";
-import UploadReceipt from "./uploadReceipt/uploadReceipt"
+import UploadReceipt from "./uploadReceipt/uploadReceipt";
+
+import History from "./Transactions/history";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  walletdiv: {
-    width: "50px",
-  },
+	root: {
+		flexGrow: 1,
+	},
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
+	title: {
+		flexGrow: 1,
+	},
+	walletdiv: {
+		width: "50px",
+	},
 }));
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props;
 
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
+	return (
+		<Typography
+			component='div'
+			role='tabpanel'
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && <Box p={3}>{children}</Box>}
+		</Typography>
+	);
 }
 
 export default props => {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [error, setError] = useState("");
-  const [response, setResponse] = useState("");
-  const [reload, setReload] = useState(true);
-  const [walletReload, setWalletReload] = useState(true);
+	const classes = useStyles();
+	const [value, setValue] = React.useState(0);
+	const [error, setError] = useState("");
+	const [response, setResponse] = useState("");
+	const [reload, setReload] = useState(true);
+	const [walletReload, setWalletReload] = useState(true);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 
-  useEffect(() => {
-    getUserDetails()
-      .then(data => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          setResponse(data[0]);
-        }
-      })
-      .catch(ex => console.log("Fund Details Retrieval error", ex));
-  }, [reload]);
+	useEffect(() => {
+		getUserDetails()
+			.then(data => {
+				if (data.error) {
+					setError(data.error);
+				} else {
+					setResponse(data[0]);
+				}
+			})
+			.catch(ex => console.log("Fund Details Retrieval error", ex));
+	}, [reload]);
 
 	return (
 		<div>
@@ -108,6 +110,8 @@ export default props => {
 							<Tab label='Pay Merchant' />
 							<Tab label='Upload Receipt' />
 							<Tab label='Investments' />
+							<Tab label='User Settings' />
+							<Tab label='Transaction History' />
 						</Tabs>
 					</AppBar>
 					<TabPanel value={value} index={0}>
@@ -147,7 +151,12 @@ export default props => {
 													<font color='#b80000'>
 														Total Investments:
 														<font color='#1273de'>
-															${(parseFloat(response.lowRiskFund + response.exchangeTradedFund + response.savingScheme).toFixed(2))}
+															$
+															{parseFloat(
+																response.lowRiskFund +
+																	response.exchangeTradedFund +
+																	response.savingScheme,
+															).toFixed(2)}
 														</font>
 													</font>
 												</p>
@@ -233,6 +242,12 @@ export default props => {
 					<TabPanel value={value} index={3}>
 						<WalletDetails reload={walletReload} />
 						<Investments reload={reload} setReload={setReload} />
+					</TabPanel>
+
+
+
+					<TabPanel value={value} index={5}>
+						<History reload={reload} setReload={setReload} />
 					</TabPanel>
 				</WalletContext.Provider>
 			</div>

@@ -124,33 +124,33 @@ exports.InvestmentSell = async (req, res) => {
 	}
 
 	//Creating JSON to save wallet transaction
-	const walletTransaction = {
+	const transaction = {
 		walletAccountNumber: req.body.walletAccountNumber,
-		category: "wallet",
-		subcategory: "investmentToWallet",
+		category: "Investments",
+		subcategory: "Investment sold",
 		amount: calculateAmount,
 		date: now,
 	
 	  }
 	  
 	  //Creating JSON to save investment transaction
-	  const investmentTransaction = {
-		walletAccountNumber: req.body.walletAccountNumber,
-		category: req.body.category,
-		subcategory: "investmentToWallet",
-		amount: calculateAmount,
-		date: now,
+	//   const investmentTransaction = {
+	// 	walletAccountNumber: req.body.walletAccountNumber,
+	// 	category: req.body.category,
+	// 	subcategory: "investmentToWallet",
+	// 	amount: calculateAmount,
+	// 	date: now,
 	
-	  }
+	//   }
 	
 	  
-	  const saveTransaction = new transaction(walletTransaction);
-	  const saveInvestmentTransaction = new transaction(investmentTransaction);
+	  const history = new transaction(transaction);
+	//   const saveInvestmentTransaction = new transaction(investmentTransaction);
 		try{
 		//Saving wallet transaction to new transactions collection 
-		  await saveTransaction.save();
+		  await history.save();
 		//Saving investment transaction to new transactions collection
-		  await saveInvestmentTransaction.save();
+		//   await saveInvestmentTransaction.save();
 		}catch(error){
 		  return res.status(400).json({
 			error: "Unable to save transaction"

@@ -56,6 +56,7 @@ app.use("/api", getInvestments);
 app.use("/api", userPhoneNumber);
 app.use("/api", changeProfileSettings);
 app.use("/api", userInvestments);
+app.use("/api", getTransactions);
 
 // Server Startup
 (async () => {

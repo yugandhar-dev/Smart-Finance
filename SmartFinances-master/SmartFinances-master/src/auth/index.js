@@ -269,25 +269,19 @@ export const getUserPhoneNumber = email => {
 };
 
 export const getReceiptValue = formData => {
-  return (
-    fetch(`${API}/user/receipt-value`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: formData,
-    })
-      .then(response => {
-        return response.json();
-      })
-
-      // .then(data => {
-      // 	console.log(data.path);
-      // })
-      .catch(err => console.log(err))
-  );
+	return fetch(`${API}/user/receipt-value`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+			"Access-Control-Allow-Origin": "*",
+		},
+		body: formData,
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
 };
 
 export const getEmailId = accountNumber => {
@@ -340,4 +334,21 @@ export const investFunds = data => {
       return response.json();
     })
     .catch(err => console.log(err));
+};
+
+export const getTransactionHistory = data => {
+	return fetch(`${API}/user/transactionhistory`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		body: JSON.stringify(data),
+	})
+		.then(response => {
+			console.log(response);
+			return response.json();
+		})
+		.catch(err => console.log(err));
 };

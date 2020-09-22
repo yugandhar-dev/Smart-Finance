@@ -1,22 +1,37 @@
 const transactions = require("../../models/newTransaction");
 
-exports.GetTransactions = (req, res) => {
-	transactions
+exports.GetTransactions = async (req, res) => {
+	
+	const data = await new Promise(resolve => transactions
 		.find({
-			walletAccountNumber: req.body.walletAccountNumber,
-			category: req.body.category,
-		})
-		.exec((err, userTransactions) => {
+			$or: [
+			{walletAccountNumber: req.body.walletAccountNumber},
+			{
+				walletAccountNumber: req.body.walletAccountNumber,
+				category: req.body.category,
+			},
+			],
+		}, (err, userTransactions) => {
 			if (err) {
-				return res.status(400).json({
+				resolve({
 					error: err,
 				});
 			} else if (userTransactions.length == 0) {
-				return res.status(400).json({
+				resolve({
 					error: "No User Transactions Found",
-				});
+				})
+				
 			} else {
-				res.json(userTransactions);
+				resolve(userTransactions);
 			}
-		});
+		})
+	)
+	if(data['error']){
+		res.status(400).json({
+			error: data['error'],
+		})
+	}
+	else{
+		res.status(200).json(data);
+	}
 };
