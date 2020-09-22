@@ -268,22 +268,6 @@ export const getInvestmentCompanies = data => {
 		.catch(err => console.log(err));
 };
 
-export const getInvestmentCompanies = data => {
-  return fetch(`${API}/user/company`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
-};
-
 export const getUserPhoneNumber = email => {
   return fetch(`${API}/admin/getPhoneNumber`, {
     method: "POST",
