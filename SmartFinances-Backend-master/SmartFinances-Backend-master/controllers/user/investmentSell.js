@@ -124,7 +124,7 @@ exports.InvestmentSell = async (req, res) => {
 	}
 
 	//Creating JSON to save wallet transaction
-	const transaction = {
+	const detail = {
 		walletAccountNumber: req.body.walletAccountNumber,
 		category: "Investments",
 		subcategory: "Investment sold",
@@ -144,7 +144,7 @@ exports.InvestmentSell = async (req, res) => {
 	//   }
 	
 	  
-	  const history = new transaction(transaction);
+	  const history = new transaction(detail);
 	//   const saveInvestmentTransaction = new transaction(investmentTransaction);
 		try{
 		//Saving wallet transaction to new transactions collection 
