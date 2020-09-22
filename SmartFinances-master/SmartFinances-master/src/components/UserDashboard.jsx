@@ -237,7 +237,9 @@ export default props => {
 						{/* {payMerchant} */}
 					</TabPanel>
 					<TabPanel value={value} index={2}>
-						<UploadReceipt />
+						<WalletDetails reload={walletReload} />
+
+						<UploadReceipt reload={reload} setReload={setReload} />
 					</TabPanel>
 					<TabPanel value={value} index={3}>
 						<WalletDetails reload={walletReload} />
