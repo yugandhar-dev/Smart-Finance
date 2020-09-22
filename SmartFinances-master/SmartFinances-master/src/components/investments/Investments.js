@@ -12,6 +12,7 @@ import Lowrisk from "./Lowrisk";
 import Withdraw from "./Withdraw";
 import Sell from "./sell/sell";
 import InvestmentCalculator from "./Calculator/Calculator";
+import LowRiskInvestment from "./lowRiskInvestment";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -148,7 +149,9 @@ function Investments(props) {
         {display === "add" && (
           <Addfunds reload={props.reload} setReload={props.setReload} />
         )}
-        {display === "lowrisk" && <Lowrisk />}
+        {display === "lowrisk" && (
+          <Lowrisk reload={props.reload} setReload={props.setReload} />
+        )}
         {/* // {display === 'etf' && <Etfs />}
         // {display === 'schemes' && <Schemes />} */}
         {display === "sell" && (

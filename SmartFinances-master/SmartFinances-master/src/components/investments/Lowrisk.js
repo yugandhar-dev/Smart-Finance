@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
+import LowRiskInvestment from "./lowRiskInvestment";
+
 const useStyles = makeStyles(theme => ({
   root: {
     maxHeight: "100vh",
@@ -36,13 +38,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Lowrisk = () => {
+const Lowrisk = props => {
   const [status, currentStatus] = useState(null);
   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
-        <div>{status === "otp" ? "" : ""}</div>
+        <div>
+          {status === "otp" ? (
+            <LowRiskInvestment
+              reload={props.reload}
+              setReload={props.setReload}
+            />
+          ) : (
+            ""
+          )}
+        </div>
       ) : (
         <Grid
           container

@@ -18,7 +18,7 @@ var InvestmentOptionDetails = new Schema({
   },
   percentageOfReturns: {
     type: Number
-    //required: true
+   
   }
 });
 
