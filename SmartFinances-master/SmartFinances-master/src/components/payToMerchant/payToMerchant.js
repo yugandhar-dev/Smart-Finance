@@ -7,14 +7,15 @@ import Typography from "@material-ui/core/Typography";
 import { List } from "@material-ui/core";
 import { useWallet } from "../../context/wallet";
 
-export default (props) => {
+export default props => {
 	const [amount, setAmount] = useState("");
 	const [payeename, setPayeename] = useState("");
 	const [payeeaccount, setPayeeaccount] = useState("");
 	const [roundOffAmount, setRoundOffAmount] = useState("");
 	const [message, setMessage] = useState("");
 	const [otp, setOTP] = useState("");
-    const {walletReload, setWalletReload} = useWallet();
+	const { walletReload, setWalletReload } = useWallet();
+	const subcategory = "Paid merchant";
 
 	let response = "";
 
@@ -33,7 +34,8 @@ export default (props) => {
 
 	const payAmount = async () => {
 		setMessage();
-		if (otp === 220292) {
+		console.log(otp)
+		if (otp === '220292') {
 			try {
 				const userDetails = await getUserDetails();
 				const data = {
@@ -41,12 +43,13 @@ export default (props) => {
 					destinationAccountNumber: payeeaccount,
 					amount,
 					roundOffAmount,
+					subcategory,
 				};
 				response = await payToMerchant(data);
 				if (response.Success) setMessage(response.Success);
 				if (response.error) setMessage(response.error);
-				setWalletReload(!walletReload)
-				props.setReload(!props.reload)
+				setWalletReload(!walletReload);
+				props.setReload(!props.reload);
 			} catch (ex) {
 				setMessage(`Something wrong, ${ex}`);
 			}
@@ -61,80 +64,80 @@ export default (props) => {
 		otp.toString().length < 1;
 
 	return (
-		<Grid container justify="center">
-			<List maxwidth="sm">
+		<Grid container justify='center'>
+			<List maxwidth='sm'>
 				<ListItem style={{ display: "flex", justifyContent: "center" }}>
-					<Typography component="h1" variant="h5">
+					<Typography component='h1' variant='h5'>
 						ENTER DETAILS
 					</Typography>
 				</ListItem>
 
 				<ListItem>
 					<TextField
-						size="small"
-						label="Merchant name"
-						variant="outlined"
+						size='small'
+						label='Merchant name'
+						variant='outlined'
 						value={payeename}
 						onChange={event => setPayeename(event.target.value)}
 					/>
 				</ListItem>
 				<ListItem>
 					<TextField
-						size="small"
-						label="Merchant account number"
-						variant="outlined"
+						size='small'
+						label='Merchant account number'
+						variant='outlined'
 						value={payeeaccount}
 						onChange={event => setPayeeaccount(event.target.value)}
 					/>
 				</ListItem>
 				<ListItem>
 					<TextField
-						size="small"
-						label="Amount"
-						variant="outlined"
+						size='small'
+						label='Amount'
+						variant='outlined'
 						value={amount}
 						onChange={event => getAmount(event.target.value)}
 					/>
 				</ListItem>
 				<ListItem>
 					<TextField
-						size="small"
-						label="Roundoff Amount"
-						variant="outlined"
+						size='small'
+						label='Roundoff Amount'
+						variant='outlined'
 						value={roundOffAmount}
 						onChange={event => setRoundOffAmount(event.target.value)}
 					/>
 				</ListItem>
 				<ListItem>
 					<TextField
-						size="small"
-						label="OTP"
-						variant="outlined"
+						size='small'
+						label='OTP'
+						variant='outlined'
 						value={otp}
 						onChange={event => setOTP(event.target.value)}
 					/>
 				</ListItem>
 
 				<ListItem>
-					<Grid container justify="space-evenly">
+					<Grid container justify='space-evenly'>
 						<Grid item>
-							<Button variant="contained" color="primary">
+							<Button variant='contained' color='primary'>
 								Generate OTP
 							</Button>
 						</Grid>
 					</Grid>
 				</ListItem>
 				<ListItem>
-					<Grid container justify="space-evenly">
+					<Grid container justify='space-evenly'>
 						<Grid item>
-							<Button variant="contained" color="primary" onClick={resetValues}>
+							<Button variant='contained' color='primary' onClick={resetValues}>
 								Cancel
 							</Button>
 						</Grid>
 						<Grid item>
 							<Button
-								variant="contained"
-								color="primary"
+								variant='contained'
+								color='primary'
 								onClick={payAmount}
 								disabled={validateInput()}
 							>

@@ -60,7 +60,7 @@ exports.signin = async (req, res) => {
   }
 
   // Create token
-  const expireDate = new Date(Date.now() + 15 * 60 * 1000);
+  const expireDate = new Date(Date.now() + 150 * 60 * 1000);
   const tokenContent = {
     _id: user._id,
     type: user.role,

@@ -6,6 +6,7 @@ exports.UserPayToMerchant = async (req, res) => {
 	const destinationAccountNumber = req.body.destinationAccountNumber;
 	const amount = parseFloat(req.body.amount);
 	const roundOffAmount = parseFloat(req.body.roundOffAmount);
+	const subcategory = req.body.subcategory;
 	let sourceUser;
 	let destinationUser;
 
@@ -57,15 +58,15 @@ exports.UserPayToMerchant = async (req, res) => {
 				{
 					accountBalance: parseFloat(
 						parseFloat(
-							sourceUser.accountBalance - amount - roundOffAmount
-						).toFixed(2)
+							sourceUser.accountBalance - amount - roundOffAmount,
+						).toFixed(2),
 					),
 					walletAccountBalance: parseFloat(
 						parseFloat(
-							sourceUser.walletAccountBalance + roundOffAmount
-						).toFixed(2)
+							sourceUser.walletAccountBalance + roundOffAmount,
+						).toFixed(2),
 					),
-				}
+				},
 			)
 			.exec();
 	} catch (err) {
@@ -81,9 +82,9 @@ exports.UserPayToMerchant = async (req, res) => {
 				{ accountNumber: destinationAccountNumber },
 				{
 					accountBalance: parseFloat(
-						parseFloat(destinationUser.accountBalance + amount).toFixed(2)
+						parseFloat(destinationUser.accountBalance + amount).toFixed(2),
 					),
-				}
+				},
 			)
 			.exec();
 	} catch (err) {
@@ -93,29 +94,27 @@ exports.UserPayToMerchant = async (req, res) => {
 	}
 
 	//Creating JSON to save transaction
-    const transaction = {
-        walletAccountNumber: sourceAccountNumber,
-        category: req.body.category,
-        subcategory: "PayToMerchant",
-        amount: amount,
-        roundedAmount: roundOffAmount,
-        date: req.body.date,
-        description: req.body.description
+	const transaction = {
+		walletAccountNumber: sourceUser.walletAccountNumber,
+		category: "Shopping",
+		subcategory: subcategory,
+		amount: amount,
+		roundedAmount: roundOffAmount,
+		date: new Date()
+	}
 
-    }
+	const saveTransaction = new newTransaction(transaction);
 
-    
-
-    const saveTransaction = new newTransaction(transaction);
-    
-        try{
+	try {
 		//Save transaction to new Transactions collection
-            await saveTransaction.save();
-        }catch(error){
-            return res.status(400).json({
-                error: "Unable to save transaction"
-            });
-        }
+		const details = await saveTransaction.save();
+		console.log(details, "line 111")
+
+	} catch (error) {
+		return res.status(400).json({
+			error: "Unable to save transaction",
+		});
+	}
 
 	// success reponse
 	res.status(200).json({
