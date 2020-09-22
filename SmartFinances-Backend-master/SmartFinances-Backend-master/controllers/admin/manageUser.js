@@ -15,7 +15,6 @@ exports.adminmanageUser = (req, res) => {
 
 exports.getUserPhoneNumber = async (req, res) => {
   const { email } = req.body;
-  console.log(email);
   try {
     const user = await ManageUser.findOne({ emailId: email });
     if (!user) return res.status(404).json({ error: "No User found" });

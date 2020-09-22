@@ -145,7 +145,9 @@ function Investments(props) {
         </CategoriesDiv>
       </MainDiv>
       <ChildDiv>
-        {display === "add" && <Addfunds />}
+        {display === "add" && (
+          <Addfunds reload={props.reload} setReload={props.setReload} />
+        )}
         {display === "lowrisk" && <Lowrisk />}
         {/* // {display === 'etf' && <Etfs />}
         // {display === 'schemes' && <Schemes />} */}
