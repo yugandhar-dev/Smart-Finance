@@ -9,7 +9,8 @@ import {
 	MenuItem,
 	Select,
 } from "@material-ui/core";
-import {Pencil} from "@styled-icons/boxicons-regular/Pencil"
+import {Pencil} from "@styled-icons/boxicons-regular/Pencil";
+
 export default()=>{
     return(
         <Grid container justify="center">
