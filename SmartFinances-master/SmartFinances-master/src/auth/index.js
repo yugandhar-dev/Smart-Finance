@@ -323,3 +323,21 @@ export const addFundsToWallet = data => {
     })
     .catch(err => console.log(err));
 };
+
+export const investFunds = data => {
+  console.log(data);
+  return fetch(`${API}/user/userinvestments`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
