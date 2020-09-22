@@ -157,20 +157,35 @@ export const getHighRisk = data => {
 };
 
 //User dashboard
-export const getUserDetails = data => {
-  return fetch(`${API}user/dashboard`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    //body: JSON.stringify(data),
-  })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => console.log(err));
+export const getUserDetails = () => {
+	return fetch(`${API}user/dashboard`, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		//body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
+};
+export const getProfileSettings = data => {
+	return fetch(`${API}user/changeProfileSettings`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+		body: JSON.stringify(data),
+	})
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => console.log(err));
 };
 
 export const getInvestmentDetails = data => {
