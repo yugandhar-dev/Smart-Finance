@@ -26,7 +26,7 @@ const receiptValue = require("./routes/user/receiptValue");
 const getInvestments = require("./routes/user/getInvestments");
 const investmentSell = require("./routes/user/investmentSell");
 const userPhoneNumber = require("./routes/admin/manageUser");
-const changeProfileSettings = require("./routes/user/changeProfileSettings")
+const changeProfileSettings = require("./routes/user/changeProfileSettings");
 
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
@@ -58,14 +58,14 @@ app.use("/api", changeProfileSettings);
 
 // Server Startup
 (async () => {
-	// We must not catch errors on db connection
-	await mongoose.connect(process.env.MONGODB_URL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-	});
+  // We must not catch errors on db connection
+  await mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
 
-	await tesseract.initWorker();
+  await tesseract.initWorker();
 })();
 
 module.exports = app;

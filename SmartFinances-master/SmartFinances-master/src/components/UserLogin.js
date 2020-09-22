@@ -84,6 +84,7 @@ const UserLogin = () => {
   const [error, setError] = useState("");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
+  const [message, setMessage] = useState("");
 
   const classes = useStyles();
   let history = useHistory();
@@ -115,10 +116,13 @@ const UserLogin = () => {
     if (res === false) {
       setError("SMS cannot be sent. Please check your phone number");
       return;
+    } else {
+      setMessage("OTP sent. Please enter it below.");
     }
   };
 
   const submitOtp = async () => {
+    setMessage("");
     if (phone.length === 0) return;
     const res = await verifyOtp(otp);
     console.log(res);
@@ -216,6 +220,9 @@ const UserLogin = () => {
                 Time Password
               </Typography>
               <div id="recaptcha-container"></div>
+              <Typography variant="body1" style={{ color: "green" }}>
+                {message}
+              </Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -243,6 +250,7 @@ const UserLogin = () => {
                 disabled={
                   parseInt(otp) === NaN || parseInt(otp).toString().length !== 6
                 }
+                id="sign-in-button"
                 variant="contained"
                 color="primary"
                 className={classes.submit}

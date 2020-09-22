@@ -1,8 +1,12 @@
 import firebase from "./firebase";
 
 export const submitPhone = phoneNumber => {
+  console.log(phoneNumber);
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-    "recaptcha-container"
+    "sign-in-button",
+    {
+      size: "invisible",
+    }
   );
   var appVerifier = window.recaptchaVerifier;
   firebase
@@ -21,9 +25,11 @@ export const verifyOtp = async code => {
   const result = await optConfirm.confirm(code);
   try {
     await result.user;
+    window.confirmationResult = null;
     return true;
   } catch (error) {
     console.log("error", error);
+    window.confirmationResult = null;
     return false;
   }
 };

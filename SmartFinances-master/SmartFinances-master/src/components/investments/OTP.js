@@ -1,12 +1,4 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import { Wallet } from "@styled-icons/entypo/Wallet";
-import { Calculator } from "@styled-icons/boxicons-solid/Calculator";
-import { Funds } from "@styled-icons/remix-fill/Funds";
-import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
-import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
-import { Plus } from "@styled-icons/evaicons-solid/Plus";
-import { Minus } from "@styled-icons/boxicons-regular/Minus";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -17,10 +9,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Investments from "./Investments";
 import Success from "./Success";
+import { verifyOtp } from "../../auth/smsAuth";
+import { addFundsToWallet } from "../../auth/index";
+import { useWallet } from "../../context/wallet";
 
-
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     height: "100vh",
   },
@@ -50,30 +43,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
-
-
-const OTP = (props) => {
-
+const OTP = props => {
   const [status, currentStatus] = useState(null);
   const [otp, onChangeOTP] = useState("");
-  
-  
-    
+  const [error, setError] = useState("");
+  const { walletReload, setWalletReload } = useWallet();
 
- 
+  const submitOtp = async e => {
+    e.preventDefault();
+    const res = await verifyOtp(otp);
+    if (res) {
+      setError("");
+      await addFundsToWallet({
+        accountNumber: props.from,
+        walletFund: props.amount,
+      });
+      setWalletReload(!walletReload);
+      props.setReload(!props.reload);
+      currentStatus(
+        "OTP is verified. Amount is added into wallet successfully"
+      );
+    } else {
+      currentStatus("");
+      setError("OTP is incorrect. Please try again");
+    }
+  };
 
- 
   const classes = useStyles();
   return (
     <div>
-      {status !== null ? (
-        <div>{+otp === 12345  ? <Success /> : <Investments />}</div>
-      ) : (
-        
       <Grid
         container
         direction="column"
@@ -92,14 +90,11 @@ const OTP = (props) => {
           elevation={10}
           square
         >
-          
-          
           <div className={classes.paper}>
             <Typography component="h1" variant="h5">
               ENTER DETAILS
             </Typography>
-            
-            
+
             <form className={classes.form} noValidate id="forms">
               <TextField
                 variant="outlined"
@@ -112,9 +107,8 @@ const OTP = (props) => {
                 autoComplete="From"
                 autoFocus
                 value={props.from}
-                
               />
-                <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
@@ -139,27 +133,23 @@ const OTP = (props) => {
                 value={props.amount}
               />
 
-             <TextField
+              <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
                 id="OTP"
                 label="OTP"
-                name = 'OTP'
+                name="OTP"
                 value={otp}
                 autoComplete="From"
                 autoFocus
-                onChange={(e) => onChangeOTP(e.target.value)}
-
-                
+                onChange={e => onChangeOTP(e.target.value)}
               />
-            {+otp === 12345 ?
-            <React.Fragment>
-              
               <Button
-               onClick={() => currentStatus("otp")}
+                onClick={submitOtp}
                 type="submit"
+                id="sign-in-button"
                 fullWidth
                 variant="contained"
                 color="primary"
@@ -167,23 +157,24 @@ const OTP = (props) => {
               >
                 Submit
               </Button>
-              </React.Fragment>
-              :""}
-              
-              
+              <Button
+                onClick={submitOtp}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Cancel
+              </Button>
+              {error}
+              {status}
             </form>
           </div>
         </Grid>
       </Grid>
-      
-      )}
-    
-    
-    
     </div>
-  
   );
-}
-
+};
 
 export default OTP;
