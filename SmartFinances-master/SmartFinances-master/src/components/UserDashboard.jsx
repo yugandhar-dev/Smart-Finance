@@ -22,6 +22,7 @@ import { WalletContext } from "../context/wallet";
 import UploadReceipt from "./uploadReceipt/uploadReceipt";
 import Settings from "./Settings/settings";
 import History from "./Transactions/history";
+import Trend from "./../components/investments/Lowriskinvest";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -140,6 +141,7 @@ export default props => {
 							<Tab classname={classes.tab} label='Pay Merchant' />
 							<Tab classname={classes.tab} label='Upload Receipt' />
 							<Tab classname={classes.tab} label='Investments' />
+							<Tab classname={classes.tab} label='Investment Trends' />
 							<Tab classname={classes.tab} label='User Settings' />
 							<Tab classname={classes.tab} label='Transaction History' />
 						</Tabs>
@@ -282,10 +284,14 @@ export default props => {
 						<Investments reload={reload} setReload={setReload} />
 					</TabPanel>
 					<TabPanel value={value} index={4}>
+						<Trend />
+						{/* </Trend> </WalletContext.Provider>/reload={reload} setReload={setReload} /> */}
+					</TabPanel>
+					<TabPanel value={value} index={5}>
 						<WalletDetails reload={walletReload} />
 						<Settings reload={reload} setReload={setReload} />
 					</TabPanel>
-					<TabPanel value={value} index={5}>
+					<TabPanel value={value} index={6}>
 						<History reload={reload} setReload={setReload} />
 					</TabPanel>
 				</WalletContext.Provider>

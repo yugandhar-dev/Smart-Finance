@@ -5,9 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Lowriskinvest from "./Lowriskinvest";
-
-import LowRiskInvestment from "./lowRiskInvestment";
+import Lowtrend from "./Lowtrend";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,22 +37,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Lowrisk = props => {
-  const [status, currentStatus] = useState(null);
+const Lowrisk = () => {
+  const [status, setStatus] = useState(null);
   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
-        <div>
-          {status === "otp" ? (
-            <LowRiskInvestment
-              reload={props.reload}
-              setReload={props.setReload}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : ""}</div>
       ) : (
         <Grid
           container
@@ -75,32 +64,42 @@ const Lowrisk = props => {
             square
           >
             <div className={classes.paper}>
-              <Typography component="h1" variant="h5">
+              {/* <Typography component="h1" variant="h5">
                 Low Risk
-              </Typography>
+              </Typography> */}
 
-              <p>
-                An Investment where there is perceived to be just a slight
-                chance of loosing some or all of the your money.An Investment
-                where there is perceived to be just a slight chance of loosing
-                some or all of the your money.An Investment where there is
-                perceived to be just a slight chance of loosing some or all of
-                the your money.An Investment where there is perceived to be just
-                a slight chance of loosing some or all of the your money.An
-                Investment where there is perceived to be just a slight chance
-                of loosing some or all of the your money
-              </p>
+             
 
               <form className={classes.form} id="forms">
                 <Button
-                  onClick={() => currentStatus("invest")}
+                  onClick={() => setStatus("invest")}
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
                 >
-                  Invest
+                  Low risk Trend Analysis
+                </Button>
+                <Button
+                  onClick={() => setStatus("invest")}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Exchange Traded Funds Trend
+                </Button>
+                <Button
+                  onClick={() => setStatus("invest")}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Savings Scheme
                 </Button>
               </form>
             </div>
