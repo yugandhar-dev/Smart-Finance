@@ -43,7 +43,6 @@ export default props => {
 				comp.push(val.companyName);
 			});
 			comps = { comp };
-			console.log(comps, "line 49");
 			setCompanies(comps);
 			setLength(comp.length);
 		};
@@ -145,6 +144,7 @@ export default props => {
 						<Button variant='contained' color='primary' onClick={buyFunds}>
 							Buy
 						</Button>
+            <br /> <br /> <br />
 					</Grid>
 				</Grid>
 				<div>{message}</div>
