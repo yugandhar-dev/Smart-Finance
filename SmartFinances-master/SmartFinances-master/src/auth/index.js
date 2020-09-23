@@ -158,34 +158,34 @@ export const getHighRisk = data => {
 
 //User dashboard
 export const getUserDetails = () => {
-	return fetch(`${API}user/dashboard`, {
-		method: "GET",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${localStorage.getItem("token")}`,
-		},
-		//body: JSON.stringify(data),
-	})
-		.then(response => {
-			return response.json();
-		})
-		.catch(err => console.log(err));
+  return fetch(`${API}user/dashboard`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    //body: JSON.stringify(data),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
 };
 export const getProfileSettings = data => {
-	return fetch(`${API}user/changeProfileSettings`, {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${localStorage.getItem("token")}`,
-		},
-		body: JSON.stringify(data),
-	})
-		.then(response => {
-			return response.json();
-		})
-		.catch(err => console.log(err));
+  return fetch(`${API}user/changeProfileSettings`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
 };
 
 export const getInvestmentDetails = data => {
@@ -284,19 +284,19 @@ export const getUserPhoneNumber = email => {
 };
 
 export const getReceiptValue = formData => {
-	return fetch(`${API}/user/receipt-value`, {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			Authorization: `Bearer ${localStorage.getItem("token")}`,
-			"Access-Control-Allow-Origin": "*",
-		},
-		body: formData,
-	})
-		.then(response => {
-			return response.json();
-		})
-		.catch(err => console.log(err));
+  return fetch(`${API}/user/receipt-value`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: formData,
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
 };
 
 export const getEmailId = accountNumber => {
@@ -352,25 +352,24 @@ export const investFunds = data => {
 };
 
 export const getTransactionHistory = data => {
-	return fetch(`${API}/user/transactionhistory`, {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${localStorage.getItem("token")}`,
-		},
-		body: JSON.stringify(data),
-	})
-		.then(response => {
-			console.log(response);
-			return response.json();
-		})
-		.catch(err => console.log(err));
+  return fetch(`${API}/user/transactionhistory`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .catch(err => console.log(err));
 };
 
-
 export const receiptTransaction = data => {
-  console.log(data, "line 358")
+  console.log(data, "line 358");
   return fetch(`${API}/user/uploadreceipt`, {
     method: "POST",
     headers: {
