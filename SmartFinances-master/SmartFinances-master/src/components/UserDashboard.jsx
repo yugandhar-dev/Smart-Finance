@@ -36,6 +36,32 @@ const useStyles = makeStyles(theme => ({
 	walletdiv: {
 		width: "50px",
 	},
+
+	tab: {
+		backgroundColor: "blue",
+		border: "none",
+		"&:active": {
+			outline: "none",
+			margin: 0,
+		},
+		"&:focus": {
+			outline: "none",
+			margin: 0,
+		},
+
+		"&:hover": {
+			outline: "none",
+			margin: 0,
+		},
+		"&:visited": {
+			outline: "none",
+			margin: 0,
+		},
+		selected: {
+			backgroundColor: "blue",
+			margin: 0,
+		},
+	},
 }));
 
 function TabPanel(props) {
@@ -50,7 +76,11 @@ function TabPanel(props) {
 			aria-labelledby={`simple-tab-${index}`}
 			{...other}
 		>
-			{value === index && <Box p={3}>{children}</Box>}
+			{value === index && (
+				<Box p={3} border={0}>
+					{children}
+				</Box>
+			)}
 		</Typography>
 	);
 }
@@ -106,12 +136,12 @@ export default props => {
 							aria-label='simple tabs example'
 							centered
 						>
-							<Tab label='Portfolio' />
-							<Tab label='Pay Merchant' />
-							<Tab label='Upload Receipt' />
-							<Tab label='Investments' />
-							<Tab label='User Settings' />
-							<Tab label='Transaction History' />
+							<Tab classname={classes.tab} label='Portfolio' />
+							<Tab classname={classes.tab} label='Pay Merchant' />
+							<Tab classname={classes.tab} label='Upload Receipt' />
+							<Tab classname={classes.tab} label='Investments' />
+							<Tab classname={classes.tab} label='User Settings' />
+							<Tab classname={classes.tab} label='Transaction History' />
 						</Tabs>
 					</AppBar>
 					<TabPanel value={value} index={0}>
@@ -122,7 +152,7 @@ export default props => {
 							alignItems='stretch'
 							component={Paper}
 						>
-							<Table>
+							<Table marginHeight='sm'>
 								<tbody>
 									<tr>
 										<td>
@@ -161,30 +191,36 @@ export default props => {
 													</font>
 												</p>
 											</Typography>
-											<p>
-												<font color='#f44336'>
-													Low Risk Fund Investments:
-													<font color='#1273de'>
-														${JSON.stringify(response.lowRiskFund)}
+											<Typography fontWeight='bold'>
+												<p>
+													<font color='#f44336'>
+														Low Risk Fund Investments:
+														<font color='#1273de'>
+															${JSON.stringify(response.lowRiskFund)}
+														</font>
 													</font>
-												</font>
-											</p>
-											<p>
-												<font color='#4caf50'>
-													Exchange Traded Funds:
-													<font color='#1273de'>
-														${JSON.stringify(response.exchangeTradedFund)}
+												</p>
+											</Typography>
+											<Typography fontWeight='bold'>
+												<p>
+													<font color='#4caf50'>
+														Exchange Traded Funds:
+														<font color='#1273de'>
+															${JSON.stringify(response.exchangeTradedFund)}
+														</font>
 													</font>
-												</font>
-											</p>
-											<p>
-												<font color='#ff9800'>
-													Savings Schemes:
-													<font color='#1273de'>
-														${JSON.stringify(response.savingScheme)}
+												</p>
+											</Typography>
+											<Typography fontWeight='bold'>
+												<p>
+													<font color='#ff9800'>
+														Savings Schemes:
+														<font color='#1273de'>
+															${JSON.stringify(response.savingScheme)}
+														</font>
 													</font>
-												</font>
-											</p>
+												</p>
+											</Typography>
 										</td>
 										<td>
 											<div>
