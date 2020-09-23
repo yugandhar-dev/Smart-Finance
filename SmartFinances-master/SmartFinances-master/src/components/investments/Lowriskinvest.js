@@ -38,12 +38,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Lowrisk = () => {
-  const [status, currentStatus] = useState(null);
+  const [status, setStatus] = useState(null);
   const classes = useStyles();
   return (
     <div>
       {status !== null ? (
-        <div>{status === "invest" ? <Lowtrend /> : ""}</div>
+        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : ""}</div>
       ) : (
         <Grid
           container
@@ -64,15 +64,15 @@ const Lowrisk = () => {
             square
           >
             <div className={classes.paper}>
-              <Typography component="h1" variant="h5">
+              {/* <Typography component="h1" variant="h5">
                 Low Risk
-              </Typography>
+              </Typography> */}
 
              
 
               <form className={classes.form} id="forms">
                 <Button
-                  onClick={() => currentStatus("invest")}
+                  onClick={() => setStatus("invest")}
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -80,6 +80,26 @@ const Lowrisk = () => {
                   className={classes.submit}
                 >
                   Low risk Trend Analysis
+                </Button>
+                <Button
+                  onClick={() => setStatus("invest")}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Exchange Traded Funds Trend
+                </Button>
+                <Button
+                  onClick={() => setStatus("invest")}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Savings Scheme
                 </Button>
               </form>
             </div>
