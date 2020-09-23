@@ -154,8 +154,12 @@ function Investments(props) {
         {display === "lowrisk" && (
           <Lowrisk reload={props.reload} setReload={props.setReload} />
         )}
-        {display === "etfs" && <ETF />}
-        {display === "schemes" && <SavingScheme />}
+        {display === "etfs" && (
+          <ETF reload={props.reload} setReload={props.setReload} />
+        )}
+        {display === "schemes" && (
+          <SavingScheme reload={props.reload} setReload={props.setReload} />
+        )}
         {display === "sell" && (
           <Sell reload={props.reload} setReload={props.setReload} />
         )}
