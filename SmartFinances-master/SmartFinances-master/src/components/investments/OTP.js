@@ -55,7 +55,7 @@ const OTP = props => {
     if (res) {
       setError("");
       await addFundsToWallet({
-        accountNumber: props.from,
+        walletAccountNumber: props.to,
         walletFund: props.amount,
       });
       setWalletReload(!walletReload);

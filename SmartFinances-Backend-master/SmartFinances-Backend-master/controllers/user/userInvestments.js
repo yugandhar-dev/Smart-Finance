@@ -4,7 +4,6 @@ const userInvestments = require("../../models/userInvestments");
 const newTransaction = require("../../models/newTransaction");
 
 exports.InvestmentFunds = async (req, res) => {
-  console.log("body", req.body);
   const investment = new userInvestments(req.body);
   const now = new Date();
   let investmentDetails;
@@ -80,7 +79,7 @@ exports.InvestmentFunds = async (req, res) => {
       investmentType: investment.investmentType,
       companyName: investment.companyName,
     });
-    console.log(userInvests);
+
     if (!userInvests) {
       const userInvest = new userInvestments({
         accountNumber: investment.accountNumber,
