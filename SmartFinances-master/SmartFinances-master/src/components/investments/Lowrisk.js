@@ -46,7 +46,7 @@ const Lowrisk = props => {
     <div>
       {status !== null ? (
         <div>
-          {status === "otp" ? (
+          {status === "lowrisk" ? (
             <LowRiskInvestment
               reload={props.reload}
               setReload={props.setReload}
@@ -93,7 +93,7 @@ const Lowrisk = props => {
 
               <form className={classes.form} id="forms">
                 <Button
-                  onClick={() => currentStatus("invest")}
+                  onClick={() => currentStatus("lowrisk")}
                   type="submit"
                   fullWidth
                   variant="contained"
