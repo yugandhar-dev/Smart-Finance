@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import {
 	List,
 	TextField,
@@ -13,7 +14,10 @@ import {
 	getInvestmentOptions,
 	getInvestmentDetails,
 	getInvestmentCompanies,
-} from "./../../../auth/index";
+	investFunds,
+	getUserDetails,
+} from "../../../auth/index";
+import { useWallet } from "../../../context/wallet";
 
 export default props => {
 	const [noOfUnits, setNoOfUnits] = useState("");
@@ -22,7 +26,8 @@ export default props => {
 	const [company, setCompany] = useState("");
 	const [len, setLength] = useState();
 	const [message, setMessage] = useState("");
-	const investType = "exchangeTradedFunds";
+	const { walletReload, setWalletReload } = useWallet();
+	const investType = "exchangeTradedFund";
 	let investmentDetails;
 
 	useEffect(() => {
@@ -56,18 +61,36 @@ export default props => {
 		investmentDetails = await getInvestmentCompanies(data);
 		investmentDetails.map(value => {
 			if (value.companyName === company) {
-				const calAmount = parseFloat(
+				const calcAmount = parseFloat(
 					parseFloat(event * value.pricePerUnit).toFixed(2),
-                );
-				setAmount(calAmount);
-				setMessage(
-					`Your account gets credited with $${calAmount} if you buy  ${noOfUnits} no of units`,
 				);
+				setAmount(calcAmount);
+				setMessage(`Your wallet account gets deducted by $${calcAmount}`);
 			}
 		});
-    };
-    
-    
+	};
+
+	const resetForm = () => {
+		setCompany("");
+		setAmount("");
+		setNoOfUnits("");
+	};
+
+	const buyFunds = async () => {
+		const userDetails = await getUserDetails();
+		const data = {
+			accountNumber: userDetails[0].accountNumber,
+			walletAccountNumber: userDetails[0].walletAccountNumber,
+			investmentType: "exchangeTradedFund",
+			companyName: company,
+			numberOfUnits: parseInt(noOfUnits), 
+		};
+		const response = await investFunds(data);
+		response.error && setMessage(response.error);
+		response.Success && setMessage(response.Success);
+		setWalletReload(!walletReload);
+		props.setReload(!props.reload);
+	};
 
 	return (
 		<Grid container justify='center'>
@@ -103,6 +126,7 @@ export default props => {
 					<a>Enter Number of Units: </a>
 					<TextField
 						placeholder='Units'
+						value={noOfUnits}
 						onChange={event => calculateAmount(event.target.value)}
 					/>
 				</ListItem>
@@ -110,8 +134,18 @@ export default props => {
 					<a>Amount:</a>
 					<TextField value={amount} />
 				</ListItem>
-				<button  >Invest</button>
-				<button>Reset</button>
+				<Grid container justify='space-evenly'>
+					<Grid item>
+						<Button variant='contained' color='primary' onClick={resetForm}>
+							Reset
+						</Button>
+					</Grid>
+					<Grid item>
+						<Button variant='contained' color='primary' onClick={buyFunds}>
+							Buy
+						</Button>
+					</Grid>
+				</Grid>
 				<div>{message}</div>
 			</List>
 		</Grid>
