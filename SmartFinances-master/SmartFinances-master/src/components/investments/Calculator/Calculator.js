@@ -97,7 +97,10 @@ const InvestmentCalculator = () => {
   };
 
   const submitData = () => {
-    if (investmentSelected === "lowRiskFund") {
+    if (
+      investmentSelected === "lowRiskFund" ||
+      investmentSelected === "exchangeTradedFund"
+    ) {
       companyDetails[0] &&
         formData.principal > companyDetails[0].pricePerUnit &&
         setMessage(
@@ -150,7 +153,8 @@ const InvestmentCalculator = () => {
         <Grid item xs={6}>
           <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel id="company">
-              {investmentSelected === "lowRiskFund"
+              {investmentSelected === "lowRiskFund" ||
+              investmentSelected === "exchangeTradedFund"
                 ? "Select the company"
                 : "Select the Scheme"}
             </InputLabel>
@@ -162,7 +166,8 @@ const InvestmentCalculator = () => {
                 setCompanySelected(e.target.value);
               }}
               label={
-                investmentSelected === "lowRiskFund"
+                investmentSelected === "lowRiskFund" ||
+                investmentSelected === "exchangeTradedFund"
                   ? "Select the company"
                   : "Select the Scheme"
               }
@@ -183,7 +188,8 @@ const InvestmentCalculator = () => {
           </FormControl>
         </Grid>
         <Grid item xs={6}>
-          {investmentSelected === "lowRiskFund" ? (
+          {investmentSelected === "lowRiskFund" ||
+          investmentSelected === "exchangeTradedFund" ? (
             <TextField
               id="outlined-basic"
               label="Investment Amount"
@@ -241,7 +247,10 @@ const InvestmentCalculator = () => {
               label="Contribution per month"
               variant="outlined"
               name="contribution"
-              disabled={investmentSelected === "lowRiskFund" && true}
+              disabled={
+                investmentSelected === "lowRiskFund" ||
+                (investmentSelected === "exchangeTradedFund" && true)
+              }
               value={formData.contribution}
               onChange={onChange}
               InputProps={{
@@ -255,7 +264,8 @@ const InvestmentCalculator = () => {
           )}
         </Grid>
         <Grid item xs={6}>
-          {investmentSelected === "lowRiskFund" ? (
+          {investmentSelected === "lowRiskFund" ||
+          investmentSelected === "exchangeTradedFund" ? (
             <TextField
               id="outlined-basic"
               label="Price Per Unit"
@@ -318,6 +328,13 @@ const InvestmentCalculator = () => {
           <BarChart
             investData={marketData}
             type="lowRiskFund"
+            company={companyDetails[0].companyName}
+          />
+        )}
+        {investmentSelected === "exchangeTradedFund" && marketData && (
+          <BarChart
+            investData={marketData}
+            type="exchangeTradedFund"
             company={companyDetails[0].companyName}
           />
         )}
