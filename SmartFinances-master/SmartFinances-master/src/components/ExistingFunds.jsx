@@ -14,7 +14,7 @@ import ManageFund from "./ManageFund";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "30vh",
+    flexGrow: 1,
   },
 
   paper: {
