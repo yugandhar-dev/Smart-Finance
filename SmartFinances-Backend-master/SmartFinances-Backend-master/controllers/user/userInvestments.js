@@ -57,17 +57,55 @@ exports.InvestmentFunds = async (req, res) => {
         error: "Balance is less than the Investment Amount",
       });
     }
-    userBalances.walletAccountBalance =
-      userBalances.walletAccountBalance - calculateAmount;
-    userBalances[investment.investmentType] =
-      userBalances[investment.investmentType] + calculateAmount;
-    userBalances.totalfunds = userBalances.totalfunds + calculateAmount;
+    userBalances.walletAccountBalance = (
+      userBalances.walletAccountBalance - calculateAmount
+    ).toFixed(2);
+    userBalances[investment.investmentType] = (
+      userBalances[investment.investmentType] + calculateAmount
+    ).toFixed(2);
+    userBalances.totalfunds = (
+      userBalances.totalfunds + calculateAmount
+    ).toFixed(2);
     try {
       await userBalances.save();
     } catch (err) {
       return res.status(400).json({
         error: err,
       });
+    }
+
+    const userInvests = await userInvestments.findOne({
+      walletAccountNumber: investment.walletAccountNumber,
+      investmentType: investment.investmentType,
+      companyName: investment.companyName,
+    });
+
+    if (!userInvests) {
+      const userInvest = new userInvestments({
+        accountNumber: investment.accountNumber,
+        walletAccountNumber: investment.walletAccountNumber,
+        investmentType: investment.investmentType,
+        companyName: investment.companyName,
+        numberOfUnits: investment.numberOfUnits,
+        amountInvested: parseFloat(calculateAmount).toFixed(2),
+        pricePerUnit: investmentDetails.pricePerUnit,
+        createdDate: now,
+      });
+      await userInvest.save();
+    } else {
+      await userInvestments.findOneAndUpdate(
+        {
+          walletAccountNumber: investment.walletAccountNumber,
+          investmentType: investment.investmentType,
+          companyName: investment.companyName,
+        },
+        {
+          $inc: {
+            numberOfUnits: investment.numberOfUnits,
+            amountInvested: calculateAmount.toFixed(2),
+          },
+        }
+      );
     }
 
     res.status(200).json({
@@ -83,7 +121,7 @@ exports.InvestmentFunds = async (req, res) => {
     walletAccountNumber: investment.walletAccountNumber,
     category: "Investments",
     subcategory: "invested in " + investment.investmentType,
-    amount: calculateAmount,
+    amount: calculateAmount.toFixed(2),
     date: new Date(),
   };
 
