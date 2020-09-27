@@ -1,7 +1,8 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const fileUpload = require("express-fileupload");
-const express = require("express");
+require('dotenv').config();
+const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+const express = require('express');
+
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -15,6 +16,7 @@ const newTransaction = require("./routes/user/newTransaction");
 const userDashboard = require("./routes/user/userDashboard");
 const adminCreateFund = require("./routes/admin/createFund");
 const adminCreateUser = require("./routes/admin/createNewUser");
+const fundOptions = require("./routes/user/userFundOptions");
 const userBalance = require("./routes/user/balance");
 const walletFunds = require("./routes/user/addFundsToWallet");
 const userPayToMerchant = require("./routes/user/payToMerchant");
@@ -40,11 +42,14 @@ app.use(cors());
 app.use(authenticate);
 
 // Routes here
+
+
 app.use("/api", userAuthRoutes);
 app.use("/api", newTransaction);
 app.use("/api", userDashboard);
 app.use("/api", adminCreateFund);
 app.use("/api", adminCreateUser);
+app.use("/api", fundOptions);
 app.use("/api", userBalance);
 app.use("/api", userPayToMerchant);
 app.use("/api", investmentWithdraw);
