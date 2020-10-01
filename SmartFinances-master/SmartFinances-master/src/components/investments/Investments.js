@@ -18,12 +18,12 @@ import SavingScheme from "./SavingSchemes/savingScheme";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
-  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 25vh;
   width: 20%;
-  padding-top: 40vh;
   position: absolute;
   left: 0;
-  top: 0;
+  top: 10%;
 `;
 
 const ChildDiv = styled.div`
@@ -59,7 +59,7 @@ const CategoriesDiv = styled.div`
 
 function Investments(props) {
   const [open, setOpen] = useState(false);
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState("add");
 
   const getForm = e => {
     setDisplay(e.target.getAttribute("name"));
@@ -113,7 +113,7 @@ function Investments(props) {
         <CategoriesDiv
           onClick={e => {
             setOpen(!open);
-            getForm(e);
+            //getForm(e);
           }}
           style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
         >
