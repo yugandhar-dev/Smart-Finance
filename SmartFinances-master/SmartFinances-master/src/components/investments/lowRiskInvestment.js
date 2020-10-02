@@ -141,8 +141,8 @@ export default (props) => {
       <Grid
         item
         xs={false}
-        sm={8}
-        md={5}
+        sm={12}
+        md={12}
         component={Paper}
         elevation={10}
         square

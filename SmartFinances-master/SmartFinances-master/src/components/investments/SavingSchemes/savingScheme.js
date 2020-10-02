@@ -138,7 +138,7 @@ export default (props) => {
       className={classes.root}
     >
       <CssBaseline />
-      <Grid xs={false} sm={8} md={5} component={Paper} elevation={10} square>
+      <Grid xs={false} sm={12} md={12} component={Paper} elevation={10} square>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Saving Schemes
