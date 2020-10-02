@@ -15,8 +15,8 @@ import { getEmailId } from "../../auth/index";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxHeight: "100vh",
-    marginTop: "5%",
+    flexGrow: 1,
+    marginLeft: '-15%',
   },
 
   paper: {
