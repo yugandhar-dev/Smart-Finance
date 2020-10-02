@@ -97,7 +97,7 @@ exports.modifyUser = async (req, res) => {
         .updateOne(
           { emailId: userDetails.emailId },
           {
-            accountNumber,
+            accountNumber: accountNumber,
             tfnNumber: usertfnNumber,
             address: useraddress
           }
