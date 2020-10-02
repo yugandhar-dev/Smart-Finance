@@ -1,16 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
-import { InvestmentWithdraw, getUserDetails } from '../../auth/index';
-import { useWallet } from '../../context/wallet';
+import React, {useState, useEffect} from 'react';
+import styled, {css} from 'styled-components';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import {InvestmentWithdraw, getUserDetails} from '../../auth/index';
+import {useWallet} from '../../context/wallet';
 
-const Content = styled.div`
-  width: 80vw;
-  height: 100%;
-  position: center;
-`;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginLeft: '-15%',
+  },
+
+  paper: {
+    margin: theme.spacing(8, 8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    justifyItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1), //tilting the page up and down
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
 
 const Input = styled.input`
-  width: 10%;
   border-shadow: none;
   text-align: Left;
   border-radius: 8px;
@@ -20,7 +49,6 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 15%;
   background-color: #07236a;
   border-radius: 10px;
   margin-top: 5px;
@@ -41,32 +69,33 @@ const Button = styled.button`
 
 const Message = styled.p`
   color: green;
-  ${props =>
+  ${(props) =>
     props.error &&
     css`
       color: red;
     `}
 `;
 
-export default props => {
+export default (props) => {
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
   const [walletAmount, setWalletAmount] = useState('');
-  const { walletReload, setWalletReload } = useWallet();
+  const {walletReload, setWalletReload} = useWallet();
 
   useEffect(() => {
     getUserDetails()
-      .then(data => {
+      .then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
           setResponse(data[0]);
         }
       })
-      .catch(ex => console.log('Fund Details Retrieval error', ex));
+      .catch((ex) => console.log('Fund Details Retrieval error', ex));
   }, []);
 
-  const withdrawAmount = async () => {
+  const withdrawAmount = async (e) => {
+    e.preventDefault();
     const userDetails = await getUserDetails();
     const data = {
       accountNumber: userDetails[0].accountNumber,
@@ -84,30 +113,58 @@ export default props => {
   const validateInput = () =>
     parseFloat(walletAmount) <= 0 || walletAmount == '';
 
+  const classes = useStyles();
+
   return (
-    <Content>
-      <p>Account number:{JSON.stringify(response.accountNumber)}</p>
-      <p>
-        Enter the amount you want to withdraw
-        <Input
-          type='text'
-          value={walletAmount}
-          onChange={event => setWalletAmount(event.target.value)}
-        ></Input>{' '}
-      </p>
-      <br></br>
-      <Button onClick={withdrawAmount} disabled={validateInput()}>
-        Withdraw
-      </Button>
-      <Button margin-left='40%'>Reset</Button>
-      {error != '' && error == null ? (
-        <Message>
-          The amount has been successfully withdrawn and your balances are
-          updated.
-        </Message>
-      ) : (
-        <Message error>{error}</Message>
-      )}
-    </Content>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      component="main"
+      className={classes.root}
+    >
+      <CssBaseline />
+      <Grid
+        item
+        xs={false}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={10}
+        square
+      >
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Withdraw Money
+          </Typography>
+          <br></br>
+          <form className={classes.form} id="forms">
+            <p>Account number:{JSON.stringify(response.accountNumber)}</p>
+            <p>
+              Enter the amount you want to withdraw:
+              <Input
+                type="text"
+                value={walletAmount}
+                onChange={(event) => setWalletAmount(event.target.value)}
+              ></Input>{' '}
+            </p>
+            <br></br>
+            <Button onClick={withdrawAmount} disabled={validateInput()}>
+              Withdraw
+            </Button>
+            <Button margin-left="40%">Reset</Button>
+            {error != '' && error == null ? (
+              <Message>
+                The amount has been successfully withdrawn and your balances are
+                updated.
+              </Message>
+            ) : (
+              <Message error>{error}</Message>
+            )}
+          </form>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
