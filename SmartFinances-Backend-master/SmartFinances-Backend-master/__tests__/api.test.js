@@ -212,8 +212,8 @@ describe('checks user details', () => {
       .send({
         accountNumber: userDetails.accountNumber,
         walletAccountNumber: userDetails.walletAccountNumber,
-        investmentType: "savingScheme",
-        companyName: "ME Term Deposit",
+        investmentType: 'savingScheme',
+        companyName: 'ME Term Deposit',
         numberOfUnits: 1,
       });
 
@@ -242,7 +242,7 @@ describe('checks user details', () => {
       subcategory: expect.any(String),
       amount: expect.any(Number),
       date: expect.any(String),
-      __v: expect.any(Number)
+      __v: expect.any(Number),
     });
     expect(getTransactionHistory.status).toBe(200);
     expect(getTransactionHistory.res.statusMessage).toBe('OK');
@@ -257,12 +257,12 @@ describe('checks user details', () => {
       })
       .send({
         useraccountNumber: userDetails.accountNumber,
-        userphoneNumber: "61481831824",
+        userphoneNumber: '61481831824',
       });
 
-      expect(getProfileSettings.body).toMatchObject({
-        Success: 'User Profile is updated'
-      });
+    expect(getProfileSettings.body).toMatchObject({
+      Success: 'User Profile is updated',
+    });
     expect(getProfileSettings.status).toBe(200);
     expect(getProfileSettings.res.statusMessage).toBe('OK');
     done();
@@ -329,29 +329,31 @@ describe('checks user details', () => {
       })
       .send({
         accountNumber: 756, //Use different details each time creating new user
-        emailId: "newuser4@gmail.com",
-        firstName: "new4",
-        lastName: "user4",
-        bankName: "newbank4",
-        address: "1123232145",
+        emailId: 'newuser4@gmail.com',
+        firstName: 'new4',
+        lastName: 'user4',
+        bankName: 'newbank4',
+        address: '1123232145',
         tfnNumber: 423311,
         phoneNumber: 6114251515,
         openingBalance: 5000,
       });
 
-    expect(createUser.body).toMatchObject({newUser: {
-      _id: expect.any(String),
-      accountNumber: expect.any(Number),
-      emailId: expect.any(String),
-      firstName: expect.any(String),
-      lastName: expect.any(String),
-      bankName: expect.any(String),
-      address: expect.any(String),
-      tfnNumber: expect.any(Number),
-      phoneNumber: expect.any(Number),
-      openingBalance: expect.any(Number),
-      __v: expect.any(Number)
-    }})
+    expect(createUser.body).toMatchObject({
+      newUser: {
+        _id: expect.any(String),
+        accountNumber: expect.any(Number),
+        emailId: expect.any(String),
+        firstName: expect.any(String),
+        lastName: expect.any(String),
+        bankName: expect.any(String),
+        address: expect.any(String),
+        tfnNumber: expect.any(Number),
+        phoneNumber: expect.any(Number),
+        openingBalance: expect.any(Number),
+        __v: expect.any(Number),
+      },
+    });
     expect(createUser.status).toBe(200);
     expect(createUser.res.statusMessage).toBe('OK');
     done();
@@ -383,6 +385,31 @@ describe('checks user details', () => {
 
     expect(getAllInvestmentOptions.status).toBe(200);
     expect(getAllInvestmentOptions.res.statusMessage).toBe('OK');
+    done();
+  });
+
+  it('checks investment companies', async (done) => {
+    const getInvestmentCompanies = await request(app)
+      .post('/api/user/company')
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        investmentType: 'savingScheme',
+      });
+
+    expect(getInvestmentCompanies.body[0].investmentType).toBe('savingScheme');
+    expect(getInvestmentCompanies.body[0]).toMatchObject({
+      _id: expect.any(String),
+      companyName: expect.any(String),
+      investmentType: expect.any(String),
+      percentageOfReturns: expect.any(Number),
+      __v: expect.any(Number),
+      pricePerUnit: expect.any(Number),
+    });
+
+    expect(getInvestmentCompanies.status).toBe(200);
+    expect(getInvestmentCompanies.res.statusMessage).toBe('OK');
     done();
   });
 });
