@@ -177,4 +177,33 @@ describe("checks user details", () => {
     done();
 
   });
+
+  it('checks all investment options', async (done) => {
+    const getAllInvestmentOptions = await request(app)
+      .get('/api/user/allInvestments')
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+
+    expect(getAllInvestmentOptions.body[0]).toMatchObject({
+      _id: expect.any(String),
+      companyName: expect.any(String),
+      investmentType: expect.any(String),
+      pricePerUnit: expect.any(Number),
+      __v: expect.any(Number),
+      companyStockSymbol: expect.any(String),
+    });
+
+    expect(getAllInvestmentOptions.body[1]).toMatchObject({
+      _id: expect.any(String),
+      companyName: expect.any(String),
+      investmentType: expect.any(String),
+      pricePerUnit: expect.any(Number),
+      __v: expect.any(Number),
+    });
+
+    expect(getAllInvestmentOptions.status).toBe(200);
+    expect(getAllInvestmentOptions.res.statusMessage).toBe('OK');
+    done();
+  });
 });
