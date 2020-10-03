@@ -13,10 +13,13 @@ router.post(
 	"/signup",
 	//using express validator to validate in routes
 	[
-		check("name")
+		check("firstName")
 			.isLength({ min: 3 })
-			.withMessage("name should be at least 3 charecters"),
-		check("email").isEmail().withMessage("email is required"),
+			.withMessage("first name should be at least 3 charecters"),
+		check("lastName")
+			.isLength({ min: 1 })
+			.withMessage("last name should be at least 3 charecters"),	
+		check("emailId").isEmail().withMessage("email is required"),
 		check("password")
 			.isLength({ min: 3 })
 			.withMessage("password should be atleast 3 charecters"),

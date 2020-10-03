@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const { User, securePassword } = require('../../models/user');
+const newUser = require("../../controllers/admin/createNewUser");
 
 const { JWT_SECRET } = process.env;
 
@@ -14,26 +15,7 @@ exports.signup = async (req, res) => {
   }
 
   // Saving user to DB
-  const user = new User({
-    email: req.body.email,
-    password: securePassword(req.body.password),
-    name: req.body.name,
-    role: req.body.role,
-  });
-
-  try {
-    await user.save();
-  } catch (err) {
-    return res.status(400).json({
-      error: err.errmsg,
-    });
-  }
-
-  return res.status(200).json({
-    name: user.name,
-    email: user.email,
-    id: user._id,
-  });
+  newUser.CreateUser(req,res);
 };
 
 exports.signin = async (req, res) => {
