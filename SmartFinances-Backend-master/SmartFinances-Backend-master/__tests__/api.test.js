@@ -72,4 +72,109 @@ describe("checks user details", () => {
     expect(investmnentWithdraw.res.statusMessage).toBe("OK");
     done();
   });
+
+  it("checks investment sell APIs", async (done) => {
+    const investmentSellDetails = await request(app)
+      .post("/api/user/getinvestments")
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        walletAccountNumber: userDetails.walletAccountNumber,
+      });
+    expect(investmentSellDetails.body[0]).toMatchObject({  //investmentType: 'lowRiskFund', companyName: 'ANZ'
+      _id: expect.any(String),
+      accountNumber: expect.any(Number),
+      walletAccountNumber: expect.any(String),
+      investmentType: expect.any(String),
+      companyName: expect.any(String),
+      numberOfUnits: expect.any(Number),
+      amountInvested: expect.any(Number), 
+      pricePerUnit: expect.any(Number),
+      createdDate: expect.any(String),
+    });
+    expect(investmentSellDetails.body[1]).toMatchObject({  //investmentType: 'savingScheme', companyName: 'ME Term Deposit'
+      _id: expect.any(String),
+      accountNumber: expect.any(Number),
+      walletAccountNumber: expect.any(String),
+      investmentType: expect.any(String),
+      companyName: expect.any(String),
+      numberOfUnits: expect.any(Number),
+      amountInvested: expect.any(Number),
+      pricePerUnit: expect.any(Number),
+      createdDate: expect.any(String),
+    });
+    expect(investmentSellDetails.body[2]).toMatchObject({  //investmentType: 'savingScheme', companyName: 'AMP Term Deposit'
+      _id: expect.any(String),
+      accountNumber: expect.any(Number),
+      walletAccountNumber: expect.any(String),
+      investmentType: expect.any(String),
+      companyName: expect.any(String),
+      numberOfUnits: expect.any(Number),
+      amountInvested: expect.any(Number),
+      pricePerUnit: expect.any(Number),
+      createdDate: expect.any(String),
+    });
+    expect(investmentSellDetails.body[3]).toMatchObject({  //investmentType: 'lowRiskFund', companyName: 'fgg', pricePerUnit: 30
+      _id: expect.any(String),
+      accountNumber: expect.any(Number),
+      //walletAccountNumber: expect.any(String),
+      investmentType: expect.any(String),
+      companyName: expect.any(String),
+      numberOfUnits: expect.any(Number),
+      amountInvested: expect.any(Number),
+      pricePerUnit: expect.any(Number),
+      //createdDate: expect.any(String),
+    });
+    expect(investmentSellDetails.body[4]).toMatchObject({  //investmentType: 'lowRiskFund', companyName: 'fgg', pricePerUnit: 40
+      _id: expect.any(String),
+      accountNumber: expect.any(Number),
+      //walletAccountNumber: expect.any(String),
+      investmentType: expect.any(String),
+      companyName: expect.any(String),
+      numberOfUnits: expect.any(Number),
+      amountInvested: expect.any(Number),
+      pricePerUnit: expect.any(Number),
+      //createdDate: expect.any(String),
+    });
+    expect(investmentSellDetails.status).toBe(200);
+    expect(investmentSellDetails.res.statusMessage).toBe("OK");
+
+    const investmentSellOptions = await request(app)
+      .post("/api/user/investmentOptions")
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        investmentType: investmentSellDetails.body[0].investmentType,
+        companyName: investmentSellDetails.body[0].companyName,
+      });
+      expect(investmentSellOptions.body[0]).toMatchObject({
+        _id: expect.any(String),
+        companyName: expect.any(String),
+        investmentType: expect.any(String),
+        pricePerUnit: expect.any(Number),
+        __v: expect.any(Number),
+        companyStockSymbol: expect.any(String)
+      });
+    expect(investmentSellOptions.status).toBe(200);
+    expect(investmentSellOptions.res.statusMessage).toBe("OK");
+
+    const sellInvestments = await request(app)
+      .post("/api/user/investmentsell")
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        walletAccountNumber: userDetails.walletAccountNumber,
+        investmentType: investmentSellDetails.body[0].investmentType,
+        companyName: investmentSellDetails.body[0].companyName,
+        numberOfUnits: "1",
+      });
+    expect(sellInvestments.body).toMatchObject({ Success: 'Sold successfully and your balances are updated' })  
+    expect(sellInvestments.status).toBe(200);
+    expect(sellInvestments.res.statusMessage).toBe("OK");
+    done();
+
+  });
 });
