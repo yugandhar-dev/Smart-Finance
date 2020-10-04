@@ -126,6 +126,7 @@ export default props => {
 					<a>Enter Number of Units: </a>
 					<TextField
 						placeholder='Units'
+						id = 'units'
 						value={noOfUnits}
 						onChange={event => calculateAmount(event.target.value)}
 					/>
