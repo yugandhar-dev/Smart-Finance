@@ -44,7 +44,7 @@ const Lowrisk = () => {
   return (
     <div>
       {status !== null ? (
-        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : <ETFT classes={classes}/>}</div>
+        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : <ETFT setStatus={setStatus} classes={classes}/>}</div>
       ) : (
         <Grid
           container
