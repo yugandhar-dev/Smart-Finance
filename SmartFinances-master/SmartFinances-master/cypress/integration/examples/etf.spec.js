@@ -1,4 +1,4 @@
-describe('Low risk investment test case', () => {
+describe('ETF investment test case', () => {
     var walletBalance;
    it('should check whether visit user login page', () => {
       cy.visit('http://localhost:3000/user'); 
@@ -6,21 +6,15 @@ describe('Low risk investment test case', () => {
       it('should check whether user sign in page contains correct user login page', () => {
          cy.get('.makeStyles-paper-3').contains('User Sign In').should('be.visible');
         }); 
-        it('should check whetherinvestment calculator functionality is working correctly or not', () => {
+        it('should check whether ETF functionality is working correctly or not', () => {
            cy.get('#email').type('usertest@gmail.com');
            cy.get('#password').type('1234');
            cy.get('#phone').type('+61481831824');
            cy.get('#otp').type('456321');
            cy.get('#sign-in-button').click();
            cy.url().should('include', '/dashboard');
-           cy.wait(3000);
-           
-   
-         
-           
-           cy.contains('Investments').click();
-           
-           
+           cy.wait(3000);          
+           cy.contains('Investments').click();          
            cy.get('#Invest').click();
            cy.contains('Exchange Traded Funds').click();
            cy.get('#simple-tabpanel-3')
