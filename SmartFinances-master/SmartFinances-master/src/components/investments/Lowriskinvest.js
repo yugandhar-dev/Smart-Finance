@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Lowtrend from "./Lowtrend";
+import ETFT from "./ETFT";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +44,7 @@ const Lowrisk = () => {
   return (
     <div>
       {status !== null ? (
-        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : ""}</div>
+        <div>{status === "invest" ? <Lowtrend setStatus={setStatus} classes={classes}/> : <ETFT setStatus={setStatus} classes={classes}/>}</div>
       ) : (
         <Grid
           container
@@ -83,7 +84,7 @@ const Lowrisk = () => {
                   Low risk Trend Analysis
                 </Button>
                 <Button
-                  onClick={() => setStatus("invest")}
+                  onClick={() => setStatus("etft")}
                   type="submit"
                   fullWidth
                   id = "etf"
