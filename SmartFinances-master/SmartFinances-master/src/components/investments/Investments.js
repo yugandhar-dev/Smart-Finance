@@ -117,7 +117,7 @@ function Investments(props) {
           }}
           style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
         >
-          <Funds size="35" /> Invest
+          <Funds size="35" id = "Invest" /> Invest
           {open ? (
             <Minus size="35" style={{ float: "right" }} />
           ) : (
