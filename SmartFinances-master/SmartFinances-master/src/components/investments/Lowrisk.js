@@ -98,6 +98,7 @@ const Lowrisk = props => {
                   fullWidth
                   variant="contained"
                   color="primary"
+                  id = "inv"
                   className={classes.submit}
                 >
                   Invest
