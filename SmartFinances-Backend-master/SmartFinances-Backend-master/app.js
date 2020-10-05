@@ -31,6 +31,8 @@ const getTransactions = require("./routes/user/transactionHistory");
 const userInvestments = require("./routes/user/userinvestments");
 const uploadreceipt = require("./routes/user/uploadReceipt");
 const changePassword = require("./routes/user/changePassword");
+const modifyUser = require("./routes/admin/modifyUser");
+const modifyFund = require("./routes/admin/modifyFund");
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
 
@@ -63,7 +65,8 @@ app.use("/api", userInvestments);
 app.use("/api", getTransactions);
 app.use("/api", uploadreceipt);
 app.use("/api", changePassword);
-
+app.use("/api", modifyUser);
+app.use("/api", modifyFund);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection

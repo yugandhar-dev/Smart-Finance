@@ -30,6 +30,9 @@ const userSchema = new Schema(
     role: {
       type: String,
       required: true
+    },
+    accountNumber: {
+      type: Number
     }
   },
   { timestamps: true }
