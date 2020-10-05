@@ -76,6 +76,7 @@ const Lowrisk = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
+                  id = "lowrisk"
                   color="primary"
                   className={classes.submit}
                 >
@@ -85,6 +86,7 @@ const Lowrisk = () => {
                   onClick={() => setStatus("invest")}
                   type="submit"
                   fullWidth
+                  id = "etf"
                   variant="contained"
                   color="primary"
                   className={classes.submit}
@@ -95,6 +97,7 @@ const Lowrisk = () => {
                   onClick={() => setStatus("invest")}
                   type="submit"
                   fullWidth
+                  id = "savings"
                   variant="contained"
                   color="primary"
                   className={classes.submit}
