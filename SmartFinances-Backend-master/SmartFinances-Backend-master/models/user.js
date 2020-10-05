@@ -32,7 +32,18 @@ const userSchema = new Schema(
       required: true
     },
     accountNumber: {
-      type: Number
+      type: Number,
+      required: true,
+      trim: true,
+      unique: true
+    },
+    walletAccountNumber: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    activationStatus: {
+      type: String
     }
   },
   { timestamps: true }
