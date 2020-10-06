@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const tesseract = require("./lib/tesseract");
+const { updatePricesForAllOptions } = require('./controllers/thirdparty/rapidapi');
 
 // import routes here
 const userAuthRoutes = require("./routes/user/userAuth");
@@ -80,4 +81,5 @@ app.use("/api", modifyFund);
   await tesseract.initWorker();
 })();
 
+updatePricesForAllOptions();
 module.exports = app;
