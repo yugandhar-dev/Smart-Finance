@@ -15,7 +15,8 @@ import { useWallet } from "../../context/wallet";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "100vh",
+    flexGrow: 1,
+    marginLeft: '-15%',
   },
 
   paper: {

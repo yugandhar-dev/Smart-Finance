@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-
+import React, {useState, useEffect} from 'react';
+import styled from 'styled-components';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   List,
   TextField,
@@ -9,25 +12,56 @@ import {
   Button,
   MenuItem,
   Select,
-} from "@material-ui/core";
+} from '@material-ui/core';
 import {
   getInvestmentOptions,
   getInvestmentDetails,
   getInvestmentCompanies,
   investFunds,
   getUserDetails,
-} from "./../../auth/index";
-import { useWallet } from "../../context/wallet";
+} from './../../auth/index';
+import {useWallet} from '../../context/wallet';
 
-export default props => {
-  const [noOfUnits, setNoOfUnits] = useState("");
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginLeft: '-15%',
+  },
+
+  paper: {
+    margin: theme.spacing(8, 8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    justifyItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1), //tilting the page up and down
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
+
+export default (props) => {
+  const [noOfUnits, setNoOfUnits] = useState('');
   const [companies, setCompanies] = useState({});
   const [amount, setAmount] = useState();
-  const [company, setCompany] = useState("");
+  const [company, setCompany] = useState('');
   const [len, setLength] = useState();
-  const [message, setMessage] = useState("");
-  const { walletReload, setWalletReload } = useWallet();
-  const investType = "lowRiskFund";
+  const [message, setMessage] = useState('');
+  const {walletReload, setWalletReload} = useWallet();
+  const investType = 'lowRiskFund';
   let investmentDetails;
 
   useEffect(() => {
@@ -39,27 +73,27 @@ export default props => {
 
       let comps = {};
       let comp = [];
-      investmentDetails.map(val => {
+      investmentDetails.map((val) => {
         comp.push(val.companyName);
       });
-      comps = { comp };
+      comps = {comp};
       setCompanies(comps);
       setLength(comp.length);
     };
     fetchData();
   }, []);
 
-  const getCompany = event => {
+  const getCompany = (event) => {
     setCompany(event.target.value);
   };
 
-  const calculateAmount = async event => {
+  const calculateAmount = async (event) => {
     setNoOfUnits(event);
     const data = {
       investmentType: investType,
     };
     investmentDetails = await getInvestmentCompanies(data);
-    investmentDetails.map(value => {
+    investmentDetails.map((value) => {
       if (value.companyName === company) {
         const creditAmount = parseFloat(
           parseFloat(event * value.pricePerUnit).toFixed(2)
@@ -71,9 +105,9 @@ export default props => {
   };
 
   const resetForm = () => {
-    setCompany("");
-    setAmount("");
-    setNoOfUnits("");
+    setCompany('');
+    setAmount('');
+    setNoOfUnits('');
   };
 
   const buyFunds = async () => {
@@ -81,7 +115,7 @@ export default props => {
     const data = {
       accountNumber: userDetails[0].accountNumber,
       walletAccountNumber: userDetails[0].walletAccountNumber,
-      investmentType: "lowRiskFund",
+      investmentType: 'lowRiskFund',
       companyName: company,
       numberOfUnits: parseInt(noOfUnits),
     };
@@ -92,64 +126,101 @@ export default props => {
     props.setReload(!props.reload);
   };
 
+  const classes = useStyles();
+
   return (
-    <Grid container justify="center">
-      <List>
-        <ListItem>
-          <h4>Low Risk Investments</h4>
-        </ListItem>
-        <ListItem>
-          <a>Select company:</a>
-          <Select
-            style={{ margin: "2px", padding: "0px 5px" }}
-            variant="outlined"
-            style={{ padding: "0px 40px" }}
-            labelId="companies"
-            id="companies"
-            onChange={getCompany}
-          >
-            {companies.comp && len > 0 ? (
-              companies.comp.map((val, index) => (
-                <MenuItem key={index} value={val}>
-                  {val}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem selected="selected" value={"No Investments Found"}>
-                No Companies Found
-              </MenuItem>
-            )}
-          </Select>
-        </ListItem>
-        <br />
-        <ListItem>
-          <a>Enter Number of Units: </a>
-          <TextField
-            placeholder="Units"
-            id = "units"
-            value={noOfUnits}
-            onChange={event => calculateAmount(event.target.value)}
-          />
-        </ListItem>
-        <ListItem>
-          <a>Amount:</a>
-          <TextField value={amount} />
-        </ListItem>
-        <Grid container justify="space-evenly">
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={resetForm}>
-              Reset
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" onClick={buyFunds}>
-              Buy
-            </Button>
-            <br /> <br /> <br />
-          </Grid>
-        </Grid>
-        <div>{message}</div>
-      </List>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+      component="main"
+      className={classes.root}
+    >
+      <CssBaseline />
+      <Grid
+        item
+        xs={false}
+        sm={12}
+        md={12}
+        component={Paper}
+        elevation={10}
+        square
+      >
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
+            Low Risk Investments
+          </Typography>
+          <form className={classes.form}>
+            <List>
+              <ListItem>
+                <a>Select company:</a>
+                <Select
+                  style={{margin: '2px', padding: '0px 5px'}}
+                  variant="outlined"
+                  style={{padding: '0px 40px'}}
+                  labelId="companies"
+                  id="companies"
+                  onChange={getCompany}
+                >
+                  {companies.comp && len > 0 ? (
+                    companies.comp.map((val, index) => (
+                      <MenuItem key={index} value={val}>
+                        {val}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem
+                      selected="selected"
+                      value={'No Investments Found'}
+                    >
+                      No Companies Found
+                    </MenuItem>
+                  )}
+                </Select>
+              </ListItem>
+              <br />
+              <ListItem>
+                <a>Enter Number of Units: </a>
+                <TextField
+                  placeholder="Units"
+                  id = "units"
+                  value={noOfUnits}
+                  onChange={(event) => calculateAmount(event.target.value)}
+                />
+              </ListItem>
+              <ListItem>
+                <a>Amount:</a>
+                <TextField value={amount} />
+              </ListItem>
+              <Grid container justify="space-evenly">
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={resetForm}
+                    className={classes.submit}
+                  >
+                    Reset
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={buyFunds}
+                    className={classes.submit}
+                  >
+                    Buy
+                  </Button>
+                  <br /> <br /> <br />
+                </Grid>
+              </Grid>
+              <div>{message}</div>
+            </List>
+          </form>
+        </div>
+      </Grid>
     </Grid>
   );
 };
