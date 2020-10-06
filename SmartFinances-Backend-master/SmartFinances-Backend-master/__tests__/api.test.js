@@ -412,4 +412,22 @@ describe('checks user details', () => {
     expect(getInvestmentCompanies.res.statusMessage).toBe('OK');
     done();
   });
+
+  it('checks phone number', async (done) => {
+    const getPhoneNumber = await request(app)
+      .post('/api/admin/getPhoneNumber')
+      .set({
+        Authorization: `Bearer ${token}`,
+      })
+      .send({
+        email: userCredentials.email,
+      });
+
+    expect(getPhoneNumber.body).toMatchObject({
+      phoneNumber: expect.any(Number),
+    });
+    expect(getPhoneNumber.status).toBe(200);
+    expect(getPhoneNumber.res.statusMessage).toBe('OK');
+    done();
+  });
 });
