@@ -1,14 +1,13 @@
-const user = require("../../models/user");
-const { securePassword } = require('../../models/user');
+const { User, securePassword } = require('../../models/user');
 
 exports.ChangePassword = async (req, res) => {
     const useremail = req.body.useremail;
-    const userpasword = req.body.userpasword;
+    const userpassword = req.body.userpassword;
     let useremailid;
 
 
     try {
-		useremailid = await user
+		useremailid = await User
 			.findOne({ email: useremail })
             .exec();
 	} catch (err) {
@@ -24,11 +23,11 @@ exports.ChangePassword = async (req, res) => {
     }
     
     try {
-		await changePassword
+		await User
 			.updateOne(
 				{ email: useremail },
 				{
-					password : securePassword(userpasword),
+					password : securePassword(userpassword),
 				}
 			)
 			.exec();
@@ -36,7 +35,10 @@ exports.ChangePassword = async (req, res) => {
 		return res.status(400).json({
 			error: "Error updating password",
 		});
-	}
+    }
+    res.status(200).json({
+		Success: "User Password is updated",
+	});
 
 }
 	
