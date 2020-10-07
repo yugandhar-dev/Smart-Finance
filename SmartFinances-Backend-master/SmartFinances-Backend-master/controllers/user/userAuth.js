@@ -35,11 +35,32 @@ exports.signin = async (req, res) => {
     });
   }
 
-  if (!password || !user.authenticate(password)) {
-    return res.status(401).json({
-      error: ' Email & password do not match',
-    });
-  }
+// limiting the unsuccessful login attempts
+if(user.loginAttemptCount > 3) {
+  try {
+		await changePassword
+			.updateOne(
+				{ email: email },
+				{
+					password : securePassword('sm@rtF1nances'),
+				}
+			)
+			.exec();
+	} catch (err) {
+		return res.status(400).json({
+			error: "Error updating password",
+		});
+	}
+  return res.status(401).json({ error: 'Limit Exceeded. Please contact admin for new password'}); 
+}
+if(!password || !user.authenticate(password)) {
+  user.loginAttemptCount ++;
+  await user.save();
+  return res.status(401).json({error: 'Enter the correct password and try again.'});
+}
+// Reset the user count to zero as soon as the user login
+  user.loginAttemptCount = 0;
+  await user.save();
 
   // Create token
   const expireDate = new Date(Date.now() + 150 * 60 * 1000);
