@@ -132,6 +132,7 @@ export default (props) => {
                   size="small"
                   label="Merchant name"
                   variant="outlined"
+                  id = "payeename"
                   value={payeename}
                   onChange={(event) => setPayeename(event.target.value)}
                 />
@@ -141,6 +142,7 @@ export default (props) => {
                   size="small"
                   label="Merchant account number"
                   variant="outlined"
+                  id = "payeeaccount"
                   value={payeeaccount}
                   onChange={(event) => setPayeeaccount(event.target.value)}
                 />
@@ -150,6 +152,7 @@ export default (props) => {
                   size="small"
                   label="Amount"
                   variant="outlined"
+                  id = "amount"
                   value={amount}
                   onChange={(event) => getAmount(event.target.value)}
                 />
@@ -168,6 +171,7 @@ export default (props) => {
                   size="small"
                   label="OTP"
                   variant="outlined"
+                  id = "otp"
                   value={otp}
                   onChange={(event) => setOTP(event.target.value)}
                 />
@@ -197,6 +201,7 @@ export default (props) => {
                     <Button
                       variant="contained"
                       color="primary"
+                      id = "payAmount"
                       onClick={payAmount}
                       disabled={validateInput()}
                     >
