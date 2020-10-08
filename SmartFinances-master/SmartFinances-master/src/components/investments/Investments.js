@@ -18,12 +18,12 @@ import SavingScheme from "./SavingSchemes/savingScheme";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
-  padding-top: 5vh;
-  padding-bottom: 25vh;
+  padding-top: 30vh;
+  height: 100vh;
   width: 20%;
   position: absolute;
   left: 0;
-  top: 10%;
+  top: 4%;
 `;
 
 const ChildDiv = styled.div`
@@ -117,7 +117,7 @@ function Investments(props) {
           }}
           style={open ? { backgroundColor: "#8598c9", color: "#07236a" } : {}}
         >
-          <Funds size="35" id = "Invest" /> Invest
+          <Funds size="35" id="Invest" /> Invest
           {open ? (
             <Minus size="35" style={{ float: "right" }} />
           ) : (
