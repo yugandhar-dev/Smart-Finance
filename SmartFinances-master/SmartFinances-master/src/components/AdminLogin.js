@@ -87,7 +87,7 @@ const AdminLogin = () => {
           setError(data.error);
         } else {
           setAuthToken(data.token)
-          history.push("/admin/fundsDashboard");
+          history.push("/admin/dashboard");
         }
       })
       .catch(ex => console.log(ex));

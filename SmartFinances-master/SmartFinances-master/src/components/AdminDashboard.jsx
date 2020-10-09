@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FundManagement from "./FundManagement.jsx";
-import UserManagement from "./UserManagement.jsx";
+import UserManagement from './UserManagement/UserManagement';
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -62,7 +62,6 @@ function TabPanel(props) {
 }
 
 export default (props) => {
-  const [status] = useState(null);
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -72,10 +71,6 @@ export default (props) => {
 
   return (
     <div>
-      {status !== null ? (
-        <div>{status === "risk" ? <FundManagement /> : <UserManagement />}</div>
-      ) : (
-        <div>
           <AppBar position="static">
             <Toolbar>
               <IconButton
@@ -101,6 +96,7 @@ export default (props) => {
             >
               <Tab label="Fund Management" />
               <Tab label="User Management" />
+              <Tab label="Admin Management" />
             </Tabs>
           </AppBar>
 
@@ -108,10 +104,11 @@ export default (props) => {
             <FundManagement />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <UserManagement />
+           <UserManagement />
           </TabPanel>
-        </div>
-      )}
+          <TabPanel value={value} index={2}>
+            <div />
+          </TabPanel>
     </div>
   );
 };
