@@ -37,6 +37,13 @@ const CategoriesDiv = styled.div`
   }
 `;
 
+const changeStyle = {
+  backgroundColor: "white",
+  color: "#07236a",
+  border: "1rem",
+  boxShadow: "0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",
+};
+
 export default () => {
   const [rows, setRows] = useState([]);
   const [toggle, setToggle] = useState(false);
@@ -60,19 +67,25 @@ export default () => {
     };
     fetchData();
   }, []);
-//   style={{ position: "fixed" }}
   return (
     <Fragment>
-      <MainDiv >
+      <MainDiv>
+        <br />
+        <br />
+        <br />
+        <br />
         <CategoriesDiv
-          name="calculator"
-            onClick={() => setActivationStatus(false)}
+          name="unverified Users"
+          onClick={() => setActivationStatus(false)}
+          style={!activationStatus ? changeStyle : {}}
         >
           USERS TO BE VERIFIED
         </CategoriesDiv>
+        <br />
         <CategoriesDiv
-          name="calculator"
-          onClick={() => setActivationStatus(false)}
+          name="verified users"
+          onClick={() => setActivationStatus(true)}
+          style={activationStatus ? changeStyle : {}}
         >
           VERIFIED USERS
         </CategoriesDiv>
@@ -80,12 +93,17 @@ export default () => {
       <ChildDiv>
         <div>
           {rows && rows != [] ? (
-            <Datatable users={rows} toggle={toggle} zeroRecords={zeroRecords} activationStatus={activationStatus}/>
+            <Datatable
+              users={rows}
+              toggle={toggle}
+              zeroRecords={zeroRecords}
+              activationStatus={activationStatus}
+            />
           ) : (
             ""
           )}
         </div>
       </ChildDiv>
-	</Fragment>
+    </Fragment>
   );
 };
