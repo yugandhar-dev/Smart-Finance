@@ -12,3 +12,16 @@ exports.adminmanageUser = (req, res) => {
     res.json(user);
   });
 };
+
+exports.getUserPhoneNumber = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await ManageUser.findOne({ emailId: email });
+    if (!user) return res.status(404).json({ error: "No User found" });
+    return res.json({ phoneNumber: user.phoneNumber });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server Error",
+    });
+  }
+};

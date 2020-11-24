@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FundManagement from "./FundManagement.jsx";
-import UserManagement from "./UserManagement.jsx";
+import UserManagement from './UserManagement/UserManagement';
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,26 +61,16 @@ function TabPanel(props) {
   );
 }
 
-export default () => {
-  const [status] = useState(null);
+export default (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  let history = useHistory();
-
-  const logout = () => {
-    history.push("/");
-  };
 
   return (
     <div>
-      {status !== null ? (
-        <div>{status === "risk" ? <FundManagement /> : <UserManagement />}</div>
-      ) : (
-        <div>
           <AppBar position="static">
             <Toolbar>
               <IconButton
@@ -95,7 +84,7 @@ export default () => {
               <Typography variant="h6" className={classes.title}>
                 Smart Finance
               </Typography>
-              <Button color="inherit" onClick={logout}>
+              <Button color="inherit" onClick={props.logout}>
                 Logout
               </Button>
             </Toolbar>
@@ -107,6 +96,7 @@ export default () => {
             >
               <Tab label="Fund Management" />
               <Tab label="User Management" />
+              <Tab label="Admin Management" />
             </Tabs>
           </AppBar>
 
@@ -114,10 +104,11 @@ export default () => {
             <FundManagement />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <UserManagement />
+           <UserManagement />
           </TabPanel>
-        </div>
-      )}
+          <TabPanel value={value} index={2}>
+            <div />
+          </TabPanel>
     </div>
   );
 };

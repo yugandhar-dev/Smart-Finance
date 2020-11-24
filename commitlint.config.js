@@ -1,0 +1,1 @@
+module.exports = {extends: ['./SmartFinances-Backend-master/SmartFinances-Backend-master/node_modules/@commitlint/config-conventional']}

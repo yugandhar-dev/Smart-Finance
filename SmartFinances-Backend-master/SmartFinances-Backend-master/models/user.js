@@ -1,66 +1,72 @@
 const mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-const crypto = require("crypto");
-const uuidv1 = require("uuid/v1");
+const bcrypt = require("bcryptjs");
 
-var userSchema = new Schema(
+const { Schema } = mongoose;
+
+const userSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
       maxlength: 32,
-      trim: true,
+      trim: true
     },
     lastname: {
       type: String,
       required: false,
       maxlength: 32,
-      trim: true,
+      trim: true
     },
     email: {
       type: String,
       trim: true,
       required: true,
-      unique: true,
+      unique: true
     },
-    role: {
+    password: {
+      type: String,
+      required: true
+    },
+    loginAttemptCount: {
       type: Number,
+      required: true,
       default: 0,
     },
+    role: {
+      type: String,
+      required: true
+    },
+    accountNumber: {
+      type: Number,
+      required: true,
+      trim: true,
+      unique: true
+    },
+    walletAccountNumber: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    activationStatus: {
+      type: String
+    }
   },
   { timestamps: true }
 );
 
-//Creating virtual fields.
-//These are used to get specific structured data from already passing data from user.
-//Eg: full name out of first name & last name given by user
-userSchema
-  .virtual("password")
-  .set(function (password) {
-    this._password = password;
-    this.salt = uuidv1();
-    this.encry_password = this.securePassword(password);
-  })
-  .get(function () {
-    return this._password;
-  });
-
-//This function converts plain password given to a encrypted string (password) refer : https://nodejs.org/api/crypto.html
 userSchema.methods = {
-  authenticate: function (plainpassword) {
-    return this.securePassword(plainpassword) === this.encry_password;
-  },
-  securePassword: function (plainpassword) {
-    if (!plainpassword) return "";
-    try {
-      return crypto
-        .createHmac("sha256", this.salt)
-        .update(plainpassword)
-        .digest("hex");
-    } catch (err) {
-      return "";
-    }
-  },
+  authenticate(password) {
+    return bcrypt.compareSync(password, this.password);
+  }
 };
 
-module.exports = mongoose.model("User", userSchema);
+const securePassword = password => {
+  const salt = bcrypt.genSaltSync(5);
+  const hash = bcrypt.hashSync(password, salt);
+  return hash;
+};
+
+module.exports = {
+  User: mongoose.model("User", userSchema),
+  securePassword
+};

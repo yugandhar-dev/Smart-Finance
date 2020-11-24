@@ -11,6 +11,12 @@ var AdminNewUser = new Schema(
 
 
         },
+        walletAccountNumber: {
+            type : String,
+            required : true,
+            trim : true,
+            unique : true,
+        },
         emailId : {
             type : String,
             required : true,
