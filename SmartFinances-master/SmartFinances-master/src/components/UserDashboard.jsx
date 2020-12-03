@@ -23,6 +23,7 @@ import UploadReceipt from './uploadReceipt/uploadReceipt';
 import Settings from './Settings/settings';
 import History from './Transactions/history';
 import Trend from './../components/investments/Lowriskinvest';
+import ContactUs from './ContactUs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,6 +120,7 @@ export default (props) => {
                 <Tab className={classes.tab} label="Investment Trends" />
                 <Tab className={classes.tab} label="User Settings" />
                 <Tab className={classes.tab} label="Transaction History" />
+                <Tab className={classes.tab} label="Contact Us" />
               </Tabs>
               <div className={classes.logout}>
                 <Button color="inherit" onClick={props.logout}>
@@ -267,7 +269,8 @@ export default (props) => {
           </TabPanel>
           <TabPanel value={value} index={4}>
             <Trend />
-            {/* </Trend> </WalletContext.Provider>/reload={reload} setReload={setReload} /> */}
+            {/* </Trend> </WalletContext.Provider>/reload={reload} setReload=
+            {setReload} /> */}
           </TabPanel>
           <TabPanel value={value} index={5}>
             <WalletDetails reload={walletReload} />
@@ -275,6 +278,9 @@ export default (props) => {
           </TabPanel>
           <TabPanel value={value} index={6}>
             <History reload={reload} setReload={setReload} />
+          </TabPanel>
+          <TabPanel value={value} index={7}>
+            <ContactUs reload={reload} setReload={setReload} />
           </TabPanel>
         </WalletContext.Provider>
       </div>

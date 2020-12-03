@@ -8,6 +8,7 @@ import PayMerchant from './components/payToMerchant/payToMerchant'
 import AdminDashboard from "./components/AdminDashboard";
 import NewUser from "./components/NewUserCreation";
 import UserDetails from "./components/UserDetails";
+import ContactUs from "./components/ContactUs"
 import {AuthContext} from './context/auth'
 import {PrivateRoute} from './components/PrivateRoute'
 import Sell from './components/investments/sell/sell'
