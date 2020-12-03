@@ -23,7 +23,7 @@ import UploadReceipt from './uploadReceipt/uploadReceipt';
 import Settings from './Settings/settings';
 import History from './Transactions/history';
 import Trend from './../components/investments/Lowriskinvest';
-import ContactUs from './ContactUs';
+import ContactUs from './contactUs/ContactUs';
 
 const useStyles = makeStyles((theme) => ({
   root: {

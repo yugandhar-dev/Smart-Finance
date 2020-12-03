@@ -33,7 +33,7 @@ export default function ContactUs() {
 </div>
 	</div>
 				<div className="form-row-last">
-					<input type="submit" name="register" className="register" value="Register"/>
+					<input type="submit" name="register" className="register" value="Send"/>
 				</div>
 			</form>
 	
