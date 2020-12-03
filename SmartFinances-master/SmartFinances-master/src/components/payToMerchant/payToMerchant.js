@@ -1,17 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import {TextField, ListItem} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
-import {getUserDetails, payToMerchant} from '../../auth/index';
+import { TextField, ListItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import {List} from '@material-ui/core';
-import {useWallet} from '../../context/wallet';
+import { List } from '@material-ui/core';
+import { submitPhone, verifyOtp } from '../../auth/smsAuth';
+import {
+  getUserPhoneNumber,
+  getUserDetails,
+  getEmailId,
+  payToMerchant,
+} from '../../auth/index';
+import { useWallet } from '../../context/wallet';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -41,19 +47,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default (props) => {
+export default props => {
   const [amount, setAmount] = useState('');
   const [payeename, setPayeename] = useState('');
   const [payeeaccount, setPayeeaccount] = useState('');
   const [roundOffAmount, setRoundOffAmount] = useState('');
   const [message, setMessage] = useState('');
   const [otp, setOTP] = useState('');
-  const {walletReload, setWalletReload} = useWallet();
+  const [phoneNumber, setPhonenumber] = useState('');
+  const [error, setError] = useState('');
+  const [emailId, setemailId] = useState('');
+  const [accNumber, setAccNumber] = useState('');
+  const { walletReload, setWalletReload } = useWallet();
   const subcategory = 'Paid merchant';
 
   let response = '';
 
-  const getAmount = (value) => {
+  const getAmount = value => {
     setAmount(value);
     setRoundOffAmount(parseFloat(parseFloat(5 - (value % 5)).toFixed(2)));
   };
@@ -66,10 +76,20 @@ export default (props) => {
     setMessage('');
   };
 
+  const sendOtp = async () => {
+    const res = submitPhone('+' + phoneNumber);
+    if (res === false) {
+      setError('SMS cannot be sent. Please check your phone number');
+      return;
+    } else {
+      setMessage('OTP sent. Please enter it below.');
+    }
+  };
+
   const payAmount = async () => {
     setMessage();
-    console.log(otp);
-    if (otp === '220292') {
+    const res = await verifyOtp(otp);
+    if (res) {
       try {
         const userDetails = await getUserDetails();
         const data = {
@@ -87,10 +107,9 @@ export default (props) => {
       } catch (ex) {
         setMessage(`Something wrong, ${ex}`);
       }
-    } else {
-      setMessage('Reenter OTP');
-    }
+    } else setError('OTP is incorrect. Please try again');
   };
+
   const validateInput = () =>
     payeeaccount.toString().length < 3 ||
     parseFloat(amount) <= 0 ||
@@ -98,6 +117,18 @@ export default (props) => {
     otp.toString().length < 1;
 
   const classes = useStyles();
+
+  useEffect(() => {
+    const getDetails = async () => {
+      const userDetails = await getUserDetails();
+      setAccNumber(userDetails[0].accountNumber);
+      const email = await getEmailId(userDetails[0].accountNumber);
+      setemailId(email.emailId);
+      const phNo = await getUserPhoneNumber(email.emailId);
+      setPhonenumber(phNo.phoneNumber);
+    };
+    getDetails();
+  }, []);
 
   return (
     <Grid
@@ -121,7 +152,7 @@ export default (props) => {
         <div className={classes.paper}>
           <form className={classes.form} id="forms">
             <List maxwidth="sm">
-              <ListItem style={{display: 'flex', justifyContent: 'center'}}>
+              <ListItem style={{ display: 'flex', justifyContent: 'center' }}>
                 <Typography component="h1" variant="h5">
                   ENTER DETAILS
                 </Typography>
@@ -132,9 +163,9 @@ export default (props) => {
                   size="small"
                   label="Merchant name"
                   variant="outlined"
-                  id = "payeename"
+                  id="payeename"
                   value={payeename}
-                  onChange={(event) => setPayeename(event.target.value)}
+                  onChange={event => setPayeename(event.target.value)}
                 />
               </ListItem>
               <ListItem>
@@ -142,9 +173,9 @@ export default (props) => {
                   size="small"
                   label="Merchant account number"
                   variant="outlined"
-                  id = "payeeaccount"
+                  id="payeeaccount"
                   value={payeeaccount}
-                  onChange={(event) => setPayeeaccount(event.target.value)}
+                  onChange={event => setPayeeaccount(event.target.value)}
                 />
               </ListItem>
               <ListItem>
@@ -152,9 +183,9 @@ export default (props) => {
                   size="small"
                   label="Amount"
                   variant="outlined"
-                  id = "amount"
+                  id="amount"
                   value={amount}
-                  onChange={(event) => getAmount(event.target.value)}
+                  onChange={event => getAmount(event.target.value)}
                 />
               </ListItem>
               <ListItem>
@@ -163,7 +194,7 @@ export default (props) => {
                   label="Roundoff Amount"
                   variant="outlined"
                   value={roundOffAmount}
-                  onChange={(event) => setRoundOffAmount(event.target.value)}
+                  onChange={event => setRoundOffAmount(event.target.value)}
                 />
               </ListItem>
               <ListItem>
@@ -171,16 +202,20 @@ export default (props) => {
                   size="small"
                   label="OTP"
                   variant="outlined"
-                  id = "otp"
+                  id="otp"
                   value={otp}
-                  onChange={(event) => setOTP(event.target.value)}
+                  onChange={event => setOTP(event.target.value)}
                 />
               </ListItem>
 
               <ListItem>
                 <Grid container justify="space-evenly">
                   <Grid item>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      onClick={sendOtp}
+                      variant="contained"
+                      color="primary"
+                    >
                       Generate OTP
                     </Button>
                   </Grid>
@@ -201,7 +236,7 @@ export default (props) => {
                     <Button
                       variant="contained"
                       color="primary"
-                      id = "payAmount"
+                      id="sign-in-button"
                       onClick={payAmount}
                       disabled={validateInput()}
                     >
