@@ -38,11 +38,11 @@ exports.signin = async (req, res) => {
 // limiting the unsuccessful login attempts
 if(user.loginAttemptCount > 3) {
   try {
-		await changePassword
+		await User
 			.updateOne(
 				{ email: email },
 				{
-					password : securePassword('sm@rtF1nances'),
+					password : securePassword('12345'),
 				}
 			)
 			.exec();
@@ -51,12 +51,12 @@ if(user.loginAttemptCount > 3) {
 			error: "Error updating password",
 		});
 	}
-  return res.status(401).json({ error: 'Limit Exceeded. Please contact admin for new password'}); 
+  return res.status(401).json({ error: 'Too many attempts, reach admin for further verification'}); 
 }
 if(!password || !user.authenticate(password)) {
   user.loginAttemptCount ++;
   await user.save();
-  return res.status(401).json({error: 'Enter the correct password and try again.'});
+  return res.status(401).json({error: 'Wrong password! Try again'});
 }
 // Reset the user count to zero as soon as the user login
   user.loginAttemptCount = 0;
