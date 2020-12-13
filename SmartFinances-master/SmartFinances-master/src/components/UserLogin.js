@@ -1,67 +1,67 @@
-import React, { useState } from "react";
-import "./App.css";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { signin } from "../auth/index";
-import { useAuth } from "../context/auth";
-import "./Homepage.css";
-import { submitPhone, verifyOtp } from "../auth/smsAuth";
-import { getUserPhoneNumber } from "../auth/index";
+import React, { useState } from 'react';
+import './App.css';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { signin } from '../auth/index';
+import { useAuth } from '../context/auth';
+import './Homepage.css';
+import { submitPhone, verifyOtp } from '../auth/smsAuth';
+import { getUserPhoneNumber } from '../auth/index';
 
 //import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Smart Finance
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "100vh",
+    height: '100vh',
   },
   image: {
     backgroundImage:
-      "url(https://images.unsplash.com/photo-1490079027102-cd08f2308c73?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)",
-    backgroundRepeat: "no-repeat",
+      'url(https://images.unsplash.com/photo-1490079027102-cd08f2308c73?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)',
+    backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === "light"
+      theme.palette.type === 'light'
         ? theme.palette.grey[50]
         : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center", //for sigin icon
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center', //for sigin icon
   },
   avatar: {
     margin: theme.spacing(1), //tilting the page up and down
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "90%", // Fix IE 11 issue.
+    width: '90%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -69,65 +69,65 @@ const useStyles = makeStyles(theme => ({
   },
   otpBtn: {
     margin: theme.spacing(2, 2, 2),
-    padding: "2%",
+    padding: '2%',
   },
   phone: {
-    width: "75%",
-    marginRight: "20px",
+    width: '75%',
+    marginRight: '20px',
   },
 }));
 
 const UserLogin = () => {
   const { setAuthToken } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [message, setMessage] = useState('');
 
   const classes = useStyles();
   let history = useHistory();
 
   const onSubmit = () => {
-    signin({ email, password, role: "user" })
+    signin({ email, password, role: 'user' })
       .then(data => {
         if (data.error) {
           setError(data.error);
         } else {
           setAuthToken(data.token);
-          history.push("/user/dashboard");
+          history.push('/user/dashboard');
         }
       })
-      .catch(ex => console.log("Signin request error", ex));
+      .catch(ex => console.log('Signin request error', ex));
   };
 
   const sendOtp = async () => {
-    if (phone.charAt(0) !== "+" || parseInt(phone.substring(1)) === NaN) {
+    if (phone.charAt(0) !== '+' || parseInt(phone.substring(1)) === NaN) {
       setError("Enter valid Phone number with '+' Country-code");
       return;
     }
     const number = await getUserPhoneNumber(email);
     if (parseInt(phone.substring(1)) !== number.phoneNumber) {
-      setError("Phone number is incorrect. Please try again");
+      setError('Phone number is incorrect. Please try again');
       return;
     }
     const res = submitPhone(phone);
     if (res === false) {
-      setError("SMS cannot be sent. Please check your phone number");
+      setError('SMS cannot be sent. Please check your phone number');
       return;
     } else {
-      setMessage("OTP sent. Please enter it below.");
+      setMessage('OTP sent. Please enter it below.');
     }
   };
 
   const submitOtp = async () => {
-    setMessage("");
+    setMessage('');
     if (phone.length === 0) return;
     const res = await verifyOtp(otp);
     console.log(res);
     if (res) onSubmit();
-    else setError("OTP is incorrect. Please try again");
+    else setError('OTP is incorrect. Please try again');
   };
 
   return (
@@ -159,7 +159,7 @@ const UserLogin = () => {
             <Typography component="h1" variant="h5">
               User Sign In
             </Typography>
-            <p style={{ color: "red" }}>{error}</p>
+            <p style={{ color: 'red' }}>{error}</p>
             <form className={classes.form} noValidate>
               <TextField
                 variant="outlined"
@@ -172,7 +172,7 @@ const UserLogin = () => {
                 autoComplete="email"
                 autoFocus
                 onChange={e => {
-                  setError("");
+                  setError('');
                   setEmail(e.target.value);
                 }}
               />
@@ -187,7 +187,7 @@ const UserLogin = () => {
                 id="password"
                 autoComplete="current-password"
                 onChange={e => {
-                  setError("");
+                  setError('');
                   setPassword(e.target.value);
                 }}
               />
@@ -199,7 +199,7 @@ const UserLogin = () => {
                 name="phone"
                 value={phone}
                 onChange={e => {
-                  setError("");
+                  setError('');
                   setPhone(e.target.value);
                 }}
                 label="Phone Number"
@@ -220,7 +220,7 @@ const UserLogin = () => {
                 Time Password
               </Typography>
               <div id="recaptcha-container"></div>
-              <Typography variant="body1" style={{ color: "green" }}>
+              <Typography variant="body1" style={{ color: 'green' }}>
                 {message}
               </Typography>
               <TextField
@@ -231,7 +231,7 @@ const UserLogin = () => {
                 name="otp"
                 value={otp}
                 onChange={e => {
-                  setError("");
+                  setError('');
                   setOtp(e.target.value);
                 }}
                 label="Enter OTP"
@@ -262,6 +262,11 @@ const UserLogin = () => {
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item xs>
+                  <Link href="/signup" variant="body2">
+                    New User? Sign up
                   </Link>
                 </Grid>
                 <Grid item>
