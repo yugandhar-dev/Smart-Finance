@@ -122,14 +122,6 @@ const StepOne = ({ formData, setFormData, navigation }) => {
       />
       <div style={{ marginTop: '1rem' }}>
         <Button
-          color="secondary"
-          variant="contained"
-          style={{ marginRight: '1rem' }}
-          onClick={() => navigation.previous()}
-        >
-          Back
-        </Button>
-        <Button
           color="primary"
           variant="contained"
           onClick={() => navigation.next()}
