@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 
-const StepOne = ({ formData, setFormData, count, setCount }) => {
+const StepTwo = ({ formData, setFormData, count, setCount }) => {
   const { isEnrolled, isWorking } = formData;
 
   const handleChange = e => {
@@ -25,6 +25,48 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
     color: 'white',
   };
 
+  const enrollmentForm = (
+    <>
+      <InputLabel id="investmentType">University</InputLabel>
+      <ButtonGroup
+        color="primary"
+        onClick={handleChange}
+        aria-label="outlined primary button group"
+      >
+        <Button>University Name</Button>
+      </ButtonGroup>
+      <InputLabel id="investmentType">Method of Transport</InputLabel>
+      <ButtonGroup
+        color="primary"
+        onClick={handleChange}
+        aria-label="outlined primary button group"
+      >
+        <Button>commute</Button>
+      </ButtonGroup>
+    </>
+  );
+
+  const fullTimeForm = (
+    <>
+      <InputLabel id="investmentType">Location</InputLabel>
+      <ButtonGroup
+        color="primary"
+        onClick={handleChange}
+        aria-label="outlined primary button group"
+      >
+        <Button>Office location</Button>
+      </ButtonGroup>
+      <InputLabel id="investmentType">Method of Transport</InputLabel>
+      <ButtonGroup
+        color="primary"
+        onClick={handleChange}
+        aria-label="outlined primary button group"
+      >
+        <Button>commute</Button>
+      </ButtonGroup>
+    </>
+  );
+
   return (
     <Container maxWidth="xs">
       <h3>User Registration</h3>
@@ -40,6 +82,8 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
         <Button style={isEnrolled === false ? changeStyle : {}}>No</Button>
       </ButtonGroup>
       <br />
+      {isEnrolled === true && enrollmentForm}
+
       <InputLabel id="investmentType">Do you work?</InputLabel>
       <ButtonGroup
         color="primary"
@@ -54,6 +98,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
         </Button>
         <Button style={isWorking === 'None' ? changeStyle : {}}>None</Button>
       </ButtonGroup>
+      {(isWorking === 'Full Time' || isWorking === 'Part Time') && fullTimeForm}
       <div style={{ marginTop: '1rem' }}>
         <Button
           color="secondary"
@@ -75,4 +120,4 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
   );
 };
 
-export default StepOne;
+export default StepTwo;
