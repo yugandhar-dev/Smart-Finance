@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm, useStep } from 'react-hooks-helper';
+import React, { useState } from 'react';
+//import { useForm, useStep } from 'react-hooks-helper';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
@@ -15,21 +15,24 @@ const defaultData = {
   city: '',
   state: '',
   postalCode: '',
+  isEnrolled: '',
+  isWorking: '',
 };
 
 const steps = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
 const SignUpForm = () => {
-  const [formData, setFormData] = useForm(defaultData);
+  const [formData, setFormData] = useState(defaultData);
+  const [count, setCount] = useState(1);
 
-  const { step, navigation } = useStep({
-    steps,
-    initialStep: 0,
-  });
+  // const { step, navigation } = useStep({
+  //   steps,
+  //   initialStep: 0,
+  // });
 
-  const props = { formData, setFormData, navigation };
+  const props = { formData, setFormData, count, setCount };
 
-  switch (step.id) {
+  switch (count) {
     case 1:
       return <StepOne {...props} />;
     case 2:

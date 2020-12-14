@@ -3,7 +3,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-const StepOne = ({ formData, setFormData, navigation }) => {
+const StepOne = ({ formData, setFormData, count, setCount }) => {
   const {
     firstName,
     lastName,
@@ -17,6 +17,9 @@ const StepOne = ({ formData, setFormData, navigation }) => {
     postalCode,
   } = formData;
 
+  const handleChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
   return (
     <Container maxWidth="xs">
       <h3>User Registration</h3>
@@ -24,7 +27,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="First Name"
         name="firstName"
         value={firstName}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -34,7 +37,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Last Name"
         name="lastName"
         value={lastName}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -44,7 +47,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Email Address"
         name="email"
         value={email}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -54,7 +57,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Date of Birth"
         name="dob"
         value={dob}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -64,7 +67,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Phone Number"
         name="phone"
         value={phone}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -74,7 +77,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Gender"
         name="gender"
         value={gender}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -84,7 +87,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Address"
         name="address"
         value={address}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -94,7 +97,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="City"
         name="city"
         value={city}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -104,7 +107,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="State"
         name="state"
         value={state}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -114,7 +117,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         label="Postal Code"
         name="postalCode"
         value={postalCode}
-        onChange={setFormData}
+        onChange={handleChange}
         margin="normal"
         variant="outlined"
         autoComplete="off"
@@ -124,7 +127,7 @@ const StepOne = ({ formData, setFormData, navigation }) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => navigation.next()}
+          onClick={() => setCount(count + 1)}
         >
           Next
         </Button>
