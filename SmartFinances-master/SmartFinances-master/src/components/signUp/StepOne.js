@@ -257,17 +257,28 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
             </FormControl>
 
             <FormControl variant="outlined" className={classes.form}>
-              <TextField
-                label="State"
+              <InputLabel>State</InputLabel>
+              <Select
+                labelId="state"
                 name="state"
-                value={state}
+                id="state-type-outlined"
                 onChange={handleChange}
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                fullWidth
+                label="State"
+                value={state}
                 required
-              />
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+
+                {Array.from(
+                  new Set(['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'])
+                ).map(stateName => (
+                  <MenuItem key={Math.random(10)} value={stateName}>
+                    {stateName}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
 
             <FormControl variant="outlined" className={classes.form}>
