@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -63,7 +63,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const StepTwo = ({ formData, setFormData, count, setCount }) => {
-  const { isEnrolled, isWorking } = formData;
+  const {
+    isEnrolled,
+    isWorking,
+    university,
+    commuteToUniversity,
+    officeLocation,
+    commuteToOffice,
+  } = formData;
+  const [error, setError] = useState('');
 
   const handleChange = e => {
     e.target.textContent === 'Yes' &&
@@ -194,7 +202,22 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
   );
 
   const submitForm = async () => {
-    await submitNewUser(formData);
+    if (
+      isEnrolled === true &&
+      (university === '' || commuteToUniversity === '')
+    ) {
+      setError('Please enter all the fields');
+      return;
+    } else if (
+      (isWorking === 'Full Time' || isWorking === 'Part Time') &&
+      (officeLocation === '' || commuteToOffice === '')
+    ) {
+      setError('Please enter all the fields');
+      return;
+    } else {
+      setError('');
+      await submitNewUser(formData);
+    }
   };
 
   const classes = useStyles();
@@ -228,6 +251,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
               User Registration
             </Typography>
             <br />
+
             <Container maxWidth="xs">
               <Box border={1}>
                 <FormControl variant="outlined" className={classes.form1}>
@@ -279,6 +303,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
                   <br />
                 </FormControl>
               </Box>
+              <p style={{ color: 'red' }}>{error}</p>
               <div style={{ marginTop: '1rem' }}>
                 <Button
                   fullWidth
@@ -291,10 +316,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
                 </Button>
                 <Button
                   fullWidth
-                  onClick={() => {
-                    submitForm();
-                    setCount(count + 1);
-                  }}
+                  onClick={submitForm}
                   variant="contained"
                   color="primary"
                   className={classes.otpBtn}

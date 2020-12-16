@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -70,8 +70,34 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
     postalCode,
   } = formData;
 
+  const [error, setError] = useState('');
+
   const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleNext = () => {
+    if (
+      firstName !== '' &&
+      lastName !== '' &&
+      email !== '' &&
+      dob !== '' &&
+      phone !== '' &&
+      gender !== '' &&
+      address !== '' &&
+      city !== '' &&
+      state !== '' &&
+      postalCode !== ''
+    ) {
+      if (isNaN(parseInt(postalCode)) || postalCode.length !== 4) {
+        setError('Please enter valid postal code');
+      } else if (isNaN(parseInt(phone)) || phone.length !== 10)
+        setError('Please enter valid Phone Number');
+      else {
+        setError('');
+        setCount(count + 1);
+      }
+    } else setError('Please enter all the fields');
+  };
 
   const classes = useStyles();
   return (
@@ -103,7 +129,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
             <Typography component="h1" variant="h5">
               User Registration
             </Typography>
-            {/* <p style={{ color: 'red' }}>{error}</p> */}
+
             <FormControl variant="outlined" className={classes.form}>
               <TextField
                 label="First Name"
@@ -128,6 +154,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -141,6 +168,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -159,6 +187,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -172,6 +201,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -183,6 +213,8 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 id="gender-type-outlined"
                 onChange={handleChange}
                 label="Gender"
+                value={gender}
+                required
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -206,6 +238,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -219,6 +252,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -232,6 +266,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 
@@ -245,13 +280,14 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
-
+            <p style={{ color: 'red' }}>{error}</p>
             <FormControl variant="outlined" className={classes.form}>
               <Button
                 fullWidth
-                onClick={() => setCount(count + 1)}
+                onClick={handleNext}
                 variant="contained"
                 color="primary"
                 className={classes.otpBtn}
