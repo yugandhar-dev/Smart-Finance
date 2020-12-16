@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Container from '@material-ui/core/Container';
+import { submitNewUser } from '../../auth/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -191,6 +192,11 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
       </FormControl>
     </>
   );
+
+  const submitForm = async () => {
+    await submitNewUser(formData);
+  };
+
   const classes = useStyles();
   return (
     <div>
@@ -285,7 +291,10 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
                 </Button>
                 <Button
                   fullWidth
-                  onClick={() => setCount(count + 1)}
+                  onClick={() => {
+                    submitForm();
+                    setCount(count + 1);
+                  }}
                   variant="contained"
                   color="primary"
                   className={classes.otpBtn}

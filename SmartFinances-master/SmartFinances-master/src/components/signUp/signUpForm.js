@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
-//import StepThree from './StepThree';
+import StepThree from './StepThree';
 
 const defaultData = {
   firstName: '',
@@ -33,6 +33,8 @@ const SignUpForm = () => {
       return <StepOne {...props} />;
     case 2:
       return <StepTwo {...props} />;
+    case 3:
+      return <StepThree />;
   }
   return <div>MultiStep form</div>;
 };

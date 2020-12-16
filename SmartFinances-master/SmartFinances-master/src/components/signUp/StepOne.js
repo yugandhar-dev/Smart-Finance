@@ -114,6 +114,7 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                required
               />
             </FormControl>
 

@@ -1,20 +1,11 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,11 +40,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     border: '1px black',
   },
-  form1: {
-    //width: '90%', // Fix IE 11 issue.
-    textAlign: 'center',
-    marginTop: theme.spacing(1),
-  },
 
   otpBtn: {
     margin: theme.spacing(2, 0, 2),
@@ -61,136 +47,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const StepTwo = ({ formData, setFormData, count, setCount }) => {
-  const { isEnrolled, isWorking } = formData;
-
-  const handleChange = e => {
-    e.target.textContent === 'Yes' &&
-      setFormData({ ...formData, isEnrolled: true });
-    e.target.textContent === 'No' &&
-      setFormData({
-        ...formData,
-        isEnrolled: false,
-        university: '',
-        commuteToUniversity: '',
-      });
-    e.target.textContent === 'Full Time' &&
-      setFormData({ ...formData, isWorking: 'Full Time' });
-    e.target.textContent === 'Part Time' &&
-      setFormData({ ...formData, isWorking: 'Part Time' });
-    e.target.textContent === 'None' &&
-      setFormData({
-        ...formData,
-        isWorking: 'None',
-        officeLocation: '',
-        commuteToOffice: '',
-      });
-  };
-
-  const handleForm = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const changeStyle = {
-    backgroundColor: '#07236a',
-    color: 'white',
-  };
-
-  const enrollmentForm = (
-    <>
-      <FormControl variant="outlined">
-        <InputLabel>University</InputLabel>
-        <Select
-          labelId="university"
-          name="university"
-          id="university-type-outlined"
-          onChange={handleForm}
-          label="University"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-
-          {Array.from(
-            new Set([
-              'Deakin University',
-              'Federation University Australia',
-              'La Trobe University',
-              'Monash University',
-              'RMIT University',
-              'Swinburne University of Technology',
-              'The University of Melbourne',
-              'Victoria University',
-            ])
-          ).map(university => (
-            <MenuItem key={Math.random(10)} value={university}>
-              {university}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <br></br>
-      <FormControl variant="outlined">
-        <InputLabel>Method of Transport</InputLabel>
-        <Select
-          labelId="transport"
-          name="commuteToUniversity"
-          id="transport-type-outlined"
-          onChange={handleForm}
-          label="Method of Transport"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-
-          {Array.from(
-            new Set(['Walk', 'Car', 'Bicycle', 'Public transport'])
-          ).map(transport => (
-            <MenuItem key={Math.random(10)} value={transport}>
-              {transport}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
-  );
-
-  const fullTimeForm = (
-    <>
-      <FormControl variant="outlined">
-        <TextField
-          id="outlined-basic"
-          label="Office location"
-          name="officeLocation"
-          onChange={handleForm}
-          variant="outlined"
-          autoComplete="off"
-        />
-      </FormControl>
-      <br></br>
-      <FormControl variant="outlined">
-        <InputLabel>Method of Transport</InputLabel>
-        <Select
-          labelId="transport"
-          name="commuteToOffice"
-          id="transport-type-outlined"
-          onChange={handleForm}
-          label="Method of Transport"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-
-          {Array.from(
-            new Set(['Walk', 'Car', 'Bicycle', 'Public transport'])
-          ).map(transport => (
-            <MenuItem key={Math.random(10)} value={transport}>
-              {transport}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </>
-  );
+const StepTwo = () => {
   const classes = useStyles();
   return (
     <div>
@@ -219,81 +76,9 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              User Registration
+              You have successfully registered. Your application will be
+              processed in few days.
             </Typography>
-            <br />
-            <Container maxWidth="xs">
-              <Box border={1}>
-                <FormControl variant="outlined" className={classes.form1}>
-                  <h4>Have you enrolled in any course?</h4>
-                  <ButtonGroup
-                    fullWidth
-                    color="primary"
-                    onClick={handleChange}
-                    aria-label="outlined primary button group"
-                  >
-                    <Button style={isEnrolled === true ? changeStyle : {}}>
-                      Yes
-                    </Button>
-                    <Button style={isEnrolled === false ? changeStyle : {}}>
-                      No
-                    </Button>
-                  </ButtonGroup>
-                  <br />
-                  {isEnrolled === true && enrollmentForm}
-                  <br />
-                </FormControl>
-              </Box>
-              <br />
-              <Box border={1}>
-                <FormControl variant="outlined" className={classes.form}>
-                  <h4>Do you Work?</h4>
-                  <ButtonGroup
-                    color="primary"
-                    onClick={handleChange}
-                    aria-label="outlined primary button group"
-                  >
-                    <Button
-                      style={isWorking === 'Full Time' ? changeStyle : {}}
-                    >
-                      Full Time
-                    </Button>
-                    <Button
-                      style={isWorking === 'Part Time' ? changeStyle : {}}
-                    >
-                      Part Time
-                    </Button>
-                    <Button style={isWorking === 'None' ? changeStyle : {}}>
-                      None
-                    </Button>
-                  </ButtonGroup>
-                  <br />
-                  {(isWorking === 'Full Time' || isWorking === 'Part Time') &&
-                    fullTimeForm}
-                  <br />
-                </FormControl>
-              </Box>
-              <div style={{ marginTop: '1rem' }}>
-                <Button
-                  fullWidth
-                  onClick={() => setCount(count - 1)}
-                  variant="contained"
-                  color="secondary"
-                  className={classes.otpBtn}
-                >
-                  Back
-                </Button>
-                <Button
-                  fullWidth
-                  onClick={() => setCount(count + 1)}
-                  variant="contained"
-                  color="primary"
-                  className={classes.otpBtn}
-                >
-                  Next
-                </Button>
-              </div>
-            </Container>
           </div>
         </Grid>
       </Grid>
