@@ -18,6 +18,7 @@ const defaultData = {
   university: '',
   commuteToUniversity: '',
   isWorking: 'None',
+  industry: '',
   officeLocation: '',
   commuteToOffice: '',
 };

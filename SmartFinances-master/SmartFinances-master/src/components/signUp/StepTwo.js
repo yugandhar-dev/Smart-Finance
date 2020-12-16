@@ -66,6 +66,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
   const {
     isEnrolled,
     isWorking,
+    industry,
     university,
     commuteToUniversity,
     officeLocation,
@@ -91,6 +92,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
       setFormData({
         ...formData,
         isWorking: 'None',
+        industry: '',
         officeLocation: '',
         commuteToOffice: '',
       });
@@ -166,6 +168,46 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
   const fullTimeForm = (
     <>
       <FormControl variant="outlined">
+        <InputLabel>Industry</InputLabel>
+        <Select
+          labelId="industry"
+          name="industry"
+          id="industry-type-outlined"
+          onChange={handleForm}
+          label="Industry"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+
+          {Array.from(
+            new Set([
+              'Accounting',
+              'Administration & Office support',
+              'Advertising, Arts & Media',
+              'Banking & Financial Services',
+              'Call centre & customer service',
+              'Construction',
+              'Design & Architecture',
+              'Education & Training',
+              'Engineering',
+              'Government & Defence',
+              'Hospitality & Tourism',
+              'Healthcare & Medical',
+              'Information & Communication Technology',
+              'Insurance & Superannuation',
+              'Science & Technology',
+              'Self Employment',
+            ])
+          ).map(ofcIndustry => (
+            <MenuItem key={Math.random(10)} value={ofcIndustry}>
+              {ofcIndustry}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <br></br>
+      <FormControl variant="outlined">
         <TextField
           id="outlined-basic"
           label="Office location"
@@ -210,7 +252,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
       return;
     } else if (
       (isWorking === 'Full Time' || isWorking === 'Part Time') &&
-      (officeLocation === '' || commuteToOffice === '')
+      (industry === '' || officeLocation === '' || commuteToOffice === '')
     ) {
       setError('Please enter all the fields');
       return;
