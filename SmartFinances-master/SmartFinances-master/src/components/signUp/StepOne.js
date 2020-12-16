@@ -7,7 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Paper from '@material-ui/core/Paper';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -147,6 +149,11 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                 name="dob"
                 value={dob}
                 onChange={handleChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">DOB</InputAdornment>
+                  ),
+                }}
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
@@ -168,8 +175,10 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
             </FormControl>
 
             <FormControl variant="outlined" className={classes.form}>
+              <InputLabel>Gender</InputLabel>
               <Select
                 labelId="gender"
+                name="gender"
                 id="gender-type-outlined"
                 onChange={handleChange}
                 label="Gender"
@@ -178,9 +187,9 @@ const StepOne = ({ formData, setFormData, count, setCount }) => {
                   <em>None</em>
                 </MenuItem>
 
-                {Array.from(new Set(['Male', 'Female'])).map(investmentType => (
-                  <MenuItem key={Math.random(10)} value={investmentType}>
-                    {investmentType}
+                {Array.from(new Set(['Male', 'Female'])).map(gender => (
+                  <MenuItem key={Math.random(10)} value={gender}>
+                    {gender}
                   </MenuItem>
                 ))}
               </Select>

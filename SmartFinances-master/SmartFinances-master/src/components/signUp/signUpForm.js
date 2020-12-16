@@ -15,7 +15,11 @@ const defaultData = {
   state: '',
   postalCode: '',
   isEnrolled: false,
+  university: '',
+  commuteToUniversity: '',
   isWorking: 'None',
+  officeLocation: '',
+  commuteToOffice: '',
 };
 
 const SignUpForm = () => {
