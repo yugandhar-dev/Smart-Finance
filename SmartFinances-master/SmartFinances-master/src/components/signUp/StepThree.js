@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Paper from '@material-ui/core/Paper';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { submitNewUser } from '../../auth/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,31 +31,61 @@ const useStyles = makeStyles(theme => ({
     backgroundPosition: 'center',
   },
   paper: {
-    backgroundColor: '#fff',
-    margin: theme.spacing(4, 2),
+    margin: theme.spacing(8, 4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center', //for sigin icon
-    textAlign: 'center',
   },
   avatar: {
     margin: theme.spacing(1), //tilting the page up and down
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    //width: '90%', // Fix IE 11 issue.
-    textAlign: 'center',
+    width: '90%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
-    border: '1px black',
   },
-
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
   otpBtn: {
     margin: theme.spacing(2, 0, 2),
     padding: '2%',
   },
+  phone: {
+    width: '75%',
+    marginRight: '20px',
+  },
 }));
 
-const StepTwo = () => {
+const StepThree = ({ formData, setFormData, count, setCount }) => {
+  const { bankName, accountNumber, tfnNumber, openingBalance } = formData;
+
+  const [error, setError] = useState('');
+
+  const handleChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const submitForm = async () => {
+    if (
+      bankName !== '' &&
+      accountNumber !== '' &&
+      tfnNumber !== '' &&
+      openingBalance !== ''
+    ) {
+      if (isNaN(parseInt(accountNumber)) || accountNumber.length !== 9) {
+        setError('Please enter valid Account Number');
+      } else if (isNaN(parseInt(tfnNumber)) || tfnNumber.length !== 9)
+        setError('Please enter valid TFN Number');
+      else if (isNaN(parseInt(openingBalance)) || parseInt(openingBalance) < 0)
+        setError('Please enter valid Opening balance');
+      else {
+        setError('');
+        await submitNewUser(formData);
+        setCount(count + 1);
+      }
+    } else setError('Please enter all the fields');
+  };
+
   const classes = useStyles();
   return (
     <div>
@@ -76,9 +114,128 @@ const StepTwo = () => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              You have successfully registered. Your application will be
-              processed in few days.
+              User Registration
             </Typography>
+
+            <FormControl variant="outlined" className={classes.form}>
+              <InputLabel>Bank Name</InputLabel>
+              <Select
+                labelId="bankName"
+                name="bankName"
+                id="bankName-type-outlined"
+                onChange={handleChange}
+                label="Bank Name"
+                value={bankName}
+                required
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+
+                {Array.from(
+                  new Set([
+                    'American Express',
+                    'Australia and New Zealand Banking Group Limited',
+                    'Australian Military Bank Ltd',
+                    'Australian Super',
+                    'Bank of Melbourne',
+                    'Bank of Queensland Limited',
+                    'Bank of Sydney Ltd',
+                    'Bendigo and Adelaide Bank Limited',
+                    'Citibank',
+                    'Commonwealth Bank of Australia',
+                    'Defence Bank Limited',
+                    'G&C Mutual Bank',
+                    'Gateway Credit Union Ltd',
+                    'Greater Bank Limited',
+                    'Heritage Bank Limited',
+                    'HSBC Bank Australia Limited',
+                    'IMB Ltd ',
+                    'ING Bank (Australia) Limited',
+                    'National Australia Bank Limited',
+                    'Regional Australia Bank',
+                    'Rural Bank',
+                    'St. George Bank',
+                    'UBank',
+                    'Westpac Banking Corporation',
+                  ])
+                ).map(bank => (
+                  <MenuItem key={Math.random(10)} value={bank}>
+                    {bank}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl variant="outlined" className={classes.form}>
+              <TextField
+                label="Account Number"
+                name="accountNumber"
+                value={accountNumber}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+                required
+              />
+            </FormControl>
+
+            <FormControl variant="outlined" className={classes.form}>
+              <TextField
+                label="Opening Balance"
+                name="openingBalance"
+                value={openingBalance}
+                onChange={handleChange}
+                margin="normal"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+                required
+              />
+            </FormControl>
+
+            <FormControl variant="outlined" className={classes.form}>
+              <TextField
+                label="TFN Number"
+                name="tfnNumber"
+                value={tfnNumber}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                fullWidth
+                required
+              />
+            </FormControl>
+
+            <p style={{ color: 'red' }}>{error}</p>
+
+            <FormControl variant="outlined" className={classes.form}>
+              <Button
+                fullWidth
+                onClick={() => setCount(count - 1)}
+                variant="contained"
+                color="secondary"
+                className={classes.otpBtn}
+              >
+                Back
+              </Button>
+              <Button
+                fullWidth
+                onClick={submitForm}
+                variant="contained"
+                color="primary"
+                className={classes.otpBtn}
+              >
+                Next
+              </Button>
+            </FormControl>
           </div>
         </Grid>
       </Grid>
@@ -86,4 +243,4 @@ const StepTwo = () => {
   );
 };
 
-export default StepTwo;
+export default StepThree;
