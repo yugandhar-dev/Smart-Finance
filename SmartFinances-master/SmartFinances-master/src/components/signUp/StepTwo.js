@@ -15,7 +15,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Container from '@material-ui/core/Container';
-import { submitNewUser } from '../../auth/index';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -243,7 +242,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
     </>
   );
 
-  const submitForm = async () => {
+  const submitForm = () => {
     if (
       isEnrolled === true &&
       (university === '' || commuteToUniversity === '')
@@ -258,7 +257,7 @@ const StepTwo = ({ formData, setFormData, count, setCount }) => {
       return;
     } else {
       setError('');
-      await submitNewUser(formData);
+      setCount(count + 1);
     }
   };
 
