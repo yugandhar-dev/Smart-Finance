@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './components/App';
 import UserLogin from './components/UserLogin';
+import UserAccountCreate from './components/UserAccountCreate';
 import AdminLogin from './components/AdminLogin';
 import UserDashboard from './components/UserDashboard';
 import PayMerchant from './components/payToMerchant/payToMerchant';
