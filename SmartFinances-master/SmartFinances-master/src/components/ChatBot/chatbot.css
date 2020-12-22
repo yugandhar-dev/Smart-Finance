@@ -1,7 +1,7 @@
 .chatBot{
     text-align: center;
-    background-color: rgb(0, 56, 0);
-    min-height: 100vh;
+    background-color: rgb(88, 0, 0);
+    max-height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -198,3 +198,29 @@
     cursor: pointer;
     text-align: left;    
   }
+
+  .app-chat-bot-container {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    z-index: 9999;
+    box-shadow: 5px 5px 13px rgba(147, 147, 147, 0.4);
+    border-radius: 50px;
+  }
+
+
+  .chat-bot-btn {
+    max-height: 50px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+    background-color: rgb(146, 105, 145);
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    z-index: 9999;
+    right: 40px;
+}

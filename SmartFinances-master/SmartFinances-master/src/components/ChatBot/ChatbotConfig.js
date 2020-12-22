@@ -3,7 +3,7 @@ import { createChatBotMessage } from "react-chatbot-kit";
 const config = {
 
   botName: "FinTech ChatBot",
-  initialMessages: [createChatBotMessage(`How can I help you today? :)`)]
+  initialMessages: [createChatBotMessage(`Hello how can I help you today? :)`)]
   
 }
 

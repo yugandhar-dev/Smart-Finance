@@ -8,7 +8,7 @@ import ActionProvider from "./ActionProvider";
 function chatBot() {
     return (
         <div className = "chatBot">
-            <div style={{ maxWidth: "300px"}}>
+            <div style={{ maxWidth: "300px", maxHeight: "500px"}}>
                 <Chatbot
                 config = {config}
                 messageParser = {MessageParser}
@@ -17,6 +17,9 @@ function chatBot() {
             </div>
         </div>
     );
+
 };
+
+
 
 export default chatBot;
