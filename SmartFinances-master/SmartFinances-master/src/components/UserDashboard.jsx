@@ -142,7 +142,8 @@ export default (props) => {
             }
           />
           </div>
-          <button className="chat-bot-btn" onClick={() => toggleChatbot((prev) => !prev)}>
+          <button className="chat-bot-btn-on" onClick={() => toggleChatbot((prev) => !prev)}>
+          
           ChatBot!
 
           </button>

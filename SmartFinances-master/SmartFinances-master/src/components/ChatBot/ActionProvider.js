@@ -6,9 +6,15 @@ class ActionProvider {
     }
 
     greet = () => {
-      const message = this.createChatBotMessage("Hello FinTech user.");
+      const message = this.createChatBotMessage("Hello FinTech user, how can I help you?");
       this.addMessageToState(message);
     }
+
+    navigateSignup = () => {
+      const message = this.createChatBotMessage("Welcome to our interface, let's sign you up now!");
+      this.addMessageToState(message);
+      window.location.replace('/signUp');
+    };
 
     addMessageToState = (message) => {
       this.setState(preState => ({

@@ -207,20 +207,23 @@
     right: 40px;
     bottom: 40px;
     z-index: 9999;
-    box-shadow: 5px 5px 13px rgba(147, 147, 147, 0.4);
-    border-radius: 50px;
+    box-shadow: 5px 5px 13px #575c7c;
+    border-radius: 5px;
   }
 
 
-  .chat-bot-btn {
+  .chat-bot-btn-on {
     max-height: 50px;
-    width: 70px;
+    width: 80px;
     height: 70px;
-    border-radius: 50px;
-    background-color: rgb(146, 105, 145);
-    border: none;
+    border-radius: 50%;
+    color: black;
+    background-color: transparent;
+    border-color: #3f51b5;
     position: fixed;
     bottom: 15px;
     z-index: 9999;
     right: 40px;
+    opacity: 0.8;
 }
+
