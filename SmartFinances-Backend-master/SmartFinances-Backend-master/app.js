@@ -35,6 +35,7 @@ const uploadreceipt = require("./routes/user/uploadReceipt");
 const changePassword = require("./routes/user/changePassword");
 const modifyUser = require("./routes/admin/modifyUser");
 const modifyFund = require("./routes/admin/modifyFund");
+const UserSignUpPage = require("./routes/user/registerUser");
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
 
@@ -70,6 +71,7 @@ app.use("/api", uploadreceipt);
 app.use("/api", changePassword);
 app.use("/api", modifyUser);
 app.use("/api", modifyFund);
+app.use("/api", UserSignUpPage);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
