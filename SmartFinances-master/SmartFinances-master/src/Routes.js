@@ -13,6 +13,7 @@ import { AuthContext } from './context/auth';
 import { PrivateRoute } from './components/PrivateRoute';
 import Sell from './components/investments/sell/sell';
 import History from './components/Transactions/history';
+import SignUpForm from './components/signUp/signUpForm';
 
 const Routes = () => {
   const existingToken = localStorage.getItem('token');
@@ -30,6 +31,7 @@ const Routes = () => {
           <Route path="/" exact component={App} />
           <Route path="/user" exact component={UserLogin} />
           <Route path="/admin" exact component={AdminLogin} />
+          <Route path="/signup" exact component={SignUpForm} />
           <PrivateRoute
             path="/user/dashboard"
             exact
