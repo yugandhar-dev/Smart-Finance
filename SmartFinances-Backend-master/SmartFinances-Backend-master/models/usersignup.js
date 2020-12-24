@@ -1,76 +1,76 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
 
 const Usersignup = new Schema(
   {
-    FirstName: {
+    firstName: {
       type: String,
       required: true,
       maxlength: 32,
-      trim: true
+      trim: true,
     },
-    lastname: {
+    lastName: {
       type: String,
       required: false,
       maxlength: 32,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
       trim: true,
       required: true,
-      unique: true
+      unique: true,
     },
-    DOB: {
-        type: Date,
-        required: false,
-        maxlength: 32,
-        trim: true
-      },
-    PhoneNumber: {
+    dob: {
+      type: Date,
+      required: false,
+      maxlength: 32,
+      trim: true,
+    },
+    phone: {
       type: Number,
       required: true,
       maxlength: 32,
-      trim: true
+      trim: true,
     },
-    Gender: {
+    gender: {
       type: String,
-      required: true
+      required: true,
     },
-    StreetAdrress: {
+    address: {
       type: String,
       required: true,
       maxlength: 64,
-      trim: true
+      trim: true,
     },
-    City: {
+    city: {
       type: String,
       required: true,
       maxlength: 32,
-      trim: true
+      trim: true,
     },
-    State: {
-        type: String,
-        required: true,
-        maxlength: 32,
-        trim: true
+    state: {
+      type: String,
+      required: true,
+      maxlength: 32,
+      trim: true,
     },
-    Postalcode: {
-        type: Number,
-        required: true,
-        trim: true
+    postalCode: {
+      type: Number,
+      required: true,
+      trim: true,
     },
     isEnrolled: {
       type: String,
       required: true,
     },
-    University: {
+    university: {
       type: String,
       required: true,
       maxlength: 64,
-      trim: true
+      trim: true,
     },
     commuteToUniversity: {
       type: String,
@@ -80,53 +80,47 @@ const Usersignup = new Schema(
       type: String,
       required: true,
     },
-    Industry: {
+    industry: {
       type: String,
       required: true,
       maxlength: 64,
-      trim: true
+      trim: true,
     },
     officeLocation: {
       type: String,
       required: true,
       maxlength: 64,
-      trim: true
+      trim: true,
     },
     commuteToOffice: {
       type: String,
       required: true,
     },
-    bankName : {
-      type : String,
-      trim : true,
-  },
-   accountNumber : {
-      type : Number,
-      required : true,
-      trim : true,
-      unique : true,
-  },
-   tfnNumber : {
-      type : Number,
-      required : true,
-      trim : true,
-  },
-   openingBalance : {
-      type : Number,
-},
-  walletAccountNumber: {
-     type : String,
-     required : true,
-     trim : true,
-     unique : true,
-   },
-   isverified: {
+    bankName: {
       type: String,
+      trim: true,
+    },
+    accountNumber: {
+      type: Number,
       required: true,
-  },
+      trim: true,
+      unique: true,
+    },
+    tfnNumber: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
+    openingBalance: {
+      type: Number,
+    },
 
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Usersignup", Usersignup);
+module.exports = mongoose.model('Usersignup', Usersignup);
