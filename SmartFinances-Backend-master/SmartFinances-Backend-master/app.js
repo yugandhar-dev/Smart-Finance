@@ -36,6 +36,8 @@ const changePassword = require("./routes/user/changePassword");
 const modifyUser = require("./routes/admin/modifyUser");
 const modifyFund = require("./routes/admin/modifyFund");
 const UserSignUpPage = require("./routes/user/registerUser");
+const adminuserupdation = require("./routes/admin/adminuserupdation");
+const adminfundupdation = require("./routes/admin/adminfundupdation");
 // Middlewares
 const { authenticate } = require("./middlewares/authenticate");
 
@@ -72,6 +74,8 @@ app.use("/api", changePassword);
 app.use("/api", modifyUser);
 app.use("/api", modifyFund);
 app.use("/api", UserSignUpPage);
+app.use("/api", adminuserupdation);
+app.use("/api", adminfundupdation);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
