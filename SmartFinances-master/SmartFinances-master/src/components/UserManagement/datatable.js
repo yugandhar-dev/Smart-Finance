@@ -168,15 +168,19 @@ export default props => {
             Save
           </Button>
         ),
+        
         Delete: (
           <Button
             className="secondary"
             variant="outlined"
             data-id={row["_id"]}
-            onClick={deleteUser}
-          >
+            onClick={e =>
+                window.confirm("Are you sure you wish to delete this item?") 
+            }
+         > 
             Delete
           </Button>
+          
         ),
       });
     }
