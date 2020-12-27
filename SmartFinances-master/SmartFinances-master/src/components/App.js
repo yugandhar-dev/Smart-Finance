@@ -96,15 +96,22 @@ const App = () => {
             managing your savings.
           </p>
         </div>
-        <div className="app-chat-bot-container">
-          <ConditionallyRender ifTrue={showChatbot} show={<Chatbot />} />
-        </div>
-        <button
-          className="chat-bot-btn"
-          onClick={() => toggleChatbot(prev => !prev)}
-        >
-          ChatBot!
-        </button>
+
+        <div className="app-chat-bot-container"> 
+        <ConditionallyRender
+         ifTrue={showChatbot} 
+         show={ 
+           <Chatbot 
+           />
+          } 
+        /> 
+        
+      </div> 
+
+      <button className="chat-bot-btn-on" onClick={() => toggleChatbot((prev) => !prev)}> 
+        ChatBot!
+        </button>  
+       
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
@@ -114,6 +121,7 @@ const App = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+
             <form className={classes.form} noValidate>
               <Button
                 onClick={user}
@@ -142,6 +150,7 @@ const App = () => {
               <Box mt={5}>
                 <Copyright />
               </Box>
+             
             </form>
           </div>
         </Grid>

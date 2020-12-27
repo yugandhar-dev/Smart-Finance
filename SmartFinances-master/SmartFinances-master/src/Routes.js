@@ -14,7 +14,6 @@ import { PrivateRoute } from './components/PrivateRoute';
 import Sell from './components/investments/sell/sell';
 import History from './components/Transactions/history';
 import SignUpForm from './components/signUp/signUpForm';
-import ChatBot from './components/ChatBot/chatbot';
 
 const Routes = () => {
   const existingToken = localStorage.getItem('token');
@@ -36,7 +35,7 @@ const Routes = () => {
           <PrivateRoute
             path="/user/dashboard"
             exact
-            component={(UserDashboard, ChatBot)}
+            component={(UserDashboard)}
           />
           <PrivateRoute
             path="/user/payToMerchant"
@@ -64,3 +63,4 @@ const Routes = () => {
 };
 
 export default Routes;
+
