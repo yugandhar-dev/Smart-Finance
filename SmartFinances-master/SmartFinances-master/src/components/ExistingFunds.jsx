@@ -140,7 +140,7 @@ const ExistingFunds = () => {
                 </Button>
 
                 <Button
-                  type="submit"
+                  type="reset"
                   variant="contained"
                   color="primary"
                   className='btn-Admin'
