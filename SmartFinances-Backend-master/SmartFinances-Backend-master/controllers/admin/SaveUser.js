@@ -58,6 +58,10 @@ exports.SaveUser = async (req, res) => {
     };
     const newBalanceModel = new balances(balanceModel);
     await newBalanceModel.save();
+
+    res.status(200).json({
+      Success: 'User is verfied and saved',
+    });
   } catch (error) {
     return res.status(400).send({ error: error });
   }
