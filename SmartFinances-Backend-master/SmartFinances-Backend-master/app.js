@@ -1,81 +1,85 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const fileUpload = require("express-fileupload");
-const express = require("express");
+require('dotenv').config();
+const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+const express = require('express');
 
 const app = express();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const tesseract = require("./lib/tesseract");
-const { updatePricesForAllOptions } = require('./controllers/thirdparty/rapidapi');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const tesseract = require('./lib/tesseract');
+const {
+  updatePricesForAllOptions,
+} = require('./controllers/thirdparty/rapidapi');
 
 // import routes here
-const userAuthRoutes = require("./routes/user/userAuth");
-const newTransaction = require("./routes/user/newTransaction");
-const userDashboard = require("./routes/user/userDashboard");
-const adminCreateFund = require("./routes/admin/createFund");
-const adminCreateUser = require("./routes/admin/createNewUser");
-const userList = require("./routes/admin/userList");
+const userAuthRoutes = require('./routes/user/userAuth');
+const newTransaction = require('./routes/user/newTransaction');
+const userDashboard = require('./routes/user/userDashboard');
+const adminCreateFund = require('./routes/admin/createFund');
+const adminCreateUser = require('./routes/admin/createNewUser');
+const userList = require('./routes/admin/userList');
 //const fundOptions = require("./routes/user/userFundOptions");
-const userBalance = require("./routes/user/balance");
-const walletFunds = require("./routes/user/addFundsToWallet");
-const userPayToMerchant = require("./routes/user/payToMerchant");
-const investmentWithdraw = require("./routes/user/investmentWithdraw");
-const thirdpartyapi = require("./routes/thirdparty/thirdPartyapi");
-const manageFund = require("./routes/admin/manageFund");
-const receiptValue = require("./routes/user/receiptValue");
-const getInvestments = require("./routes/user/getInvestments");
-const investmentSell = require("./routes/user/investmentSell");
-const userPhoneNumber = require("./routes/admin/manageUser");
-const changeProfileSettings = require("./routes/user/changeProfileSettings");
-const getTransactions = require("./routes/user/transactionHistory");
-const userInvestments = require("./routes/user/userinvestments");
-const uploadreceipt = require("./routes/user/uploadReceipt");
-const changePassword = require("./routes/user/changePassword");
-const modifyUser = require("./routes/admin/modifyUser");
-const modifyFund = require("./routes/admin/modifyFund");
-const UserSignUpPage = require("./routes/user/registerUser");
-const adminuserupdation = require("./routes/admin/adminuserupdation");
-const adminfundupdation = require("./routes/admin/adminfundupdation");
+const userBalance = require('./routes/user/balance');
+const walletFunds = require('./routes/user/addFundsToWallet');
+const userPayToMerchant = require('./routes/user/payToMerchant');
+const investmentWithdraw = require('./routes/user/investmentWithdraw');
+const thirdpartyapi = require('./routes/thirdparty/thirdPartyapi');
+const manageFund = require('./routes/admin/manageFund');
+const receiptValue = require('./routes/user/receiptValue');
+const getInvestments = require('./routes/user/getInvestments');
+const investmentSell = require('./routes/user/investmentSell');
+const userPhoneNumber = require('./routes/admin/manageUser');
+const changeProfileSettings = require('./routes/user/changeProfileSettings');
+const getTransactions = require('./routes/user/transactionHistory');
+const userInvestments = require('./routes/user/userinvestments');
+const uploadreceipt = require('./routes/user/uploadReceipt');
+const changePassword = require('./routes/user/changePassword');
+const modifyUser = require('./routes/admin/modifyUser');
+const modifyFund = require('./routes/admin/modifyFund');
+const UserSignUpPage = require('./routes/user/registerUser');
+const adminuserupdation = require('./routes/admin/adminuserupdation');
+const adminfundupdation = require('./routes/admin/adminfundupdation');
+const saveUser = require('./routes/admin/saveUser');
 // Middlewares
-const { authenticate } = require("./middlewares/authenticate");
+const { authenticate } = require('./middlewares/authenticate');
 
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
-app.use(authenticate);
+//app.use(authenticate);
 
 // Routes here
 
-app.use("/api", userAuthRoutes);
-app.use("/api", newTransaction);
-app.use("/api", userDashboard);
-app.use("/api", adminCreateFund);
-app.use("/api", adminCreateUser);
-app.use("/api", userList);
+app.use('/api', userAuthRoutes);
+app.use('/api', newTransaction);
+app.use('/api', userDashboard);
+app.use('/api', adminCreateFund);
+app.use('/api', adminCreateUser);
+app.use('/api', userList);
 //app.use("/api", fundOptions);
-app.use("/api", userBalance);
-app.use("/api", userPayToMerchant);
-app.use("/api", investmentWithdraw);
-app.use("/openapi", thirdpartyapi);
-app.use("/api", walletFunds);
-app.use("/api", manageFund);
-app.use("/api", receiptValue);
-app.use("/api", investmentSell);
-app.use("/api", getInvestments);
-app.use("/api", userPhoneNumber);
-app.use("/api", changeProfileSettings);
-app.use("/api", userInvestments);
-app.use("/api", getTransactions);
-app.use("/api", uploadreceipt);
-app.use("/api", changePassword);
-app.use("/api", modifyUser);
-app.use("/api", modifyFund);
-app.use("/api", UserSignUpPage);
-app.use("/api", adminuserupdation);
-app.use("/api", adminfundupdation);
+app.use('/api', userBalance);
+app.use('/api', userPayToMerchant);
+app.use('/api', investmentWithdraw);
+app.use('/openapi', thirdpartyapi);
+app.use('/api', walletFunds);
+app.use('/api', manageFund);
+app.use('/api', receiptValue);
+app.use('/api', investmentSell);
+app.use('/api', getInvestments);
+app.use('/api', userPhoneNumber);
+app.use('/api', changeProfileSettings);
+app.use('/api', userInvestments);
+app.use('/api', getTransactions);
+app.use('/api', uploadreceipt);
+app.use('/api', changePassword);
+app.use('/api', modifyUser);
+app.use('/api', modifyFund);
+app.use('/api', UserSignUpPage);
+app.use('/api', adminuserupdation);
+app.use('/api', adminfundupdation);
+app.use('/api', saveUser);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
