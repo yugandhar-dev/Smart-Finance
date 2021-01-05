@@ -24,7 +24,7 @@ import Settings from './Settings/settings';
 import History from './Transactions/history';
 import Trend from './../components/investments/Lowriskinvest';
 import ContactUs from './contactUs/ContactUs';
-import Chatbot from "./ChatBot/chatbot";
+import Chatbot from "./ChatBotdashboard/chatbot";
 import { ConditionallyRender } from "react-util-kit";
 
 const useStyles = makeStyles((theme) => ({

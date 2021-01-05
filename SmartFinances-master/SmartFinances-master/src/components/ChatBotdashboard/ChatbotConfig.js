@@ -27,9 +27,9 @@ const config = {
             id: 1,
           },
           {
-            question: "How will I save money?",
+            question: "What is Upload Receipt?",
             answer:
-            "Smart Finance will help set goals, budgets and help you invest in stocks.",
+            "Smart Finance allows the user to upload their expense receipt in order to claim the amount automatically via the receipt, instead entering the amount manually.",
             id: 2,
           },
           {
@@ -39,15 +39,15 @@ const config = {
             id: 3,
           },
           {
-            question: "How can I join this?",
+            question: "What is low risk and high risk investments?",
             answer:
-            "Any person is eligible to join this platform by following the steps. Click user -> 'New User? Sign up'",
+            "'Low risk' considered as taking a less risk in investing for long term investments, and as for 'High risk' the user is taking a risk in investing in bigger firms where there would be losses that impact significant amount",
             id: 4,
           },
           {
             question: "How can I find support?",
             answer:
-            "Smart Finance is embedded with tools that support users need to save money for future, however, there is customer support provider 24/7",
+            "Smart Finance is embedded with tools that support users need to save money for future, however, there is customer support provider 24/7 under 'USER SETTINGS TAB'",
             id: 5,
           },
         ],

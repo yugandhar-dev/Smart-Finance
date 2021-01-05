@@ -13,7 +13,6 @@ const Instructions = (props) => {
     if (!currentQuestion) {
       return <p className="endSentence">Well done we have reached the end.</p>
     }
-  
     return (
       <Questions
         question={currentQuestion.question}

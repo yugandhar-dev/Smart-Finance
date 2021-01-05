@@ -1,0 +1,9 @@
+.chatBot{ 
+    text-align: center; 
+    background-color: rgb(87, 85, 85); 
+    max-height: 50vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border-radius: 10px; 
+} 

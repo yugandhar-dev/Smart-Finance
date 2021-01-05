@@ -9,11 +9,11 @@ const Options = (props) => {
             handler: props.actionProvider.handleInstructions, 
             id: 1, 
         }, 
-        { 
-            text: "Sign Up", 
-            handler: props.actionProvider.navigateSignup, 
-            id: 2, 
-        }, 
+        // { 
+        //     text: "testing", 
+        //     handler: props.actionProvider.navigateSignup, 
+        //     id: 2, 
+        // }, 
          //{ text: "", handler: () => {}, id: 2 }, 
         //  { text: "Goals", handler: () => {}, id: 3 }, 
     ]; 
