@@ -9,11 +9,21 @@ const Options = (props) => {
             handler: props.actionProvider.handleInstructions, 
             id: 1, 
         }, 
-        // { 
-        //     text: "testing", 
-        //     handler: props.actionProvider.navigateSignup, 
-        //     id: 2, 
-        // }, 
+        { 
+            text: "Invest", 
+            handler: props.actionProvider.navigateInvest, 
+            id: 2, 
+        },
+        { 
+            text: "Create goals", 
+            handler: props.actionProvider.navigateCalculator, 
+            id: 3, 
+        }, 
+        { 
+            text: "Check Spendings", 
+            handler: props.actionProvider.navigateTransactions, 
+            id: 4, 
+        }, 
          //{ text: "", handler: () => {}, id: 2 }, 
         //  { text: "Goals", handler: () => {}, id: 3 }, 
     ]; 

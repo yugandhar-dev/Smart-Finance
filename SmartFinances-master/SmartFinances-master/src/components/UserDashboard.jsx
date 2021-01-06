@@ -119,10 +119,10 @@ export default (props) => {
                 <Tab className={classes.tab} label="Portfolio" />
                 <Tab className={classes.tab} label="Pay Merchant" />
                 <Tab className={classes.tab} label="Upload Receipt" />
-                <Tab className={classes.tab} label="Investments" />
+                <Tab id='Investments' className={classes.tab} label="Investments" />
                 <Tab className={classes.tab} label="Investment Trends" />
                 <Tab className={classes.tab} label="User Settings" />
-                <Tab className={classes.tab} label="Transaction History" />
+                <Tab id='Transactions' className={classes.tab} label="Transaction History" />
                 <Tab className={classes.tab} label="Contact Us" />
               </Tabs>
               <div className={classes.logout}>
@@ -143,7 +143,7 @@ export default (props) => {
           </div> 
           
           <button className="chat-bot-btn-on" onClick={() => toggleChatbot((prev) => !prev)}>
-          ChatBot! 
+          ChatBot 
           </button> 
           
           <TabPanel value={value} index={0}>
