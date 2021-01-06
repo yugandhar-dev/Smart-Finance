@@ -41,6 +41,7 @@ const UserSignUpPage = require('./routes/user/registerUser');
 const adminuserupdation = require('./routes/admin/adminuserupdation');
 const adminfundupdation = require('./routes/admin/adminfundupdation');
 const saveUser = require('./routes/admin/saveUser');
+const unverfiedusers = require('./routes/admin/unverifiedusers');
 // Middlewares
 const { authenticate } = require('./middlewares/authenticate');
 
@@ -80,6 +81,7 @@ app.use('/api', UserSignUpPage);
 app.use('/api', adminuserupdation);
 app.use('/api', adminfundupdation);
 app.use('/api', saveUser);
+app.use('/api', unverfiedusers);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
