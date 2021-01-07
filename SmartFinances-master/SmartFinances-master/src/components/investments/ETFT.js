@@ -6,7 +6,7 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-    const url = "https://public.tableau.com/views/DashboardforETF/DashBoardForETF";
+    const url = "https://public.tableau.com/views/InvestmentTrend_16100204527940/Dashboard1?:language=en&:display_count=y&:origin=viz_share_link";
 
 	const options = {
 		device: "desktop",
