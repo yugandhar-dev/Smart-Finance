@@ -6,14 +6,15 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-	const url = "https://public.tableau.com/views/userdashboard/userdashboard";
+	const url = "https://public.tableau.com/views/UserInvestments_updated/Dashboard1";
+	
 
 	const options = {
 		device: "desktop",
 	};
 
 	function initViz() {
-		new tableau.Viz(ref.current, url);
+		new tableau.Viz(ref.current, url,options);
 	}
 
 	useEffect(() => {
