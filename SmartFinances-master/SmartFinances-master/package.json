@@ -16,6 +16,7 @@
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-validation": "^0.1.11",
     "react-chartjs-2": "^2.9.0",
+    "react-chatbot-kit": "^1.1.1",
     "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
     "react-hooks-helper": "^1.6.0",

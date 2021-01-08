@@ -35,7 +35,7 @@ const Routes = () => {
           <PrivateRoute
             path="/user/dashboard"
             exact
-            component={UserDashboard}
+            component={(UserDashboard)}
           />
           <PrivateRoute
             path="/user/payToMerchant"
@@ -63,3 +63,4 @@ const Routes = () => {
 };
 
 export default Routes;
+

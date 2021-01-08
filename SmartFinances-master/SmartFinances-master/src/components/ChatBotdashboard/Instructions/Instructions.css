@@ -1,0 +1,21 @@
+.question-container{
+    padding: 12px;
+    border-radius: 12px;
+    background-color: #dafba5;
+}
+
+.question-btn{
+    background: transparent;
+    padding: 8px;
+    border-radius: 90px;
+    border-color: rgb(125, 125, 248);
+    margin: 5px;
+    width: 150px;
+
+}
+
+.endSentence{
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #dbdff5;
+}

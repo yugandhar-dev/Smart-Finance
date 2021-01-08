@@ -24,6 +24,8 @@ import Settings from './Settings/settings';
 import History from './Transactions/history';
 import Trend from './../components/investments/Lowriskinvest';
 import ContactUs from './contactUs/ContactUs';
+import Chatbot from "./ChatBotdashboard/chatbot";
+import { ConditionallyRender } from "react-util-kit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,6 +82,7 @@ export default (props) => {
   const [response, setResponse] = useState('');
   const [reload, setReload] = useState(true);
   const [walletReload, setWalletReload] = useState(true);
+  const [showChatbot, toggleChatbot] = useState(true)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -116,10 +119,10 @@ export default (props) => {
                 <Tab className={classes.tab} label="Portfolio" />
                 <Tab className={classes.tab} label="Pay Merchant" />
                 <Tab className={classes.tab} label="Upload Receipt" />
-                <Tab className={classes.tab} label="Investments" />
+                <Tab id='Investments' className={classes.tab} label="Investments" />
                 <Tab className={classes.tab} label="Investment Trends" />
                 <Tab className={classes.tab} label="User Settings" />
-                <Tab className={classes.tab} label="Transaction History" />
+                <Tab id='Transactions' className={classes.tab} label="Transaction History" />
                 <Tab className={classes.tab} label="Contact Us" />
               </Tabs>
               <div className={classes.logout}>
@@ -129,6 +132,20 @@ export default (props) => {
               </div>
             </Toolbar>
           </AppBar>
+
+          <div className="app-chat-bot-container"> 
+          <ConditionallyRender 
+            ifTrue={showChatbot} 
+            show={ 
+              <Chatbot />
+            } 
+          /> 
+          </div> 
+          
+          <button className="chat-bot-btn-on" onClick={() => toggleChatbot((prev) => !prev)}>
+          ChatBot 
+          </button> 
+          
           <TabPanel value={value} index={0}>
             <Grid
               container
