@@ -140,6 +140,7 @@ function Investments(props) {
           <MoneyCheckAlt size="35" /> Withdraw Money
         </CategoriesDiv>
         <CategoriesDiv
+          id="Calculator"
           name="calculator"
           onClick={e => getForm(e)}
           style={display === "calculator" ? changeStyle : {}}

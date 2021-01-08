@@ -1,57 +1,59 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import "./Homepage.css";
+import React, { useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import './Homepage.css';
+import Chatbot from './ChatBot/chatbot';
+import { ConditionallyRender } from 'react-util-kit';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
         Smart Finance
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    height: "100vh",
+    height: '100vh',
   },
   image: {
     backgroundImage:
-      "url(https://images.unsplash.com/photo-1490079027102-cd08f2308c73?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)",
-    backgroundRepeat: "no-repeat",
+      'url(https://images.unsplash.com/photo-1490079027102-cd08f2308c73?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)',
+    backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === "light"
+      theme.palette.type === 'light'
         ? theme.palette.grey[50]
         : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center", //for sigin icon
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center', //for sigin icon
   },
   avatar: {
     margin: theme.spacing(1), //tilting the page up and down
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -60,17 +62,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
+  const [showChatbot, toggleChatbot] = useState(true);
   const [] = useState(null);
   const classes = useStyles();
 
   let history = useHistory();
 
   const user = () => {
-    history.push("/user");
+    history.push('/user');
   };
 
   const admin = () => {
-    history.push("/admin");
+    history.push('/admin');
   };
 
   return (
@@ -93,6 +96,22 @@ const App = () => {
             managing your savings.
           </p>
         </div>
+
+        <div className="app-chat-bot-container"> 
+        <ConditionallyRender
+         ifTrue={showChatbot} 
+         show={ 
+           <Chatbot 
+           />
+          } 
+        /> 
+        
+      </div> 
+
+      <button className="chat-bot-btn-on" onClick={() => toggleChatbot((prev) => !prev)}> 
+        ChatBot!
+        </button>  
+       
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
@@ -102,6 +121,7 @@ const App = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+
             <form className={classes.form} noValidate>
               <Button
                 onClick={user}
@@ -124,15 +144,13 @@ const App = () => {
                 Admin
               </Button>
               <Grid container>
-                <Grid item xs>
-                </Grid>
-                <Grid item>
-
-                </Grid>
+                <Grid item xs></Grid>
+                <Grid item></Grid>
               </Grid>
               <Box mt={5}>
                 <Copyright />
               </Box>
+             
             </form>
           </div>
         </Grid>
