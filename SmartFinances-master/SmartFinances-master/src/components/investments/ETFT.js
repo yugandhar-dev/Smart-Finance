@@ -6,7 +6,7 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-    const url = "https://public.tableau.com/views/InvestmentTrend_16100204527940/Dashboard1";
+    const url = "https://public.tableau.com/views/TransactionDashBoard/Dashboard1";
 
 	const options = {
 		device: "desktop",
@@ -30,7 +30,7 @@ function Tablembed(props) {
 			>
 				Back
 			</Button>
-			<p><h1>Investment Analysis</h1></p>
+			<p><h1>Transaction Analysis</h1></p>
 			<div ref={ref}></div>
 		</div>
 	);
