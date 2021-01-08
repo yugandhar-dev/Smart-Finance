@@ -6,14 +6,15 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-    const url = "https://public.tableau.com/views/InvestmentTrend_16100204527940/Dashboard1?:language=en&:display_count=y&:origin=viz_share_link";
+	const url = "https://public.tableau.com/views/iteration1_dashboard_final/Dashboard1";
+	
 
 	const options = {
 		device: "desktop",
 	};
 
 	function initViz() {
-		new tableau.Viz(ref.current, url);
+		new tableau.Viz(ref.current, url,options);
 	}
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ function Tablembed(props) {
 			>
 				Back
 			</Button>
-			<p> Trends of User Investments </p>
+			<p><h1>Investment Analysis</h1></p>
 			<div ref={ref}></div>
 		</div>
 	);
