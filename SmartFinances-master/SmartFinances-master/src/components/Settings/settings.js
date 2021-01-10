@@ -128,18 +128,19 @@ export default () => {
 
   const Update = async () => {
     if(
-      newpassword !== ''
-    ){
+      newpassword !== '' || 
+      newpassword == ''
+    ){ 
       if(newpassword.length < 5){
-        alert('Minimum 8 characters in the password')
+        alert('Minimum 8 characters in the password') 
         return false
-      } if(newpassword.length > 10){
-        alert('Maximum 10 characters in the password')
+      } if(newpassword.length > 10){ 
+        alert('Maximum 10 characters in the password')  
         return false
-      }if(newpassword.includes('@'||'!'||'#'||'$'||'%'||'^'||'&'||'*'||'('||')'||';')){
+      }if(!newpassword.includes('@'||'!'||'#'||'$'||'%'||'^'||'&'||'*'||'('||')'||';')){
         alert('Please include one symbol')
-        return false
-      }if(newpassword.includes(newpassword.toLowerCase)){
+        return false  
+      }if(newpassword.includes(newpassword.toLocaleLowerCase())){
         alert('Please include one upper case character')
         return false
       } 
