@@ -88,6 +88,7 @@ export default () => {
       </ListItem>
       <ListItem>
         <TextField
+          name = 'newpassword'
           label="New Password"
           type="password"
           required="required"
@@ -126,6 +127,22 @@ export default () => {
   }, []);
 
   const Update = async () => {
+    if(
+      newpassword !== ''
+    ){
+      if(newpassword.length < 5){
+        alert('Minimum 8 characters in the password')
+        return false
+      } if(newpassword.length > 10){
+        alert('Maximum 10 characters in the password')
+        return false
+      }if(newpassword.includes('@'||'!'||'#'||'$'||'%'||'^'||'&'||'*'||'('||')'||';')){
+        alert('Please include one symbol')
+        return false
+      }if(newpassword.includes(newpassword.toLowerCase)){
+        alert('Please include one upper case character')
+        return false
+      } 
     const data = {
       useraccountNumber: accNumber,
       userphoneNumber: newphonenumber,
@@ -140,6 +157,7 @@ export default () => {
     const phNo = await getUserPhoneNumber(email.emailId);
     setPhonenumber(phNo.phoneNumber);
   };
+};
 
   const classes = useStyles();
 
