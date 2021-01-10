@@ -1,14 +1,12 @@
-const usertran = require("../../models/userBanktransaction");
+const usertran = require('../../models/userBanktransaction');
 
-
-exports.userBanktran = (req, res) =>{
-  const userbank = new usertran(req.body)
-  userbank.save((err,userbank)=> {
-    if(err){s
+exports.userBanktran = (req, res) => {
+  usertran.find((err, userbank) => {
+    if (err) {
       return res.status(400).json({
-        error:"Not able to Create transaction"
-      })
+        error: 'Internal Server error',
+      });
     }
-    res.json({userbank})
-  })
-}
+    res.json(userbank);
+  });
+};
