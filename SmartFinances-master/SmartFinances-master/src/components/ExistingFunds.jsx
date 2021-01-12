@@ -117,10 +117,36 @@ const ExistingFunds = () => {
                 {/* <p className="text-white text-center">
                   {JSON.stringify(fundId)}
                 </p> */}
-                <p>Fund Id:{JSON.stringify(response.fundId)}</p>
-                <p>Fund Title:{JSON.stringify(response.fundTitle)}</p>
-                <p>ROI:{JSON.stringify(response.returnOfInvestment)}</p>
-                <p>Fund Description:{JSON.stringify(response.description)}</p>
+                <br/><br/>
+                <p>Fund Id: <span className="idSpot">{JSON.stringify(response.fundId)}</span></p> 
+                <p>Fund Title:
+                  <br></br> 
+                  <input type='text' className="inputBox" defaultValue={JSON.stringify(response.fundTitle)}/></p>
+                <p>ROI: 
+                  <br></br>
+                  <input type='text' className="inputBox" defaultValue={JSON.stringify(response.returnOfInvestment)}/></p>
+                <p>Fund Description: 
+                  <br></br>
+                  <textarea className="inputArea" defaultValue={JSON.stringify(response.description)}/></p>
+                  <br/>
+                 
+                  <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className="btn-Admin"
+                >
+                  CHANGE
+                </Button>
+
+                <Button
+                  type="reset"
+                  variant="contained"
+                  color="primary"
+                  className='btn-Admin'
+                >
+                  RESET
+                </Button>
               </form>
             </div>
           </Grid>
