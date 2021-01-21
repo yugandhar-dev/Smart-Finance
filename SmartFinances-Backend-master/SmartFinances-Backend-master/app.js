@@ -41,12 +41,9 @@ const UserSignUpPage = require('./routes/user/registerUser');
 const adminuserupdation = require('./routes/admin/adminuserupdation');
 const adminfundupdation = require('./routes/admin/adminfundupdation');
 const saveUser = require('./routes/admin/saveUser');
-<<<<<<< HEAD
 const unverfiedusers = require('./routes/admin/unverifiedusers');
 const verified = require('./routes/admin/verified');
-=======
 const userBanktransaction = require('./routes/user/userBanktransaction');
->>>>>>> 7105c2cf929ff88287f1826d6c791240a638fced
 // Middlewares
 const { authenticate } = require('./middlewares/authenticate');
 
@@ -86,12 +83,9 @@ app.use('/api', UserSignUpPage);
 app.use('/api', adminuserupdation);
 app.use('/api', adminfundupdation);
 app.use('/api', saveUser);
-<<<<<<< HEAD
 app.use('/api', unverfiedusers);
 app.use('/api', verified);
-=======
 app.use('/api', userBanktransaction);
->>>>>>> 7105c2cf929ff88287f1826d6c791240a638fced
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
