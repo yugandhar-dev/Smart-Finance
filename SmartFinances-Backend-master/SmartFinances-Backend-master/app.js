@@ -44,6 +44,8 @@ const saveUser = require('./routes/admin/saveUser');
 const unverfiedusers = require('./routes/admin/unverifiedusers');
 const verified = require('./routes/admin/verified');
 const userBanktransaction = require('./routes/user/userBanktransaction');
+const goals = require('./routes/user/goals');
+
 // Middlewares
 const { authenticate } = require('./middlewares/authenticate');
 
@@ -51,7 +53,7 @@ app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(cookieParser()); // used to put or delete some values into the cookies
 app.use(cors());
-//app.use(authenticate);
+app.use(authenticate);
 
 // Routes here
 
@@ -86,6 +88,8 @@ app.use('/api', saveUser);
 app.use('/api', unverfiedusers);
 app.use('/api', verified);
 app.use('/api', userBanktransaction);
+app.use('/api', goals);
+
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
