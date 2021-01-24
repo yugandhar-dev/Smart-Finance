@@ -363,6 +363,7 @@ export const getTransactionHistory = data => {
   })
     .then(response => {
       console.log(response);
+      //console.log(response.json())
       return response.json();
     })
     .catch(err => console.log(err));
@@ -427,6 +428,7 @@ export const submitNewUser = data =>
    })
      .then(response => {
        console.log((response));
+       //console.log(response.json())
        return response.json();
      })
      .catch(err => console.log(err));

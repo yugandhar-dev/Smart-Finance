@@ -24,7 +24,7 @@ export default (props) => {
       {
         label: "Merchant Name",
         width: 180,
-        field: "Merchant Name",
+        field: "MerchantName",
       },
       {
         label: "Outflow",
@@ -42,22 +42,22 @@ export default (props) => {
 
   useEffect(() => {
     let arr = [{
-      date: "Loading..",
-      category: "",
+      Date: "Loading..",
+      Category: "",
       MerchantName: "",
-      outflow: "",
-      inflow: "",
+      Outflow: "",
+      Inflow: "",
       }];
     if(props.zeroRecords || props.history.length > 1){
         arr = [];
     }
     for (const row of props.history) {
       arr.push({
-        date: row["date"] ? row["date"].split("GMT")[0].trim() : "",
-        category: row["category"] ? row["category"] : "",
-        MerchantName: row["merchantaame"] ? row["merchantname"] : "",
-        outflow: row["outflow"] ? row["outflow"] : 0,
-        inflow: row["inflow"] ? row["inflow"] : 0,
+        Date: row["date"] ? row["date"].split("GMT")[0].trim() : "",
+        Category: row["category"] ? row["category"] : "",
+        MerchantName: row["MerchantName"] ? row["MerchantName"] : "",
+        Outflow: row["outflow"] ? row["outflow"] : 0,
+        Inflow: row["inflow"] ? row["inflow"] : 0,
       });
     }
 
@@ -77,7 +77,7 @@ export default (props) => {
       searchTop
       searchBottom={false}
       barReverse
-      noRecordsFoundLabel='No Transactions found'
+      noRecordsFoundLabel='No Bank Transactions found'
     />
   );
 };
