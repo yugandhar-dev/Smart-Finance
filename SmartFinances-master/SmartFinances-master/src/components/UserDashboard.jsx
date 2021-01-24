@@ -299,7 +299,7 @@ export default (props) => {
             <History reload={reload} setReload={setReload} />
           </TabPanel>
           <TabPanel value={value} index={7}>
-            <ContactUs reload={reload} setReload={setReload} />
+            <Spending reload={reload} setReload={setReload} />
           </TabPanel>
           <TabPanel value={value} index={8}>
             <ContactUs reload={reload} setReload={setReload} />

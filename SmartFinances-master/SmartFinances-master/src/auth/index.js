@@ -412,3 +412,22 @@ export const submitNewUser = data =>
       return response.json();
     })
     .catch(err => console.log(err));
+
+    //banktransactions 
+
+    export const getSpending = data => {
+      return fetch(`${API}/user/userBankTransactions`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
+        .catch(err => console.log(err));
+    };
