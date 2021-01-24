@@ -12,8 +12,8 @@ export default (props) => {
         width: 120,
         field: "Date",
         attributes: {
-          "aria-controls": "DataTable",
-          "aria-label": "Date",
+        "aria-controls": "DataTable",
+        "aria-label": "Date",
         },
       },
       {
