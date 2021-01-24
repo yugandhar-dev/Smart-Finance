@@ -25,6 +25,7 @@ import History from './Transactions/history';
 import Trend from './../components/investments/Lowriskinvest';
 import ContactUs from './contactUs/ContactUs';
 import Chatbot from "./ChatBotdashboard/chatbot";
+import Spending from "./Spendings/spendinghistory"
 import { ConditionallyRender } from "react-util-kit";
 
 const useStyles = makeStyles((theme) => ({
@@ -123,6 +124,7 @@ export default (props) => {
                 <Tab className={classes.tab} label="Investment Trends" />
                 <Tab className={classes.tab} label="User Settings" />
                 <Tab id='Transactions' className={classes.tab} label="Transaction History" />
+                <Tab className={classes.tab} label="Spendings" />
                 <Tab className={classes.tab} label="Contact Us" />
               </Tabs>
               <div className={classes.logout}>
@@ -297,6 +299,9 @@ export default (props) => {
             <History reload={reload} setReload={setReload} />
           </TabPanel>
           <TabPanel value={value} index={7}>
+            <ContactUs reload={reload} setReload={setReload} />
+          </TabPanel>
+          <TabPanel value={value} index={8}>
             <ContactUs reload={reload} setReload={setReload} />
           </TabPanel>
         </WalletContext.Provider>
