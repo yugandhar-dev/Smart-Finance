@@ -414,7 +414,7 @@ export const submitNewUser = data =>
     })
     .catch(err => console.log(err));
 
-    //banktransactions 
+    //banktransactions fetch request 
 
     export const getSpending = data => {
       return fetch(`${API}/user/userBanktransaction`, {
