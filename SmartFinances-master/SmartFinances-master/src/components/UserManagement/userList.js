@@ -1,13 +1,13 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { getUsers } from "../../auth/index";
-import Datatable from "./datatable";
-import styled from "styled-components";
+import React, { useState, useEffect, Fragment } from 'react';
+import { getUsers } from '../../auth/index';
+import Datatable from './datatable';
+import styled from 'styled-components';
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
   padding-top: 5vh;
   padding-bottom: 25vh;
-  width: 20%;
+  width: 12%;
   position: fixed;
   height: 100vh;
   left: 0;
@@ -15,7 +15,7 @@ const MainDiv = styled.div`
 `;
 
 const ChildDiv = styled.div`
-  margin-left: 20%;
+  margin-left: 12%;
 `;
 
 const CategoriesDiv = styled.div`
@@ -38,10 +38,10 @@ const CategoriesDiv = styled.div`
 `;
 
 const changeStyle = {
-  backgroundColor: "white",
-  color: "#07236a",
-  border: "1rem",
-  boxShadow: "0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)",
+  backgroundColor: 'white',
+  color: '#07236a',
+  border: '1rem',
+  boxShadow: '0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)',
 };
 
 export default () => {
@@ -54,11 +54,12 @@ export default () => {
     const fetchData = async () => {
       try {
         const users = await getUsers();
-        if (!users["error"]) {
+        if (!users['error']) {
+          console.log(users);
           setRows(users);
           setToggle(!toggle);
         } else {
-          if (users["error"] === "No users found") setZeroRecords(true);
+          if (users['error'] === 'No users found') setZeroRecords(true);
           setToggle(!toggle);
         }
       } catch (ex) {
@@ -100,7 +101,7 @@ export default () => {
               activationStatus={activationStatus}
             />
           ) : (
-            ""
+            ''
           )}
         </div>
       </ChildDiv>

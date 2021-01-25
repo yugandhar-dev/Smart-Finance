@@ -5,8 +5,9 @@ const balances = require('../../models/balance');
 const { securePassword } = require('../../models/user');
 
 exports.SaveUser = async (req, res) => {
+  console.log(req.body);
   try {
-    const user = await userSignUp.findOne({ email: req.body.emailId });
+    const user = await userSignUp.findOne({ _id: req.body.id });
     user.isVerified = true;
 
     await user.save();
