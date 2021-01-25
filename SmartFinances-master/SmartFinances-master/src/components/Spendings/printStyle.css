@@ -1,8 +1,8 @@
 @media print {
-  .print-btn {
+  .chatBot {
     display: none;
   }
-  .chatBot {
+  .print-btn {
     display: none;
   }
 }
