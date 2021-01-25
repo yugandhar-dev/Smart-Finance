@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getSpending, getUserDetails } from '../../auth/index';
 import Datatable from './datasheet';
 import Button from '@material-ui/core/Button';
+import './printStyle.css';
 
 export default () => {
   const [rows, setRows] = useState([]);
@@ -31,7 +32,16 @@ export default () => {
 
   return (
     <div>
-      <Button>Print</Button>
+      <div className="print-btn">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => window.print()}
+          style={{ float: 'right', marginTop: 10 }}
+        >
+          Print Statement
+        </Button>
+      </div>
       {rows && rows != [] ? (
         <Datatable history={rows} toggle={toggle} zeroRecords={zeroRecords} />
       ) : (

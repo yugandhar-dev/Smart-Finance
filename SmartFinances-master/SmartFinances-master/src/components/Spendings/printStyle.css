@@ -1,0 +1,8 @@
+@media print {
+  .print-btn {
+    display: none;
+  }
+  .chatBot {
+    display: none;
+  }
+}
