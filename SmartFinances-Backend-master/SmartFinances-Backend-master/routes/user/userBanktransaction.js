@@ -3,6 +3,6 @@ var router = express.Router();
 
 const { userBanktran } = require('../../controllers/user/userBanktransaction');
 
-router.get('/user/userBanktransaction', userBanktran);
+router.post('/user/userBanktransaction', userBanktran);
 
 module.exports = router;
