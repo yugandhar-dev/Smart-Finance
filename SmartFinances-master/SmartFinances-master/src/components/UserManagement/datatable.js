@@ -90,8 +90,8 @@ export default props => {
     event.preventDefault();
     console.log(event.currentTarget.dataset.id);
     const id = event.currentTarget.dataset.id;
-    await acceptUser({ id });
-    console.log(userData[id]);
+    const res = await acceptUser(id);
+    console.log(res);
   };
 
   const deleteUser = event => {

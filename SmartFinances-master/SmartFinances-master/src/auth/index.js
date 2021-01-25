@@ -441,9 +441,10 @@ export const acceptUser = data => {
       'Access-Control-Allow-Origin': '*',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ id: data }),
   })
     .then(response => {
+      console.log(response);
       return response.json();
     })
     .catch(err => console.log(err));
