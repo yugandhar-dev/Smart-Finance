@@ -416,20 +416,19 @@ export const submitNewUser = data =>
 
     //banktransactions 
 
- export const getSpending = data => {
-   return fetch(`${API}/user/userBanktransaction`, {
-     method: 'POST',
-     headers: {
-       Accept: 'application/json',
-       'Content-Type': 'application/json',
-       Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-     body: JSON.stringify(data),
-   })
-     .then(response => {
-       console.log((response));
-       //console.log(response.json())
-       return response.json();
-     })
-     .catch(err => console.log(err));
- };
+    export const getSpending = data => {
+      return fetch(`${API}/user/userBanktransaction`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+       },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          console.log((response));
+          return response.json();
+        })
+        .catch(err => console.log(err));
+    };

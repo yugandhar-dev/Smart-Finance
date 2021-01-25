@@ -11,7 +11,7 @@ export default () => {
 			const userDetails = await getUserDetails();
 			try {
 				const history = await getSpending({
-					walletAccountNumber: userDetails[0].walletAccountNumber,
+					//walletAccountNumber: userDetails[0].walletAccountNumber,
 				});
 				if (!history["error"]) {
 					setRows(history);
