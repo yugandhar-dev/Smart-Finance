@@ -387,7 +387,7 @@ export const receiptTransaction = data => {
 };
 
 export const getUsers = () =>
-  fetch(`${API}admin/userlist`, {
+  fetch(`${API}admin/unverifiedusers`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -414,21 +414,38 @@ export const submitNewUser = data =>
     })
     .catch(err => console.log(err));
 
-    //banktransactions fetch request 
+//banktransactions fetch request
 
-    export const getSpending = data => {
-      return fetch(`${API}/user/userBanktransaction`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-       },
-        body: JSON.stringify(data),
-      })
-        .then(response => {
-          console.log((response));
-          return response.json();
-        })
-        .catch(err => console.log(err));
-    };
+export const getSpending = data => {
+  return fetch(`${API}/user/userBanktransaction`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};
+export const acceptUser = data => {
+  console.log(data);
+  fetch(`${API}admin/saveUser`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({ id: data }),
+  })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .catch(err => console.log(err));
+};

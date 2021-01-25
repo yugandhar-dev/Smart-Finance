@@ -1,14 +1,13 @@
-const userSign = require("../../models/usersignup");
+const userSign = require('../../models/usersignup');
 
-
-exports.UserSignUpPage = (req, res) =>{
-  const usersSign = new userSign(req.body)
-  usersSign.save((err,usersSign)=> {
-    if(err){
+exports.UserSignUpPage = (req, res) => {
+  const usersSign = new userSign(req.body);
+  usersSign.save((err, usersSign) => {
+    if (err) {
       return res.status(400).json({
-        error:"Not able to Create User"
-      })
+        error: err,
+      });
     }
-    res.json({usersSign})
-  })
-}
+    res.json({ usersSign });
+  });
+};

@@ -1,57 +1,78 @@
-import React, { useEffect, useState } from "react";
-import { MDBDataTableV5 } from "mdbreact";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
-import { Button, Input, TextField } from "@material-ui/core";
+import React, { useEffect, useState } from 'react';
+import { MDBDataTableV5 } from 'mdbreact';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+import { Button, Input, TextField } from '@material-ui/core';
+import { acceptUser } from '../../auth/index';
 
 export default props => {
   let userData = {};
   const [datatable, setDatatable] = useState({
     columns: [
       {
-        label: "accountNumber",
-        width: 120,
-        field: "accountNumber",
+        label: 'accountNumber',
+        width: 80,
+        field: 'accountNumber',
         attributes: {
-          "aria-controls": "DataTable",
-          "aria-label": "accountNumber",
+          'aria-controls': 'DataTable',
+          'aria-label': 'accountNumber',
         },
       },
       {
-        label: "walletAccountNumber",
+        label: 'firstName',
         width: 120,
-        field: "walletAccountNumber",
+        field: 'firstName',
       },
       {
-        label: "emailId",
+        label: 'lastName',
+        width: 120,
+        field: 'lastName',
+      },
+      {
+        label: 'email',
         width: 180,
-        field: "emailId",
+        field: 'email',
       },
       {
-        label: "bankName",
+        label: 'bankName',
         width: 180,
-        field: "bankName",
+        field: 'bankName',
       },
       {
-        label: "address",
+        label: 'address',
         width: 100,
-        field: "address",
+        field: 'address',
       },
       {
-        label: "tfnNumber",
+        label: 'tfnNumber',
         width: 180,
-        field: "tfnNumber",
+        field: 'tfnNumber',
       },
       {
-        label: "",
+        label: 'phone',
         width: 180,
-        field: "Save",
+        field: 'phone',
       },
       {
-        label: "",
+        label: 'isEnrolled',
         width: 180,
-        field: "Delete",
+        field: 'isEnrolled',
+      },
+      {
+        label: 'university',
+        width: 180,
+        field: 'university',
+      },
+      {
+        label: '',
+        width: 180,
+        field: 'Accept',
+      },
+      {
+        label: '',
+        width: 180,
+        field: 'Decline',
       },
     ],
     rows: [],
@@ -65,11 +86,12 @@ export default props => {
     };
   };
 
-  const saveUser = event => {
+  const saveUser = async event => {
     event.preventDefault();
     console.log(event.currentTarget.dataset.id);
     const id = event.currentTarget.dataset.id;
-    console.log(userData[id]);
+    const res = await acceptUser(id);
+    console.log(res);
   };
 
   const deleteUser = event => {
@@ -80,20 +102,27 @@ export default props => {
   useEffect(() => {
     let arr = [
       {
-        accountNumber: "Loading..",
-        walletAccountNumber: "",
-        emailId: "",
-        bankName: "",
-        address: "",
-        tfnNumber: "",
-        Save: "",
-        Delete: "",
+        accountNumber: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        bankName: '',
+        address: '',
+        tfnNumber: '',
+        phoneNumber: '',
+        isEnrolled: '',
+        university: '',
+        isWorking: '',
+        officeLocation: '',
+        openingBalance: '',
+        Accept: '',
+        Decline: '',
       },
     ];
     console.log(props.users);
-    if (props.zeroRecords || props.users.length > 1) {
-      arr = [];
-    }
+    // if (props.zeroRecords || props.users.length > 1) {
+    //   arr = [];
+    // }
     for (const row of props.users) {
       arr.push({
         accountNumber: (
@@ -102,30 +131,38 @@ export default props => {
             variant="outlined"
             name="accountNumber"
             type="text"
-            defaultValue={row["accountNumber"] ? row["accountNumber"] : 0}
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['accountNumber'] ? row['accountNumber'] : 0}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
-        walletAccountNumber: (
+        firstName: (
           <TextField
             size="small"
             variant="outlined"
-            name="walletAccountNumber"
+            name="firstName"
             type="text"
-            defaultValue={
-              row["walletAccountNumber"] ? row["walletAccountNumber"] : 0
-            }
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['firstName'] ? row['firstName'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
-        emailId: (
+        lastName: (
           <TextField
             size="small"
             variant="outlined"
-            name="emailId"
+            name="lastName"
             type="text"
-            defaultValue={row["emailId"] ? row["emailId"] : 0}
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['lastName'] ? row['lastName'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
+          />
+        ),
+        email: (
+          <TextField
+            size="small"
+            variant="outlined"
+            name="email"
+            type="text"
+            defaultValue={row['email'] ? row['email'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
         bankName: (
@@ -134,8 +171,8 @@ export default props => {
             variant="outlined"
             name="bankName"
             type="text"
-            defaultValue={row["bankName"] ? row["bankName"] : ""}
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['bankName'] ? row['bankName'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
         address: (
@@ -144,8 +181,8 @@ export default props => {
             variant="outlined"
             name="address"
             type="text"
-            defaultValue={row["address"] ? row["address"] : ""}
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['address'] ? row['address'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
         tfnNumber: (
@@ -154,33 +191,64 @@ export default props => {
             variant="outlined"
             name="tfnNumber"
             type="text"
-            defaultValue={row["tfnNumber"] ? row["tfnNumber"] : ""}
-            onChange={(event) => handleChange(event, row["_id"])}
+            defaultValue={row['tfnNumber'] ? row['tfnNumber'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
           />
         ),
-        Save: (
+        phone: (
+          <TextField
+            size="small"
+            variant="outlined"
+            name="phone"
+            type="text"
+            defaultValue={row['phone'] ? row['phone'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
+          />
+        ),
+        isEnrolled: (
+          <TextField
+            size="small"
+            variant="outlined"
+            name="isEnrolled"
+            type="text"
+            defaultValue={row['isEnrolled'] ? row['isEnrolled'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
+          />
+        ),
+        university: (
+          <TextField
+            size="small"
+            variant="outlined"
+            name="university"
+            type="text"
+            defaultValue={row['university'] ? row['university'] : ''}
+            onChange={event => handleChange(event, row['_id'])}
+          />
+        ),
+        Accept: (
           <Button
             className="primary"
-            variant="outlined"
-            data-id={row["_id"]}
+            color="primary"
+            variant="contained"
+            data-id={row['_id']}
             onClick={saveUser}
           >
-            Save
+            Accept
           </Button>
         ),
-        
-        Delete: (
+
+        Decline: (
           <Button
             className="secondary"
-            variant="outlined"
-            data-id={row["_id"]}
+            color="secondary"
+            variant="contained"
+            data-id={row['_id']}
             onClick={e =>
-                window.confirm("Are you sure you wish to delete this item?") 
+              window.confirm('Are you sure you wish to delete this item?')
             }
-         > 
-            Delete
+          >
+            Decline
           </Button>
-          
         ),
       });
     }
