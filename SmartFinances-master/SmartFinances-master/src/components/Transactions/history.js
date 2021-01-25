@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTransactionHistory, getUserDetails } from '../../auth/index';
 import Datatable from './datatable';
 import Button from '@material-ui/core/Button';
+import './historyprint.css';
 
 export default () => {
   const [rows, setRows] = useState([]);
