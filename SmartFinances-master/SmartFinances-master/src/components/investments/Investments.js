@@ -16,6 +16,7 @@ import InvestmentCalculator from "./Calculator/Calculator";
 import LowRiskInvestment from "./lowRiskInvestment";
 import ETF from "./ETFs/ETF";
 import SavingScheme from "./SavingSchemes/savingScheme";
+import Goals from "./Goals/goals";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -177,6 +178,9 @@ function Investments(props) {
           <Withdraw reload={props.reload} setReload={props.setReload} />
         )}
         {display === "calculator" && <InvestmentCalculator />}
+        {display === "goals" && (
+          <Goals reload={props.reload} setReload={props.setReload} />
+        )}
       </ChildDiv>
     </Fragment>
   );
