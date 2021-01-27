@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import './questionnaire.css';
 
 export default function Questionnaire() {
     return (
@@ -38,7 +39,7 @@ export default function Questionnaire() {
 					</div>
 				</div>
 				<div className="form-row-last">
-					<input type="submit" name="Submit" className="Submit" value="Submit"/>
+					<input type="submit" name="Submit" className="register" value="Submit"/>
 				</div>
 			</form>
 	
