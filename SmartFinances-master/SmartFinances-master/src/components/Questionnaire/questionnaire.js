@@ -37,7 +37,9 @@ export default function Questionnaire() {
 						<input type="text" name="fifth_question" id="fifth_question" placeholder="Your answer" className="input-text" />
 					</div>
 				</div>
-
+				<div className="form-row-last">
+					<input type="submit" name="Submit" className="Submit" value="Submit"/>
+				</div>
 			</form>
 	
         </div>
