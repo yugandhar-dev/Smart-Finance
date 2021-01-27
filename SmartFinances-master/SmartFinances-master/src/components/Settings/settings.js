@@ -63,12 +63,11 @@ export default () => {
   const [message, setMessage] = useState('');
   const [emailId, setemailId] = useState('');
   const [accNumber, setAccNumber] = useState('');
-
   const getCurrentPassword = (value) => {
     setCurrentpassword(value);
    
   };
- 
+  function onSelect(){};
   function validatePassword() {
          
     var newPassword = newpassword
@@ -225,11 +224,22 @@ export default () => {
                 <TextField>Password</TextField>
                 <Pencil size="25" onClick={() => setOpen(!open)} />
               </ListItem>
+              <ListItem>
+                <a>Address:</a>
+                <TextField>Address</TextField>
+                <Pencil size="25" onClick={() => setOpen(!open)} />
+              </ListItem>
+              <ListItem>
+                <a>City:</a>
+                <TextField>City</TextField>
+                <Pencil size="25" onClick={() => setOpen(!open)} />
+                </ListItem>
               {open && changePwd}
               <ListItem>
                 <a>Email:</a>
                 <Button>Contact Us to Change Email Address</Button>
               </ListItem>
+              
               <ListItem>
                 <Button variant="contained" color="primary" onClick={Update}>
                   Update
