@@ -7,6 +7,7 @@ import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
 import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
 import { Plus } from "@styled-icons/evaicons-solid/Plus";
 import { Minus } from "@styled-icons/boxicons-regular/Minus";
+import { PiggyBank } from "@styled-icons/fa-solid/PiggyBank";
 import Addfunds from "./Addfunds";
 import Lowrisk from "./Lowrisk";
 import Withdraw from "./Withdraw";
@@ -146,6 +147,14 @@ function Investments(props) {
           style={display === "calculator" ? changeStyle : {}}
         >
           <Calculator size="35" /> Investment Calculator
+        </CategoriesDiv>
+        <CategoriesDiv
+          id="Goals"
+          name="goals"
+          onClick={e => getForm(e)}
+          style={display === "goals" ? changeStyle : {}}
+        >
+          <PiggyBank size="35" /> Goals
         </CategoriesDiv>
       </MainDiv>
       <ChildDiv>
