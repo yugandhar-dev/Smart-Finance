@@ -249,11 +249,7 @@ export default () => {
                 
                 </select>
                 </ListItem>
-                <ListItem>
-                <a>Post Code:</a>
-                <TextField>Postcode</TextField>
-                <Pencil size="25" onClick={() => setOpen(!open)} />
-                </ListItem>
+          
               
               <ListItem>
                 <a>Email:</a>
