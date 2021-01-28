@@ -225,6 +225,11 @@ export default () => {
                 <Pencil size="25" onClick={() => setOpen(!open)} />
               </ListItem>
               <ListItem>
+                <a>Birthdate:</a>
+                <TextField>Birthdate</TextField>
+                <Pencil size="25" onClick={() => setOpen(!open)} />
+              </ListItem>
+              <ListItem>
                 <a>Address:</a>
                 <TextField>Address</TextField>
                 <Pencil size="25" onClick={() => setOpen(!open)} />
