@@ -249,8 +249,26 @@ export default () => {
                 
                 </select>
                 </ListItem>
-          
-              
+                <ListItem>
+                <a>Post Code:</a>
+                <TextField>Postcode</TextField>
+                <Pencil size="25" onClick={() => setOpen(!open)} />
+                </ListItem>
+                <ListItem>
+                <a>University:</a>
+                <select value="University">
+                <option value="Deakin University">Deakin University</option>
+                <option value="Federation University Australia">Federation University Australia</option>
+                <option value="La Trobe University">La Trobe University</option>
+                <option value="Monash University">Monash University</option>
+                <option value="RMIT University">RMIT University</option>
+                <option value="Swinburne University of Technology">Swinburne University of Technology</option>
+                <option value="The University of Melbourne">The University of Melbourne</option>
+                <option value="Victoria University">Victoria University</option>
+                
+                </select>
+                
+              </ListItem>
               <ListItem>
                 <a>Email:</a>
                 <Button>Contact Us to Change Email Address</Button>
