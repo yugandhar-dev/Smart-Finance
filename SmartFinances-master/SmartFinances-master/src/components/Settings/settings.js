@@ -236,6 +236,26 @@ export default () => {
                 </ListItem>
               {open && changePwd}
               <ListItem>
+              
+                <a>State:</a>
+                <select value="NT">
+                <option value="ACT">ACT</option>
+                <option value="NSW">NSW</option>
+                <option value="NT">NT</option>
+                <option value="SA">SA</option>
+                <option value="TAS">TAS</option>
+                <option value="VIC">VIC</option>
+                <option value="VIC">WA</option>
+                
+                </select>
+                </ListItem>
+                <ListItem>
+                <a>Post Code:</a>
+                <TextField>Postcode</TextField>
+                <Pencil size="25" onClick={() => setOpen(!open)} />
+                </ListItem>
+              
+              <ListItem>
                 <a>Email:</a>
                 <Button>Contact Us to Change Email Address</Button>
               </ListItem>
