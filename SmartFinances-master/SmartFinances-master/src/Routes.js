@@ -15,6 +15,8 @@ import Sell from './components/investments/sell/sell';
 import History from './components/Transactions/history';
 import SignUpForm from './components/signUp/signUpForm';
 import Spending from './components/Spendings/spendinghistory';
+import Questions from './components/ChatBotdashboard/Instructions/questions';
+import Questionnaire from './components/Questionnaire/questionnaire';
 
 const Routes = () => {
   const existingToken = localStorage.getItem('token');
@@ -57,6 +59,7 @@ const Routes = () => {
           <PrivateRoute path="/user/investmentsell" component={Sell} />
           <PrivateRoute path="/user/transactionhistory" component={History} />
           <PrivateRoute path="/user/spendinghistory" component={Spending} />
+          <PrivateRoute path='/user/questionnaire' component={Questionnaire} />
           <PrivateRoute path="/user/contactus" component={ContactUs} />
           
         </Switch>
