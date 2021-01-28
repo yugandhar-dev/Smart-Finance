@@ -16,7 +16,7 @@ import InvestmentCalculator from "./Calculator/Calculator";
 import LowRiskInvestment from "./lowRiskInvestment";
 import ETF from "./ETFs/ETF";
 import SavingScheme from "./SavingSchemes/savingScheme";
-import Goals from "./Goals/goals";
+import Goals from "./Goals/short-term";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
