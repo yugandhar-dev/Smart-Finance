@@ -14,5 +14,7 @@ describe("navigation test cases", () => {
       cy.wait(5000);
       cy.contains("Questionnaire").should("exist");
       cy.contains("Questionnaire").click();
+      cy.contains("Upload Receipt").should("exist");
+      cy.contains("Upload Receipt").click();
     });
 })
