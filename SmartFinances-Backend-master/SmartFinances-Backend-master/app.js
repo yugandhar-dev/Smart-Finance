@@ -46,6 +46,7 @@ const verified = require('./routes/admin/verified');
 const userBanktransaction = require('./routes/user/userBanktransaction');
 const goals = require('./routes/user/goals');
 const questionnaire = require('./routes/user/questionnaire');
+const settings = require('./routes/user/settings');
 
 // Middlewares
 const { authenticate } = require('./middlewares/authenticate');
@@ -91,6 +92,7 @@ app.use('/api', verified);
 app.use('/api', userBanktransaction);
 app.use('/api', goals);
 app.use('/api', questionnaire);
+app.use('/api', settings);
 
 // Server Startup
 (async () => {
