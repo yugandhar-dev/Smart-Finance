@@ -28,5 +28,7 @@ describe("navigation test cases", () => {
       cy.contains("Investment Trends").click();
       cy.contains("Investments").should("exist");
       cy.contains("Investments").click();
+      cy.contains("Contact Us").should("exist");
+      cy.contains("Contact Us").click();
     });
 })
