@@ -22,5 +22,7 @@ describe("navigation test cases", () => {
       cy.contains("Spendings").click();
       cy.contains("Transaction History").should("exist");
       cy.contains("Transaction History").click();
+      cy.contains("User Settings").should("exist");
+      cy.contains("User Settings").click();
     });
 })
