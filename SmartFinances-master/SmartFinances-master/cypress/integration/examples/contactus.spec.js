@@ -16,6 +16,10 @@ describe("contact us test cases", () => {
       cy.contains("Name").should("be.visible");
       cy.contains("Your Email").should("be.visible");
       cy.contains("Your Message").should("be.visible");
+      cy.contains("Liked our product and wanted to convey it or found something that you would like to add on to our application ?").should("be.visible")
+      cy.contains("Toll Free : 888-0123-4567").should("be.visible");
+      cy.contains("Fax : 1-234-567-8900").should("be.visible");
+      cy.contains("Mail : hello@smartfinance.com.au").should("be.visible");
       cy.get('#first_name').type('usertest');
    });
   })
