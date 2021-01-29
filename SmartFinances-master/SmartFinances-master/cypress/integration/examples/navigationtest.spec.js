@@ -20,5 +20,7 @@ describe("navigation test cases", () => {
       cy.contains("pay merchant").click();
       cy.contains("Spendings").should("exist");
       cy.contains("Spendings").click();
+      cy.contains("Transaction History").should("exist");
+      cy.contains("Transaction History").click();
     });
 })
