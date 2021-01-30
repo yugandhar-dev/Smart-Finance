@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FundManagement from "./FundManagement.jsx";
 import UserManagement from './UserManagement/UserManagement';
+import UserFeedback from './UserFeedback';
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -96,7 +97,7 @@ export default (props) => {
             >
               <Tab label="Fund Management" />
               <Tab label="User Management" />
-              <Tab label="Admin Management" />
+              <Tab label="User Feedback" />
             </Tabs>
           </AppBar>
 
@@ -107,7 +108,7 @@ export default (props) => {
            <UserManagement />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <div />
+            <UserFeedback />
           </TabPanel>
     </div>
   );
