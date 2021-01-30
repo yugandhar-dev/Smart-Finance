@@ -6,7 +6,7 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-    const url = "https://public.tableau.com/views/TransactionDashBoard/Dashboard1";
+    const url = "https://public.tableau.com/views/drafttransactionvisual/Dashboard1";
 
 	const options = {
 		device: "desktop",
