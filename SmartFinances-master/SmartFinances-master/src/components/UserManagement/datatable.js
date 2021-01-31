@@ -228,10 +228,11 @@ export default props => {
         Accept: (
           <Button
             className="primary"
-            color="primary"
-            variant="contained"
-            data-id={row['_id']}
-            onClick={saveUser}
+            variant="outlined"
+            data-id={row["_id"]}
+            onClick={e =>
+              window.confirm("Are you sure you wish to save this item?") 
+          }
           >
             Accept
           </Button>
