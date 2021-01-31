@@ -61,12 +61,12 @@ export default function UserGoals() {
     input.setAttribute("value", "valueTaken");
     input.appendChild(inputText);
     
-    input2.appendChild(inputText2);
+   // input2.appendChild(inputText2);
 
     // input2.appendChild(input2Value);
     console.log(input2Value);
     rowIDOPTION.appendChild(input); 
-    rowIDINPUT.appendChild(input2);
+    rowIDINPUT.appendChild(input2Value);
 
   }
 
@@ -180,6 +180,7 @@ export default function UserGoals() {
           placeholder='$200'
           id="addInput"
           type="number"
+          value=''
           InputLabelProps={{
             shrink: true,
           }}
