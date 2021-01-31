@@ -1,12 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {List, TextField, Grid, Button, InputLabel, FormHelperText, FormControl, Select, NativeSelect, Paper, CssBaseline} from '@material-ui/core';
+import {List, TextField, Grid, Button, InputLabel, FormHelperText, FormControl, Select, NativeSelect, Paper, CssBaseline, ListItem, Typography} from '@material-ui/core';
 import { Container } from '@material-ui/core';
 
+
 const useStyles = makeStyles((theme) => ({
-  formControl: {
+  form: {
     margin: theme.spacing(1),
     minWidth: 120,
+    minHeight: 120,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -15,23 +17,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
     gridGap: theme.spacing(3),
+    alignItems: 'center',
   },
   Paper: {
     margin: theme.spacing(8, 8),
-    display: 'flex',
+    display: 'grid',
     flexDirection: 'column',
     alignItems: 'center',
-    alignContent: 'center',
-    alignSelf: 'center',
-    justifyItems: 'center',
   },
 }));
 
 export default function UserGoals() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    age: '',
-    name: 'goal',
+    budget: '',
+    name: '',
+    goal: '',
+    
+    // goalList: [{index: Math.random(), }]
   });
 
   const handleChange = (event) => {
@@ -42,6 +45,31 @@ export default function UserGoals() {
     });
   };
 
+  function handleClick() {
+    //alert('Hello!');
+    var rowIDOPTION = document.getElementById('addOption');
+    var rowIDINPUT = document.getElementById('addInput');
+    var rowIDBTN = document.getElementById('addBtn'); 
+    var input = document.createElement('OPTION');
+    var catchOption = document.getElementById('budget-list'); //catch option from selector
+    var catchValue = catchOption.value; //catch value from option
+    var inputText = document.createTextNode(catchValue);
+    var input2Value = document.getElementById('shopping').value;
+    var input2 = document.createTextNode(input2Value);
+
+
+    input.setAttribute("value", "valueTaken");
+    input.appendChild(inputText);
+    
+    input2.appendChild(inputText2);
+
+    // input2.appendChild(input2Value);
+    console.log(input2Value);
+    rowIDOPTION.appendChild(input); 
+    rowIDINPUT.appendChild(input2);
+
+  }
+
   return (
     <Grid
     container
@@ -51,7 +79,6 @@ export default function UserGoals() {
     component="main"
     className={classes.root}
   >
-    <CssBaseline />
     <Grid
       item
       xs={false}
@@ -63,36 +90,75 @@ export default function UserGoals() {
     >
       <div className={classes.paper}>
       <div>
-      <Container maxWidth="xs" justify="center">
-      
-      <FormControl className={classes.formControl}>
-      
+      <Container maxWidth="md" justify="center">
+
+      <br />
+      <Typography component="h1" variant="h5" justify="center">
+          User goals
+      </Typography>
+      <br />
+
+      <FormControl variant="outlined" className={classes.form}>
       <Grid container spacing={3}>
         <Grid item md={6}>
           <p>Budget your spendings</p>
         </Grid>
-
-        <Grid item md={4}>
+        <Grid item md={6}>
         <NativeSelect
           value={state.goal}
           onChange={handleChange}
           inputProps={{
             name: 'goal',
-            id: 'goals-term',
+            id: 'goal-term',
           }}
         >
           <option value={10}>Short Term</option>
           <option value={20}>Long Term</option>
         </NativeSelect>
         </Grid>
+    
         <Grid item md={6}>
             <p>
                 Enter Income
             </p>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={6}>
         <TextField
-          id="standard-number"
+          placeholder='$2000'
+          id="standard-income"
+          type="standard-income"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        </Grid>
+
+        <Grid item md={3}>
+        <NativeSelect
+          value={state.budget}
+          onChange={handleChange}
+         // id='selectOptions'
+          inputProps={{
+            name: 'budget',
+            id: 'budget-list',
+          }}
+        >
+          <option value={'Shopping'}>Shopping</option>
+          <option value={'Gas'}>Gas</option>
+          <option value={'Groceries'}>Groceries</option>
+          <option value={'Eating-Out'}>Eating Out</option>
+          <option value={'Rent'}>Rent</option>
+          <option value={'Entertainment'}>Entertainment</option>
+          <option value={'Maintenance'}>Maintenance</option>
+          <option value={'Utilities'}>Utilities</option>
+          <option value={'Entertainment'}>Entertainment</option>
+          <option value={'Other'}>Other</option>
+        </NativeSelect>
+        </Grid>
+        <Grid item md={3}>
+        <TextField
+          placeholder='$200'
+          id="shopping"
           type="number"
           InputLabelProps={{
             shrink: true,
@@ -100,30 +166,34 @@ export default function UserGoals() {
         />
         </Grid>
         <Grid item md={6}>
-        <NativeSelect
-          value={state.goal}
-          onChange={handleChange}
-          inputProps={{
-            name: 'budget',
-            id: 'budget-list',
-          }}
-        >
-          <option value={10}>Shopping</option>
-          <option value={20}>Gas</option>
-          <option value={30}>Groceries</option>
-          <option value={40}>Eating Out</option>
-          <option value={50}>Rent</option>
-          <option value={60}>Entertainment</option>
-          <option value={70}>Maintenance</option>
-          <option value={80}>Utilities</option>
-          <option value={90}>Entertainment</option>
-          <option value={100}>Other</option>
+          <Button variant="contained" color="primary" onClick={handleClick}> Add budget </Button>
+        </Grid>
+
+        
+        <Grid item md={3}>
+        <NativeSelect id='addOption'>
+        {/* {activeOnClick()} */}
         </NativeSelect>
         </Grid>
-        <Grid item md={6}>
-          <Button variant="contained" color="primary"> Add new budget </Button>
+        <Grid item md={3}>
+        <TextField
+          placeholder='$200'
+          id="addInput"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
         </Grid>
+        <Grid item md={3}>
+        <Button id='addBtn'>
+        {/* {activeOnClick()} */}
+        </Button>
         </Grid>
+        
+        <br />
+        </Grid>
+        <br /><br />
       </FormControl>
       </Container>
     </div>
