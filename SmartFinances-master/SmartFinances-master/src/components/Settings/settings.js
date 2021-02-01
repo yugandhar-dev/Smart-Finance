@@ -67,6 +67,7 @@ export default () => {
     setCurrentpassword(value);
    
   };
+  const classes = useStyles();
   function onSelect(){};
   function validatePassword() {
          
@@ -185,7 +186,7 @@ export default () => {
     setPhonenumber(phNo.phoneNumber);
   };
 
-  const classes = useStyles();
+ 
 
   return (
     <Grid
