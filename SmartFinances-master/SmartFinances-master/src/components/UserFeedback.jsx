@@ -5,7 +5,8 @@ const { tableau } = window;
 function Tablembed(props) {
 	const ref = useRef(null);
 
-    const url = "https://public.tableau.com/views/TransactionDashBoard/Dashboard1";
+	const url = "https://public.tableau.com/views/suggestion_admin/suggestiondashboard";
+	
 
 	const options = {
 		device: "desktop",
