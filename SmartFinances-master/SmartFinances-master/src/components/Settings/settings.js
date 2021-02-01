@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import styled, {css} from 'styled-components';
-import {List, TextField, Grid, ListItem, Button} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import styled, { css } from 'styled-components';
+import { List, TextField, Grid, ListItem, Button } from '@material-ui/core';
 import {
   getUserDetails,
   getProfileSettings,
@@ -10,19 +10,19 @@ import {
 import Paper from '@material-ui/core/Paper';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {makeStyles} from '@material-ui/core/styles';
-import {Pencil} from '@styled-icons/boxicons-regular/Pencil';
+import { makeStyles } from '@material-ui/core/styles';
+import { Pencil } from '@styled-icons/boxicons-regular/Pencil';
 
 const Message = styled.p`
   color: green;
-  ${(props) =>
+  ${props =>
     props.error &&
     css`
       color: red;
     `}
 `;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -63,37 +63,41 @@ export default () => {
   const [message, setMessage] = useState('');
   const [emailId, setemailId] = useState('');
   const [accNumber, setAccNumber] = useState('');
-  const getCurrentPassword = (value) => {
+  const getCurrentPassword = value => {
     setCurrentpassword(value);
-   
   };
   const classes = useStyles();
-  function onSelect(){};
+  function onSelect() {}
   function validatePassword() {
-         
-    var newPassword = newpassword
+    var newPassword = newpassword;
     var minNumberofChars = 6;
     var maxNumberofChars = 16;
-    var regularExpression  = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-    alert(newPassword); 
-    if(newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars){
-      alert("password should contain atleast One uppercase letter, Lowercase letter, One number, One Special Character");
-        return false;
+    var regularExpression = /^[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    alert(newPassword);
+    if (
+      newPassword.length < minNumberofChars ||
+      newPassword.length > maxNumberofChars
+    ) {
+      alert(
+        'password should contain atleast One uppercase letter, Lowercase letter, One number, One Special Character'
+      );
+      return false;
     }
-    if(!regularExpression.test(newPassword)) {
-        alert("password should contain atleast One uppercase letter, Lowercase letter, One number, One Special Character");
-        return false;
+    if (!regularExpression.test(newPassword)) {
+      alert(
+        'password should contain atleast One uppercase letter, Lowercase letter, One number, One Special Character'
+      );
+      return false;
     }
-}
- 
-  const getNewPassword = (value) => {
+  }
+
+  const getNewPassword = value => {
     setNewpassword(value);
   };
-  const getPhonenumber = (value) => {
+  const getPhonenumber = value => {
     setNewPhonenumber(value);
   };
 
- 
   const changePwd = (
     <div>
       <ListItem>
@@ -102,7 +106,7 @@ export default () => {
           type="password"
           required="required"
           value={currentpassword}
-          onChange={(event) => getCurrentPassword(event.target.value)}
+          onChange={event => getCurrentPassword(event.target.value)}
         >
           Current Password
         </TextField>
@@ -113,9 +117,9 @@ export default () => {
           type="password"
           required="required"
           value={newpassword}
-          onChange={(event) => getNewPassword(event.target.value)}
-          helperText= "Please enter minimum 8 letters,One uppercase letter, Lowercase letter, One number, One Special Character"
-          inputProps={{minLength :8}}
+          onChange={event => getNewPassword(event.target.value)}
+          helperText="Please enter minimum 8 letters,One uppercase letter, Lowercase letter, One number, One Special Character"
+          inputProps={{ minLength: 8 }}
         >
           Change Password
         </TextField>
@@ -128,15 +132,13 @@ export default () => {
         <TextField
           label="New Mobile Number"
           value={newphonenumber}
-          onChange={(event) => getPhonenumber(event.target.value)}
+          onChange={event => getPhonenumber(event.target.value)}
         >
           New Mobile Number
         </TextField>
       </ListItem>
     </div>
   );
-
-  
 
   useEffect(() => {
     const getDetails = async () => {
@@ -151,43 +153,55 @@ export default () => {
   }, []);
 
   const Update = async () => {
-    if(
-      newpassword !== '' || 
-      newpassword == ''
-    ){ 
-      if(newpassword.length < 5){
-        alert('Minimum 8 characters in the password') 
-        return false
-      } if(newpassword.length > 10){ 
-        alert('Maximum 10 characters in the password')  
-        return false
-      }if(!newpassword.includes('@'||'!'||'#'||'$'||'%'||'^'||'&'||'*'||'('||')'||';')){
-        alert('Please include one symbol')
-        return false  
-      }if(newpassword.includes(newpassword.toLocaleLowerCase())){
-        alert('Please include one upper case character')
-        return false
-      } 
-    const data = {
-      useraccountNumber: accNumber,
-      //userphoneNumber: newphonenumber,
-    };
+    if (newpassword !== '' || newpassword == '') {
+      if (newpassword.length < 5) {
+        alert('Minimum 8 characters in the password');
+        return false;
+      }
+      if (newpassword.length > 10) {
+        alert('Maximum 10 characters in the password');
+        return false;
+      }
+      if (
+        !newpassword.includes(
+          '@' ||
+            '!' ||
+            '#' ||
+            '$' ||
+            '%' ||
+            '^' ||
+            '&' ||
+            '*' ||
+            '(' ||
+            ')' ||
+            ';'
+        )
+      ) {
+        alert('Please include one symbol');
+        return false;
+      }
+      if (newpassword.includes(newpassword.toLocaleLowerCase())) {
+        alert('Please include one upper case character');
+        return false;
+      }
+      const data = {
+        useraccountNumber: accNumber,
+        //userphoneNumber: newphonenumber,
+      };
 
-    validatePassword();
+      validatePassword();
 
-    const res = await getProfileSettings(data);
-    res.error ? setError(res.error + ' Please try again') : setError(null);
-    setCurrentpassword('');
-    setNewpassword('');
-    setNewPhonenumber('');
-    const userDetails = await getUserDetails();
-    const email = await getEmailId(userDetails[0].accountNumber);
-    const phNo = await getUserPhoneNumber(email.emailId);
-    setPhonenumber(phNo.phoneNumber);
+      const res = await getProfileSettings(data);
+      res.error ? setError(res.error + ' Please try again') : setError(null);
+      setCurrentpassword('');
+      setNewpassword('');
+      setNewPhonenumber('');
+      const userDetails = await getUserDetails();
+      const email = await getEmailId(userDetails[0].accountNumber);
+      const phNo = await getUserPhoneNumber(email.emailId);
+      setPhonenumber(phNo.phoneNumber);
+    }
   };
-
- 
-
   return (
     <Grid
       container
@@ -239,47 +253,53 @@ export default () => {
                 <a>City:</a>
                 <TextField>City</TextField>
                 <Pencil size="25" onClick={() => setOpen(!open)} />
-                </ListItem>
+              </ListItem>
               {open && changePwd}
               <ListItem>
-              
                 <a>State:</a>
                 <select value="NT">
-                <option value="ACT">ACT</option>
-                <option value="NSW">NSW</option>
-                <option value="NT">NT</option>
-                <option value="SA">SA</option>
-                <option value="TAS">TAS</option>
-                <option value="VIC">VIC</option>
-                <option value="VIC">WA</option>
-                
+                  <option value="ACT">ACT</option>
+                  <option value="NSW">NSW</option>
+                  <option value="NT">NT</option>
+                  <option value="SA">SA</option>
+                  <option value="TAS">TAS</option>
+                  <option value="VIC">VIC</option>
+                  <option value="VIC">WA</option>
                 </select>
-                </ListItem>
-                <ListItem>
+              </ListItem>
+              <ListItem>
                 <a>Post Code:</a>
                 <TextField>Postcode</TextField>
                 <Pencil size="25" onClick={() => setOpen(!open)} />
-                </ListItem>
-                <ListItem>
+              </ListItem>
+              <ListItem>
                 <a>University:</a>
                 <select value="University">
-                <option value="Deakin University">Deakin University</option>
-                <option value="Federation University Australia">Federation University Australia</option>
-                <option value="La Trobe University">La Trobe University</option>
-                <option value="Monash University">Monash University</option>
-                <option value="RMIT University">RMIT University</option>
-                <option value="Swinburne University of Technology">Swinburne University of Technology</option>
-                <option value="The University of Melbourne">The University of Melbourne</option>
-                <option value="Victoria University">Victoria University</option>
-                
+                  <option value="Deakin University">Deakin University</option>
+                  <option value="Federation University Australia">
+                    Federation University Australia
+                  </option>
+                  <option value="La Trobe University">
+                    La Trobe University
+                  </option>
+                  <option value="Monash University">Monash University</option>
+                  <option value="RMIT University">RMIT University</option>
+                  <option value="Swinburne University of Technology">
+                    Swinburne University of Technology
+                  </option>
+                  <option value="The University of Melbourne">
+                    The University of Melbourne
+                  </option>
+                  <option value="Victoria University">
+                    Victoria University
+                  </option>
                 </select>
-                
               </ListItem>
               <ListItem>
                 <a>Email:</a>
                 <Button>Contact Us to Change Email Address</Button>
               </ListItem>
-              
+
               <ListItem>
                 <Button variant="contained" color="primary" onClick={Update}>
                   Update
@@ -295,5 +315,5 @@ export default () => {
         <Message error>{error}</Message>
       )}
     </Grid>
-  )
-}}
+  );
+};
