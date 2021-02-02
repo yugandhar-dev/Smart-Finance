@@ -464,3 +464,17 @@ export const submitQuestionnaire = data =>
       return response.json();
     })
     .catch(err => console.log(err));
+
+export const getAnswers = () =>
+  fetch(`${API}user/questionnaireAnswers`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => console.log(err));
