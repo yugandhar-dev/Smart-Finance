@@ -15,12 +15,12 @@ const Options = (props) => {
             id: 2, 
         },
         { 
-            text: "Create goals", 
+            text: "Calculator", 
             handler: props.actionProvider.navigateCalculator, 
             id: 3, 
         }, 
         { 
-            text: "Check Spendings", 
+            text: "My Spendings", 
             handler: props.actionProvider.navigateTransactions, 
             id: 4, 
         }, 
