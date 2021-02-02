@@ -7,6 +7,7 @@ import { HandHoldingUsd } from "@styled-icons/fa-solid/HandHoldingUsd";
 import { MoneyCheckAlt } from "@styled-icons/fa-solid/MoneyCheckAlt";
 import { Plus } from "@styled-icons/evaicons-solid/Plus";
 import { Minus } from "@styled-icons/boxicons-regular/Minus";
+import { PiggyBank } from "@styled-icons/fa-solid/PiggyBank";
 import Addfunds from "./Addfunds";
 import Lowrisk from "./Lowrisk";
 import Withdraw from "./Withdraw";
@@ -15,6 +16,7 @@ import InvestmentCalculator from "./Calculator/Calculator";
 import LowRiskInvestment from "./lowRiskInvestment";
 import ETF from "./ETFs/ETF";
 import SavingScheme from "./SavingSchemes/savingScheme";
+import Goals from "./Goals/short-term";
 
 const MainDiv = styled.div`
   background-color: #3f51b5;
@@ -147,6 +149,14 @@ function Investments(props) {
         >
           <Calculator size="35" /> Investment Calculator
         </CategoriesDiv>
+        <CategoriesDiv
+          id="Goals"
+          name="goals"
+          onClick={e => getForm(e)}
+          style={display === "goals" ? changeStyle : {}}
+        >
+          <PiggyBank size="35" /> Goals
+        </CategoriesDiv>
       </MainDiv>
       <ChildDiv>
         {display === "add" && (
@@ -168,6 +178,9 @@ function Investments(props) {
           <Withdraw reload={props.reload} setReload={props.setReload} />
         )}
         {display === "calculator" && <InvestmentCalculator />}
+        {display === "goals" && (
+          <Goals reload={props.reload} setReload={props.setReload} />
+        )}
       </ChildDiv>
     </Fragment>
   );
