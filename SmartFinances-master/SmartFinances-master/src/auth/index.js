@@ -465,8 +465,8 @@ export const submitQuestionnaire = data =>
     })
     .catch(err => console.log(err));
 
-export const getAnswers = () =>
-  fetch(`${API}user/questionnaireAnswers`, {
+export const getAnswers = () => {
+  return fetch(`${API}user/questionnaireAnswers`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -478,3 +478,4 @@ export const getAnswers = () =>
       return response.json();
     })
     .catch(err => console.log(err));
+};

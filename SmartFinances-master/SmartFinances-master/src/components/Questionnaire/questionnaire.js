@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './questionnaire.css';
 import { submitQuestionnaire } from '../../auth/index';
+import { getAnswers } from '../../auth/index';
 
 export default function Questionnaire() {
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    const getprevious = async () => {
+      const res = await getAnswers();
+      console.log(res);
+    };
+    getprevious();
+  }, []);
 
   const submitAns = async e => {
     e.preventDefault();
