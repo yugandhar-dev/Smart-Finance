@@ -61,7 +61,7 @@ class ActionProvider {
 
   lowRisk = () => {
     const message = this.createChatBotMessage(
-      'Low Risk Investments are investments that are inherently safer than their counterparts'
+      'Low Risk Investments are investments that are inherently safer than their counterparts. Learn more about it here - https://capital.com/low-risk-investment-definition'
     );
     this.addMessageToState(message);
   };
@@ -75,7 +75,7 @@ class ActionProvider {
 
   savingScheme = () => {
     const message = this.createChatBotMessage(
-      'Savings scheme is designed to encourage savings by making small deposits'
+      'Savings scheme is designed to encourage savings by making small deposits. Learn more about it here - https://cleartax.in/g/terms/savings-scheme#:~:text=Savings%20scheme%20means%20a%20scheme,savings%20by%20making%20small%20deposits.'
     );
     this.addMessageToState(message);
   };
