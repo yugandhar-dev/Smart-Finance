@@ -55,6 +55,10 @@ const useStyles = makeStyles(theme => ({
 export default () => {
   const [open, setOpen] = useState(false);
   const [openn, setOpenn] = useState(false);
+  const [opendob, setOpenDob] = useState(false);
+  const [openaddress, setOpenAddress] = useState(false);
+  const [opencity, setOpenCity] = useState(false);
+  const [openPostal, setOpenPostal] = useState(false);
   const [error, setError] = useState('');
   const [currentpassword, setCurrentpassword] = useState('');
   const [newpassword, setNewpassword] = useState('');
@@ -140,6 +144,62 @@ export default () => {
     </div>
   );
 
+  const changeDob = (
+    <div>
+      <ListItem>
+        <TextField
+          label="New Date of Birth"
+          value={newphonenumber}
+          onChange={event => getPhonenumber(event.target.value)}
+        >
+          New Mobile Number
+        </TextField>
+      </ListItem>
+    </div>
+  );
+
+  const changeAddress = (
+    <div>
+      <ListItem>
+        <TextField
+          label="New Address"
+          value={newphonenumber}
+          onChange={event => getPhonenumber(event.target.value)}
+        >
+          New Mobile Number
+        </TextField>
+      </ListItem>
+    </div>
+  );
+
+  const changeCity = (
+    <div>
+      <ListItem>
+        <TextField
+          label="New City"
+          value={newphonenumber}
+          onChange={event => getPhonenumber(event.target.value)}
+        >
+          New Mobile Number
+        </TextField>
+      </ListItem>
+    </div>
+  );
+
+  const changePostal = (
+    <div>
+      <ListItem>
+        <TextField
+          label="New Postal Code"
+          value={newphonenumber}
+          onChange={event => getPhonenumber(event.target.value)}
+        >
+          New Mobile Number
+        </TextField>
+      </ListItem>
+    </div>
+  );
+
   useEffect(() => {
     const getDetails = async () => {
       const userDetails = await getUserDetails();
@@ -153,54 +213,54 @@ export default () => {
   }, []);
 
   const Update = async () => {
-    if (newpassword !== '' || newpassword == '') {
-      if (newpassword.length < 5) {
-        alert('Minimum 8 characters in the password');
-        return false;
-      }
-      if (newpassword.length > 10) {
-        alert('Maximum 10 characters in the password');
-        return false;
-      }
-      if (
-        !newpassword.includes(
-          '@' ||
-            '!' ||
-            '#' ||
-            '$' ||
-            '%' ||
-            '^' ||
-            '&' ||
-            '*' ||
-            '(' ||
-            ')' ||
-            ';'
-        )
-      ) {
-        alert('Please include one symbol');
-        return false;
-      }
-      if (newpassword.includes(newpassword.toLocaleLowerCase())) {
-        alert('Please include one upper case character');
-        return false;
-      }
-      const data = {
-        useraccountNumber: accNumber,
-        //userphoneNumber: newphonenumber,
-      };
+    // if (newpassword !== '' || newpassword == '') {
+    //   if (newpassword.length < 5) {
+    //     alert('Minimum 8 characters in the password');
+    //     return false;
+    //   }
+    //   if (newpassword.length > 10) {
+    //     alert('Maximum 10 characters in the password');
+    //     return false;
+    //   }
+    //   if (
+    //     !newpassword.includes(
+    //       '@' ||
+    //         '!' ||
+    //         '#' ||
+    //         '$' ||
+    //         '%' ||
+    //         '^' ||
+    //         '&' ||
+    //         '*' ||
+    //         '(' ||
+    //         ')' ||
+    //         ';'
+    //     )
+    //   ) {
+    //     alert('Please include one symbol');
+    //     return false;
+    //   }
+    //   if (newpassword.includes(newpassword.toLocaleLowerCase())) {
+    //     alert('Please include one upper case character');
+    //     return false;
+    //   }
+    const data = {
+      useraccountNumber: accNumber,
+      //userphoneNumber: newphonenumber,
+    };
 
-      validatePassword();
+    // validatePassword();
 
-      const res = await getProfileSettings(data);
-      res.error ? setError(res.error + ' Please try again') : setError(null);
-      setCurrentpassword('');
-      setNewpassword('');
-      setNewPhonenumber('');
-      const userDetails = await getUserDetails();
-      const email = await getEmailId(userDetails[0].accountNumber);
-      const phNo = await getUserPhoneNumber(email.emailId);
-      setPhonenumber(phNo.phoneNumber);
-    }
+    const res = await getProfileSettings(data);
+    res.error ? setError(res.error + ' Please try again') : setError(null);
+    setCurrentpassword('');
+    setNewpassword('');
+    setNewPhonenumber('');
+    const userDetails = await getUserDetails();
+    const email = await getEmailId(userDetails[0].accountNumber);
+    const phNo = await getUserPhoneNumber(email.emailId);
+    setPhonenumber(phNo.phoneNumber);
+    //}
   };
   return (
     <Grid
@@ -239,39 +299,34 @@ export default () => {
                 <TextField>Password</TextField>
                 <Pencil size="25" onClick={() => setOpen(!open)} />
               </ListItem>
+              {open && changePwd}
               <ListItem>
                 <a>Birthdate:</a>
                 <TextField>Birthdate</TextField>
-                <Pencil size="25" onClick={() => setOpen(!open)} />
+                <Pencil size="25" onClick={() => setOpenDob(!opendob)} />
               </ListItem>
+              {opendob && changeDob}
               <ListItem>
                 <a>Address:</a>
                 <TextField>Address</TextField>
-                <Pencil size="25" onClick={() => setOpen(!open)} />
+                <Pencil
+                  size="25"
+                  onClick={() => setOpenAddress(!openaddress)}
+                />
               </ListItem>
+              {openaddress && changeAddress}
               <ListItem>
                 <a>City:</a>
                 <TextField>City</TextField>
-                <Pencil size="25" onClick={() => setOpen(!open)} />
+                <Pencil size="25" onClick={() => setOpenCity(!opencity)} />
               </ListItem>
-              {open && changePwd}
-              <ListItem>
-                <a>State:</a>
-                <select value="NT">
-                  <option value="ACT">ACT</option>
-                  <option value="NSW">NSW</option>
-                  <option value="NT">NT</option>
-                  <option value="SA">SA</option>
-                  <option value="TAS">TAS</option>
-                  <option value="VIC">VIC</option>
-                  <option value="VIC">WA</option>
-                </select>
-              </ListItem>
+              {opencity && changeCity}
               <ListItem>
                 <a>Post Code:</a>
                 <TextField>Postcode</TextField>
-                <Pencil size="25" onClick={() => setOpen(!open)} />
+                <Pencil size="25" onClick={() => setOpenPostal(!openPostal)} />
               </ListItem>
+              {openPostal && changePostal}
               <ListItem>
                 <a>University:</a>
                 <select value="University">
