@@ -36,7 +36,7 @@ class ActionProvider {
     };
 
     navigateCalculator = () => {
-      const message = this.createChatBotMessage("Excellent let's create a goal!"); 
+      const message = this.createChatBotMessage("Excellent let's calculate your investments!"); 
       this.addMessageToState(message); 
       let button = document.getElementById('Investments');
       button.click();
@@ -52,7 +52,22 @@ class ActionProvider {
       const button = document.getElementById('Transactions');
       button.click();
     };
- 
+
+   lowRisk = () => {
+      const message = this.createChatBotMessage("Low Risk Investments are investments that are inherently safer than their counterparts"); 
+      this.addMessageToState(message); 
+    };
+
+    etf = () => {
+      const message = this.createChatBotMessage("An exchange traded fund (ETF) is a basket of securities that trade on an exchange, just like a stock. ETFs can contain all types of investments including stocks, commodities, or bonds; some offer U.S. only holdings, while others are international."); 
+      this.addMessageToState(message); 
+    };
+
+    savingScheme = () => {
+      const message = this.createChatBotMessage("Savings scheme is designed to encourage savings by making small deposits"); 
+      this.addMessageToState(message); 
+    };
+    
     addMessageToState = (message) => {
       this.setState(preState => ({
         ...preState,

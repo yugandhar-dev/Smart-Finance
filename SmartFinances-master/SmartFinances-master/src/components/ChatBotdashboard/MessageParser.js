@@ -21,11 +21,11 @@ class MessageParser {
          
       } 
       
-      if (lowercase.includes("instructions") || lowercase.includes("what is smart finance")){
+      if (lowercase.includes("instructions") || lowercase.includes("what is smart finance") || lowercase.includes('faq')){
         this.actionProvider.handleInstructions();
       }
 
-      if (lowercase.includes("investments") || lowercase.includes("I want to invest")|| lowercase.includes("invest")){
+      if (lowercase.includes("investment") || lowercase.includes("I want to invest")|| lowercase.includes("invest")){
         this.actionProvider.navigateInvest();
       }
 
@@ -33,9 +33,21 @@ class MessageParser {
         this.actionProvider.navigateCalculator();
       }
 
-      if (lowercase.includes("transactions") || lowercase.includes("check spendings") || lowercase.includes("spendings")){
+      if (lowercase.includes("goto transactions") || lowercase.includes("check spendings") || lowercase.includes('my spendings')){
         this.actionProvider.navigateTransactions();
       }
+
+      if (lowercase.includes("low risk")){
+        this.actionProvider.lowRisk();
+      }
+
+      if (lowercase.includes('exchange traded fund') || lowercase.includes('exchange traded funds') || lowercase.includes('etf')){
+        this.actionProvider.etf();
+      }
+      if (lowercase.includes('saving schemes') || lowercase.includes('saving scheme')){
+        this.actionProvider.savingScheme();
+      }
+      
     } 
   } 
  
