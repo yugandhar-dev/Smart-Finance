@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {List, TextField, Grid, Button, InputLabel, FormHelperText, FormControl, Select, NativeSelect, Paper, CssBaseline, ListItem, Typography} from '@material-ui/core';
 import { Container } from '@material-ui/core';
-
+import './goals.css';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -49,7 +49,7 @@ export default function UserGoals() {
     //alert('Hello!');
     var rowIDOPTION = document.getElementById('addOption');
     var rowIDINPUT = document.getElementById('addInput');
-    var rowIDBTN = document.getElementById('addBtn'); 
+    var rowIDBTN = document.getElementById('delBtn'); 
     var input = document.createElement('p');
     var catchOption = document.getElementById('budget-list'); //catch option from selector
     var catchValue = catchOption.value; //catch value from option
@@ -59,19 +59,28 @@ export default function UserGoals() {
     var input2Value = input2Id.value;
     var input22 = document.createTextNode(input2Value);
     var input3 = document.createElement('button');
-    var input33 = document.createTextNode('Delete')
+    var input33 = document.createTextNode('Delete');
+
     input.appendChild(inputText);
     input2.appendChild(input22);
     input3.setAttribute('class', 'delBtn');
     input3.appendChild(input33);
-    // input3.setAttribute('value', 'delete');
-    //input3.appendChild(input3);
-
-    // input2.appendChild(input2Value);
     console.log(input2Value);
+
     rowIDOPTION.appendChild(input); 
     rowIDINPUT.append(input2);
     rowIDBTN.append(input3);
+  }
+
+  function deleteData() {
+    //alert('clicked');
+    var rowIDOPTION = document.getElementById('addOption');
+    var rowIDINPUT = document.getElementById('addInput');
+    var rowIDBTN = document.getElementById('delBtn'); 
+    
+    rowIDOPTION.remove();
+    rowIDINPUT.remove();
+    rowIDBTN.remove();
 
   }
 
@@ -176,18 +185,22 @@ export default function UserGoals() {
 
         
         <Grid item md={3}>
-        <p id='addOption'>
+        <div id='addOption'>
         {/* {activeOnClick()} */}
-        </p>
+        </div>
         </Grid>
         <Grid item md={3}>
-        <p id='addInput'>
-        </p>
+
+        <div id='addInput'>
+        </div>
+        
         </Grid>
         <Grid item md={3}>
-        <Button id='addBtn'>
+
+        <div id='delBtn' variant="contained" color="primary" onClick={deleteData}>
         {/* {activeOnClick()} */}
-        </Button>
+        </div>
+       
         </Grid>
         
         <br />
