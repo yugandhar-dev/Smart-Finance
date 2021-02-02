@@ -50,23 +50,28 @@ export default function UserGoals() {
     var rowIDOPTION = document.getElementById('addOption');
     var rowIDINPUT = document.getElementById('addInput');
     var rowIDBTN = document.getElementById('addBtn'); 
-    var input = document.createElement('OPTION');
+    var input = document.createElement('p');
     var catchOption = document.getElementById('budget-list'); //catch option from selector
     var catchValue = catchOption.value; //catch value from option
     var inputText = document.createTextNode(catchValue);
-    var input2Value = document.getElementById('shopping').value;
-    var input2 = document.createTextNode(input2Value);
-
-
-    input.setAttribute("value", "valueTaken");
+    var input2 = document.createElement('p');
+    var input2Id = document.getElementById('shopping');
+    var input2Value = input2Id.value;
+    var input22 = document.createTextNode(input2Value);
+    var input3 = document.createElement('button');
+    var input33 = document.createTextNode('Delete')
     input.appendChild(inputText);
-    
-   // input2.appendChild(inputText2);
+    input2.appendChild(input22);
+    input3.setAttribute('class', 'delBtn');
+    input3.appendChild(input33);
+    // input3.setAttribute('value', 'delete');
+    //input3.appendChild(input3);
 
     // input2.appendChild(input2Value);
     console.log(input2Value);
     rowIDOPTION.appendChild(input); 
-    rowIDINPUT.appendChild(input2Value);
+    rowIDINPUT.append(input2);
+    rowIDBTN.append(input3);
 
   }
 
@@ -166,25 +171,18 @@ export default function UserGoals() {
         />
         </Grid>
         <Grid item md={6}>
-          <Button variant="contained" color="primary" onClick={handleClick}> Add budget </Button>
+          <Button id='btn' variant="contained" color="primary" onClick={handleClick}> Add budget </Button>
         </Grid>
 
         
         <Grid item md={3}>
-        <NativeSelect id='addOption'>
+        <p id='addOption'>
         {/* {activeOnClick()} */}
-        </NativeSelect>
+        </p>
         </Grid>
         <Grid item md={3}>
-        <TextField
-          placeholder='$200'
-          id="addInput"
-          type="number"
-          value=''
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+        <p id='addInput'>
+        </p>
         </Grid>
         <Grid item md={3}>
         <Button id='addBtn'>
