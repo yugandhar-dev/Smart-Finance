@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './questionnaire.css';
+import { submitQuestionnaire } from '../../auth/index';
 
 export default function Questionnaire() {
+  const [formData, setFormData] = useState({});
+
+  const submitAns = async e => {
+    e.preventDefault();
+    const res = await submitQuestionnaire(formData);
+    console.log(res);
+  };
   return (
     <div>
       <div className="page-content">
         <div className="form-v4-content">
-          <form className="form-detail" action="#" method="post" id="myform">
+          <form className="form-detail" id="myform">
             <h2>Questionnaire Form</h2>
             <div className="form-group">
               <div className="form-row">
@@ -19,6 +27,9 @@ export default function Questionnaire() {
                   type="text"
                   name="first_question"
                   id="first_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer1: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -34,6 +45,9 @@ export default function Questionnaire() {
                   type="text"
                   name="second_question"
                   id="second_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer2: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -50,6 +64,9 @@ export default function Questionnaire() {
                   type="text"
                   name="third_question"
                   id="third_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer3: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -65,6 +82,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fourth_question"
                   id="fourth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer4: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -80,6 +100,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer5: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -95,6 +118,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer6: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -109,6 +135,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer7: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -123,6 +152,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer8: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -137,6 +169,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer9: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -151,6 +186,9 @@ export default function Questionnaire() {
                   type="text"
                   name="fifth_question"
                   id="fifth_question"
+                  onChange={e =>
+                    setFormData({ ...formData, Answer10: e.target.value })
+                  }
                   placeholder="Your answer"
                   className="input-text"
                 />
@@ -158,8 +196,8 @@ export default function Questionnaire() {
             </div>
             <div className="form-row-last">
               <input
-                type="submit"
                 name="Submit"
+                onClick={e => submitAns(e)}
                 className="register"
                 value="Submit"
               />
