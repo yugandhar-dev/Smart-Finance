@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UserManagement from "./UserManagement.jsx";
+import UserManagement from "./AdminManagement.jsx";
 import Risk from "./Risk";
 import ExistingFunds from "./ExistingFunds";
 import Button from "@material-ui/core/Button";
