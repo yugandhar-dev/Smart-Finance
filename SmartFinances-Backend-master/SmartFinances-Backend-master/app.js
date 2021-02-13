@@ -48,7 +48,7 @@ const goals = require('./routes/user/goals');
 const questionnaire = require('./routes/user/questionnaire');
 const settings = require('./routes/user/settings');
 const answersRoute = require('./routes/user/getAnswers');
-
+const admins = require('./routes/admin/admins');
 // Middlewares
 const { authenticate } = require('./middlewares/authenticate');
 
@@ -95,7 +95,7 @@ app.use('/api', goals);
 app.use('/api', questionnaire);
 app.use('/api', settings);
 app.use('/api', answersRoute);
-
+app.use('/api', admins);
 // Server Startup
 (async () => {
   // We must not catch errors on db connection
