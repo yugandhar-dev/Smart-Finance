@@ -207,7 +207,7 @@ const UserLogin = () => {
                 className={classes.phone}
                 autoComplete="off"
               />
-              {/* <Button
+              <Button
                 onClick={sendOtp}
                 variant="contained"
                 color="primary"
@@ -237,7 +237,7 @@ const UserLogin = () => {
                 label="Enter OTP"
                 id="otp"
                 autoComplete="off"
-              /> */}
+              />
 
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -247,9 +247,9 @@ const UserLogin = () => {
               <Button
                 onClick={onSubmit}
                 fullWidth
-                // disabled={
-                //   parseInt(otp) === NaN || parseInt(otp).toString().length !== 6
-                // }
+                disabled={
+                  parseInt(otp) === NaN || parseInt(otp).toString().length !== 6
+                }
                 id="sign-in-button"
                 variant="contained"
                 color="primary"
